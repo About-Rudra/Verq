@@ -1,0 +1,415 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Main container */
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #121212;
+  color: white;
+  overflow: hidden;
+}
+
+/* Left half */
+.left-half {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.welcome-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+}
+
+/* Right half */
+.right-half {
+  width: 80em;
+  padding: 20px;
+  overflow: auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  background-color: #2a2a2a;
+  border-radius: 20px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  color: #999;
+  margin-left: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.bell-icon {
+  background-color: #2a2a2a;
+  border-radius: 50%;
+  padding: 8px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Card common styles */
+.card {
+  background-color: #1e1e1e;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.settings-button {
+  background-color: #2a2a2a;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+/* Stats */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #999;
+}
+
+.stat-value {
+  font-size: 12px;
+}
+
+/* Charts */
+.chart-container {
+  flex: 1;
+  position: relative;
+  margin-top: 10px;
+}
+
+/* Donut chart */
+.donut-chart {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  display: flex;
+}
+
+.donut-segment-1 {
+  width: 25%;
+  background-color: #FF5E94;
+  border-top-left-radius: 80px;
+}
+
+.donut-segment-2 {
+  width: 25%;
+  background-color: #9C5FFF;
+}
+
+.donut-segment-3 {
+  width: 25%;
+  background-color: #FFDA44;
+}
+
+.donut-segment-4 {
+  width: 25%;
+  background-color: transparent;
+  position: relative;
+}
+
+.center-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1e1e1e;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Bar chart */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  height: 150px;
+  gap: 8px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.bar {
+  flex: 1;
+  background-color: #3a3a3a;
+  border-radius: 6px;
+}
+
+.active-bar {
+  background-color: #FFDA44;
+}
+
+.bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+}
+
+/* Relaxation card */
+.water-image {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, rgba(41, 121, 255, 0.2), rgba(41, 121, 255, 0.05));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.flower {
+  width: 80px;
+  height: 80px;
+  opacity: 0.7;
+}
+
+.relax-button {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.relax-button-inner {
+  background-color: rgba(30, 30, 30, 0.7);
+  color: #FFDA44;
+  border: 1px solid #FFDA44;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Wellness summary card */
+.wellness-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.day-box {
+  flex: 1;
+  background-color: #2a2a2a;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.active-day {
+  background-color: rgba(255, 218, 68, 0.3);
+}
+
+.day-label {
+  font-size: 12px;
+  color: #999;
+}
+
+.active-day-label {
+  color: #FFDA44;
+}
+
+.day-number {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+.active-day-number {
+  color: #FFDA44;
+}
+
+.dot-container {
+  display: flex;
+  margin-top: 5px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  margin: 0 2px;
+}
+
+.purple-dot {
+  background-color: #9C5FFF;
+}
+
+.pink-dot {
+  background-color: #FF5E94;
+}
+
+.yellow-dot {
+  background-color: #FFDA44;
+}
+
+.average-score {
+  text-align: center;
+  
+}
+
+.big-number {
+  font-size: 38px;
+  font-weight: 600;
+  color: greenyellow;
+  
+}
+
+.score-label {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .welcome-text {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .left-half, .right-half {
+    width: 100%;
+  }
+  
+  .left-half {
+    height: 30vh;
+  }
+  
+  .right-half {
+    height: 70vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .card {
+    height: 220px;
+  }
+  
+  .welcome-text {
+    font-size: 3rem;
+  }
+}
+
+/* .circle {
+    width: 80px;
+    height: 80px;
+    border: 0.5em solid green;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 9em;
+    margin-top: 2em;
+}
+
+.check {
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+    height: 6em;
+    width: 3em;
+    padding-left: 2em;
+    border-bottom: 0.5em solid green;
+    border-right: 0.5em solid green;
+    transform: rotate(45deg);
+} */
+
+
+
