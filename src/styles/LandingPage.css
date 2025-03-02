@@ -1,4 +1,4 @@
-/* General Styles */
+/* 
 body, html {
     margin: 0;
     padding: 0;
@@ -17,7 +17,7 @@ body, html {
     text-align: center;
   }
   
-  /* Video Background */
+  /* Video Background 
   .video-background {
     position: absolute;
     top: 0;
@@ -40,10 +40,10 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text visibility */
-  }
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text visibility 
+  }*/
   
-  /* Navigation Bar */
+  /* Navigation Bar 
   .navbar {
     position: absolute;
     top: 0;
@@ -93,7 +93,7 @@ body, html {
   }
   
   /* Main Content */
-  /* 🔹 General Styles */
+  /* 🔹 General Styles 
 * {
     margin: 0;
     padding: 0;
@@ -107,7 +107,7 @@ body {
     overflow-x: hidden;
 }
 
-/*  Video Background */
+/*  Video Background 
 .video-background {
     position: absolute;
     top: 0;
@@ -133,7 +133,7 @@ body {
     background: rgba(0, 0, 0, 0.6); 
 }
 
-/* 🔹 Navbar */
+/* 🔹 Navbar 
 .navbar {
     position: fixed;
     top: 0;
@@ -166,7 +166,7 @@ body {
 }
 
 .nav-link:hover {
-    color: #1db954; /* Spotify Green */
+    color: #1db954; /* Spotify Green 
 }
 
 .btn-primary {
@@ -183,7 +183,7 @@ body {
     background: #14833b;
 }
 
-/* 🔹 Main Content */
+/* 🔹 Main Content
 .content-wrapper {
     position: relative;
     display: flex;
@@ -203,7 +203,7 @@ body {
     letter-spacing: 2px;
 }
 
-/* 🔹 Responsive Design */
+/* 🔹 Responsive Design 
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -218,4 +218,80 @@ body {
     .h-display {
         font-size: 2rem;
     }
-}
+} */
+
+.container {
+    display: flex;
+    height: 100vh;
+    background-color: black;
+  }
+  
+  .left-panel {
+    width: 50%;
+   
+    display: inline-flex;
+    flex-wrap:wrap;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .category {
+    display: flex;
+   justify-content: space-evenly;
+   padding: 0.5em;
+   margin: 10px;
+   background-color: #222;
+  
+   border-radius: 20px;
+  
+   width: auto;
+  }
+  
+  #red,   #blue, #yellow,  #purple , #green ,#orange , #pink ,#white {
+   
+    font-size: 18px;
+  }
+
+  #red { color: red; }
+.blue { color: lightblue; }
+.yellow { color: yellow; }
+.purple { color: violet; }
+.green { color: lightgreen; }
+.white { color: white; }
+.orange { color: orange; }
+.pink { color: pink; }
+  
+  .right-panel {
+    width: 50%;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+  }
+  
+  h1 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  p {
+    font-size: 18px;
+  }
+  
+  .buttons {
+    margin-top: 20px;
+  }
+  
+  .btn {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  

@@ -1,9 +1,11 @@
 import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
+
 import LandingPage from "./pages/LandingPage";
+import OngoingDrives from "./pages/OngoingDrives";
+import UpcomingDrives from "./pages/UpcomingDrives";
 
 function App() {
-    return <Dashboard />;
+    return <UpcomingDrives />;
 }
 
 export default App;

@@ -1,0 +1,283 @@
+/* Dark theme color variables */
+:root {
+    --dark-bg: #F5EFE7	;
+    --dark-card-bg: #213555;
+    --dark-hover: #2d2d2d;
+    --dark-border: #333333;
+    --dark-text-primary: #ffffff;
+    --dark-text-secondary: #b3b3b3;
+    --dark-accent: #0c0c0d;
+    --dark-star: #ffc107;
+    --dark-tag-bg: #2d2d2d;
+  }
+  
+  body {
+    background-color: var(--dark-bg);
+    color: var(--dark-text-primary);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .company-listing {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 24px;
+    font-weight: bold;
+  }
+  
+  /* Categories section */
+  .categories-container {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  
+  .categories {
+    display: flex;
+    gap: 16px;
+    min-width: max-content;
+  }
+  
+  .category-card {
+    background-color: var(--dark-card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    min-width: 180px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .category-card:hover {
+    background-color: var(--dark-hover);
+  }
+  
+  .category-card h2 {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+  }
+  
+  .company-count {
+    color: var(--dark-accent);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .arrow {
+    font-size: 16px;
+  }
+  
+  /* Listing container */
+  .listing-container {
+    display: flex;
+    gap: 24px;
+  }
+  
+  /* Filters section */
+  .filters-section {
+    min-width: 250px;
+    background-color: var(--dark-card-bg);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  
+  .filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--dark-border);
+  }
+  
+  .filters-header h2 {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .applied-filters {
+    color: var(--dark-accent);
+    font-size: 14px;
+  }
+  
+  .company-type-filter {
+    margin-bottom: 16px;
+  }
+  
+  .filter-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .filter-title h3 {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .arrow-icon {
+    font-size: 12px;
+    transition: transform 0.3s;
+  }
+  
+  .arrow-icon.expanded {
+    transform: rotate(180deg);
+  }
+  
+  .filter-options {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .filter-options.show {
+    display: flex;
+  }
+  
+  .filter-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .filter-option input[type="checkbox"] {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--dark-accent);
+  }
+  
+  .checkbox-label {
+    margin-right: 4px;
+  }
+  
+  .count {
+    color: var(--dark-text-secondary);
+  }
+  
+  /* Results section */
+  .results-section {
+    flex: 1;
+  }
+  
+  .results-count {
+    font-size: 14px;
+    color: var(--dark-text-secondary);
+    margin-bottom: 16px;
+  }
+  
+  .company-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .company-card {
+    background-color: var(--dark-card-bg);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .company-card:hover {
+    background-color: var(--dark-hover);
+  }
+  
+  .company-info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .company-logo {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-bg);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .company-logo img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  .company-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .company-name {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .company-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .star {
+    color: var(--dark-star);
+  }
+  
+  .rating-value {
+    font-weight: bold;
+  }
+  
+  .reviews-count {
+    color: var(--dark-text-secondary);
+    font-size: 14px;
+  }
+  
+  .company-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  
+  .company-tag {
+    background-color: var(--dark-tag-bg);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--dark-text-secondary);
+  }
+  
+  .view-details {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--dark-text-secondary);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .listing-container {
+      flex-direction: column;
+    }
+    
+    .filters-section {
+      min-width: auto;
+    }
+  }
