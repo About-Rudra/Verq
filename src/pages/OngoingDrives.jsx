@@ -17,7 +17,7 @@ function TechDirectory() {
     'Development tools',
     'End user applications' ,
     'Cloud',
-    'Operating systems',
+    
     'Devopps',
     'Cyber Security',
     'SDE',
