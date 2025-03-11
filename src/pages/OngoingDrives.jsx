@@ -15,7 +15,7 @@ function TechDirectory() {
     'Artificial Intelligence',
     'Data Science',
     'Development tools',
-    'End user applications',
+    'End user applications' ,
     'Cloud',
     'Operating systems',
     'Devopps',
