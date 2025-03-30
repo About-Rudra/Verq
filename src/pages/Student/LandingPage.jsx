@@ -1,6 +1,6 @@
 import React from "react";
-import "../styles/LandingPage.css"; // Import CSS
-import bgImage from "../assets/bg.png"; // Import the image
+import "../../styles/Student/LandingPage.css";
+import bgImage from "../../assets/bg.png"; // Import the image
 
 const LandingPage = () => {
   return (

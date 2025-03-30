@@ -6,8 +6,6 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   transition: all 0.3s ease;
   max-width: 100%;
-  margin-left: 250px; /* Add margin equal to sidebar width */
-  width: calc(100% - 250px); /* Reduce width to accommodate sidebar */
 }
 
 .drives-container h1 {
@@ -44,8 +42,8 @@
   border: 1px solid rgba(0, 0, 0, 0.02);
   position: relative;
   overflow: hidden;
-  width: 100%;
-  height: auto;
+  width: auto; /* Changed from 100% to auto */
+  height: auto; /* Added to ensure proper sizing */
 }
 
 .grid-card::before {
@@ -63,7 +61,7 @@
 .grid-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  z-index: 1;
+  z-index: 1; /* Added to prevent hover effects from being cut off */
 }
 
 .grid-card:hover::before {
@@ -123,7 +121,7 @@
   text-align: center;
   display: block;
   text-decoration: none;
-  margin-top: 16px;
+  margin-top: 16px; /* Added to ensure consistent spacing */
 }
 
 .apply-button:hover {
@@ -172,11 +170,6 @@
   .grid-container {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  .drives-container {
-    margin-left: 0;
-    width: 100%;
-  }
 }
 
 @media (max-width: 768px) {
@@ -186,7 +179,6 @@
   
   .drives-container h1 {
     font-size: 32px;
-    margin-top: 30px; /* Add space for the hamburger menu */
   }
   
   .grid-container {

@@ -1,6 +1,5 @@
-// Auth.jsx
 import React, { useState } from 'react';
-import '../styles/Auth.css';
+import "../../styles/Student/Auth.css";
 
 const Auth = () => {
   // State to toggle between login and signup views

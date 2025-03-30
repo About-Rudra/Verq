@@ -1,17 +1,4 @@
 /* OngoingDrives.css */
-/* Layout Structure */
-.layout-container {
-  display: flex;
-  width: 100%;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  overflow-x: hidden;
-  margin-left: 0px;
-  padding: 0px;
-}
 
 .page-container {
   background-color: #f8fafc;
@@ -402,7 +389,6 @@
   background-color: white;
   color: #3b82f6;
   border: 1px solid #3b82f6;
-  
 }
 
 .details-button:hover {

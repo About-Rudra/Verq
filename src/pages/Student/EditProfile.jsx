@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/StudentRegistrationForm.css';
+import "../../styles/Student/EditProfile.css";
 
 const StudentRegistrationForm = () => {
   // State for managing the current step

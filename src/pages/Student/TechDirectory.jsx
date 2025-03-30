@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import '../styles/TechDirectory.css';
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../../components/Sidebar"; 
+import '../../styles/student/TechDirectory.css';
 
 function TechDirectory() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortOrder, setSortOrder] = useState('A-Z');
   const [viewMode, setViewMode] = useState('grid');
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState("Ongoing Drives");
   
   const categories = [
     'All',
@@ -67,10 +66,6 @@ function TechDirectory() {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
   
   // Filter companies based on active filter and search term
   const filteredCompanies = allCompanies.filter(company => {
@@ -97,7 +92,6 @@ function TechDirectory() {
   
   return (
     <div className="page-container">
-    <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
       <div className="tech-directory">
         <div className="header-section">
           <h1 className="header">Tech Directory</h1>
@@ -127,12 +121,12 @@ function TechDirectory() {
               value={searchTerm}
               onChange={handleSearchChange}
             />
-            {/* <button className="search-button">
+            <button className="search-button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
-            </button> */}
+            </button>
           </div>
           
           {/* Sort and view options */}

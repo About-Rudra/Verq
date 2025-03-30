@@ -1,15 +1,14 @@
-import Dashboard from "./pages/Dashboard";
-
-import LandingPage from "./pages/LandingPage";
-import OngoingDrives from "./pages/OngoingDrives";
-import UpcomingDrives from "./pages/UpcomingDrives";
-import Auth from "./pages/Auth";
-import TechDirectory from "./pages/TechDirectory";
-import EditProfile from "./pages/EditProfile";
+import Dashboard from "./pages/Student/Dashboard";
+import LandingPage from "./pages/Student/LandingPage";
+import OngoingDrives from "./pages/Student/OngoingDrives";
+import UpcomingDrives from "./pages/Student/UpcomingDrives";
+import Auth from "./pages/Student/Auth";
+import TechDirectory from "./pages/Student/TechDirectory";
+import EditProfile from "./pages/Student/EditProfile";
 
 
 function App() {
-    return <Auth/>;
+    return <Dashboard />;
 }
 
 export default App;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Sidebar from "../components/Sidebar"; 
-import "../styles/Dashboard.css";
+import Sidebar from "../../components/Sidebar"; 
+import "../../styles/student/Dashboard.css";
 
 // Tech Stack Card Component
 const TechStackCard = () => {
