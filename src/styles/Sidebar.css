@@ -11,7 +11,7 @@
   color: #334155;
   border-right: 1px solid rgba(0, 0, 0, 0.05);
   overflow-y: auto;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 10;
   transition: all 0.3s ease;

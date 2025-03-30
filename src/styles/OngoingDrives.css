@@ -9,6 +9,8 @@
 .main-content {
   flex: 1;
   overflow-x: hidden;
+  margin-left: 0px;
+  padding: 0px;
 }
 
 .page-container {
