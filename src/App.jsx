@@ -8,7 +8,7 @@ import EditProfile from "./pages/Student/EditProfile";
 
 
 function App() {
-    return <Dashboard />;
+    return <LandingPage />;
 }
 
 export default App;

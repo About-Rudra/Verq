@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../../styles/student/OngoingDrives.css';
-import Sidebar from "../../components/Sidebar"; 
 import { Container } from 'react-bootstrap';
 
 function OngoingDrives() {
