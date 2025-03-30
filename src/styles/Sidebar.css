@@ -1,19 +1,19 @@
-/* Sidebar.css - Improved Version */
-
+/* Sidebar.css - Final Verified Version */
 .sidebar {
   width: 250px;
-  height: 110vh;
+  height: 100vh;
   background: white;
-  border-radius: 16px;
   padding: 24px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   color: #334155;
-  border: 1px solid rgba(0, 0, 0, 0.02);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
   overflow-y: auto;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   transition: all 0.3s ease;
 }
 
@@ -38,25 +38,39 @@
 .search-container {
   position: relative;
   margin-bottom: 24px;
+  width: 85%; /* Reduced container width */
 }
 
 .search-bar {
-  width: 80%;
-  padding: 12px 16px;
-  padding-right: 36px;
-  border-radius: 10px;
+  width: 80%; /* Now relative to the container */
+  padding: 10px 16px 10px 36px; /* Slightly reduced padding */
+  border-radius: 8px; /* Smaller radius for tighter look */
   border: 1px solid #e2e8f0;
   background-color: #f8fafc;
-  outline: none;
-  color: #334155;
   font-size: 14px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03) inset;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .search-bar:focus {
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15),
+              inset 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.search-bar::placeholder {
+  color: #94a3b8;
+}
+
+/* Search Icon (Added for better UX) */
+.search-container::before {
+  content: "🔍";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #000000;
 }
 
 .clear-search {
@@ -66,14 +80,8 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #94a3b8;
+  color: #003e95;
   cursor: pointer;
-  font-size: 16px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: color 0.2s ease;
 }
 
@@ -86,6 +94,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  flex-grow: 1;
 }
 
 .menu li {
@@ -113,31 +122,51 @@
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
 }
 
+.icon {
+  margin-right: 12px;
+  font-size: 18px;
+  min-width: 24px;
+  transition: color 0.2s ease;
+}
+
 .menu li.active .icon {
   color: white;
 }
 
-.icon {
+/* Theme Toggle */
+.theme-toggle {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.theme-toggle button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle button:hover {
+  background: #f1f5f9;
+}
+
+.theme-toggle .icon {
   margin-right: 12px;
-  font-size: 18px;
-  color: #64748b;
-  transition: color 0.2s ease;
+  font-size: 16px;
 }
 
-.menu li:hover .icon {
-  color: #000000;
-}
-
-/* Dark theme support */
-.dark-theme .sidebar {
+/* Dark Mode */
+.dark-theme.sidebar {
   background-color: #1e293b;
-  border-color: rgba(255, 255, 255, 0.03);
-}
-
-.dark-theme .logo {
-  background: linear-gradient(90deg, #60a5fa, #3b82f6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  border-right-color: rgba(255, 255, 255, 0.05);
 }
 
 .dark-theme .search-bar {
@@ -146,46 +175,37 @@
   color: #f1f5f9;
 }
 
-.dark-theme .search-bar:focus {
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
-}
-
-.dark-theme .menu li {
-  color: #cbd5e1;
-}
-
 .dark-theme .menu li:hover {
   background: #334155;
   color: #f1f5f9;
 }
 
-.dark-theme .icon {
-  color: #94a3b8;
+.dark-theme .theme-toggle {
+  border-top-color: #334155;
 }
 
-.dark-theme .menu li:hover .icon {
-  color: #60a5fa;
+.dark-theme .theme-toggle button:hover {
+  background: #334155;
 }
 
-.dark-theme .menu li.active {
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
-}
-
-.dark-theme .clear-search {
-  color: #cbd5e1;
-}
-
-.dark-theme .clear-search:hover {
-  color: #f87171;
-}
-
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
     height: auto;
+    position: static;
     border-radius: 0;
     padding: 16px;
+  }
+
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .menu li {
+    margin-bottom: 0;
+    padding: 8px 12px;
   }
 }

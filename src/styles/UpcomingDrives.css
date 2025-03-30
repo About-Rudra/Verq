@@ -1,250 +1,208 @@
-/* Main Container */
-.job-listings-container {
-    background-color: #f5eeee;
-    padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    color: #333;
-    background-image: url('grid-pattern.png');
-    background-repeat: repeat;
-  }
-  
-  /* Grid Layout */
-  .jobs-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  /* Job Card */
-  .job-card {
-    background-color: #525556;
-    border-radius: 4px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 300px;
-    position: relative;
-    border-bottom: 1px solid #e0e0e0;
-    border-right: 1px solid #faf7f7;
-    transition: transform 0.2s ease;
-  }
-  
-  .job-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  }
-  
-  /* Job Header */
-  .job-header {
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .company-logo {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .company-logo img {
-    max-width: 100%;
-    max-height: 100%;
-  }
-  
-  .company-name {
-    font-weight: 600;
-    font-size: 16px;
-    color: #f1eeee;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .remote-tag {
-    font-size: 10px;
-    background-color: #333;
-    padding: 2px 6px;
-    border-radius: 4px;
-    color: #f1eeee;
-    font-weight: 500;
-  }
-  
-  /* Job Content */
-  .job-position {
-    padding: 0 16px;
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #f1eeee;
-  }
-  
-  .job-description {
-    padding: 0 16px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #f1eeee;
-    margin-bottom: 24px;
-    overflow: hidden;
-    display: -webkit-box;
-    
-    -webkit-box-orient: vertical;
-    flex-grow: 1;
-  }
-  
-  /* Job Footer */
-  .job-footer {
-    padding: 12px 16px 16px;
-    border-top: 1px solid #eee;
-    margin-top: auto;
-  }
-  
-  .job-detail {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 13px;
-  }
-  
-  .detail-label {
-    font-weight: 500;
-    color: #f1eeee;
-  }
-  
-  .detail-value {
-    color: #f1eeee;
-    text-align: right;
-    font-weight: 400;
-  }
-  
-  .job-posted {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-    font-size: 13px;
-    color: #f1eeee;
-  }
-  
-  .days-ago {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .clock-icon {
-    font-size: 16px;
-  }
-  
-  .arrow-icon {
-    font-size: 18px;
-    font-weight: 300;
-  }
-  
-  /* Responsiveness */
-  @media (max-width: 1100px) {
-    .jobs-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
-  @media (max-width: 900px) {
-    .jobs-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .jobs-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .job-card {
-      min-height: auto;
-    }
-  }
+/* UpcomingDrives.css - Styled to match Dashboard */
 
-  /* General Styles */
-.upcoming-drives-container {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
+.drives-container {
+  padding: 28px 32px;
+  background-color: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  transition: all 0.3s ease;
+  max-width: 100%;
+  margin-left: 250px; /* Add margin equal to sidebar width */
+  width: calc(100% - 250px); /* Reduce width to accommodate sidebar */
+}
+
+.drives-container h1 {
+  font-size: 42px;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 32px;
+  margin-top: 0;
+  font-weight: 700;
+  background: linear-gradient(90deg, #1e293b, #334155);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.grid-card {
+  background: white;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  color: #334155;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+}
+
+.grid-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.grid-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  z-index: 1;
+}
+
+.grid-card:hover::before {
+  opacity: 1;
+}
+
+.grid-card h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #1e293b;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.grid-card h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 3px;
+}
+
+.grid-card h5 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.grid-card p {
+  font-size: 15px;
+  color: #64748b;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.apply-button {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  width: 200px;
+  margin: auto auto 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  margin-top: 16px;
+}
+
+.apply-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Dark mode adjustments */
+.dark-theme .drives-container {
+  background-color: #0f172a;
+}
+
+.dark-theme .grid-card {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.03);
+}
+
+.dark-theme .grid-card h3 {
+  color: #f1f5f9;
+}
+
+.dark-theme .grid-card h5,
+.dark-theme .grid-card p {
+  color: #cbd5e1;
+}
+
+.dark-theme .grid-card h3::after {
+  background: linear-gradient(90deg, #60a5fa, #3b82f6);
+}
+
+.dark-theme h1 {
+  background: linear-gradient(90deg, #f1f5f9, #e2e8f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
   }
   
-  /* Menu Button */
-  .menu-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    font-size: 24px;
-    background: #333;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-  }
-  
-  .menu-button:hover {
-    background: #555;
-  }
-  
-  /* Menu Overlay */
-  .menu-overlay {
-    position: fixed;
-    top: 0;
-    left: -25%; /* Start off-screen */
-    width: 25%;
-    height: 100%;
-    background: #222;
-    transition: left 0.3s ease;
-    z-index: 999;
-  }
-  
-  .menu-overlay.open {
-    left: 0; /* Slide in */
-  }
-  
-  /* Menu Content */
-  .menu-content {
-    padding: 20px;
-    color: white;
-  }
-  
-  .menu-content ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .menu-content li {
-    margin: 15px 0;
-  }
-  
-  .menu-content a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-  }
-  
-  .menu-content a:hover {
-    color: #ddd;
-  }
-  
-  /* Job Listings */
-  .job-listings-container {
-    padding: 20px;
+  .drives-container {
     margin-left: 0;
-    transition: margin-left 0.3s ease;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .drives-container {
+    padding: 20px;
   }
   
-  .job-listings-container.shifted {
-    margin-left: 25%; /* Push content to the right */
+  .drives-container h1 {
+    font-size: 32px;
+    margin-top: 30px; /* Add space for the hamburger menu */
   }
   
-  /* Rest of your existing styles for job cards */
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid-card {
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .grid-card h3 {
+    font-size: 20px;
+  }
+  
+  .apply-button {
+    width: 100%;
+  }
+}

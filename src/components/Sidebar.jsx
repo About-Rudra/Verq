@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from 'react';
 import { 
   FaHome, 
   FaCheckCircle, 
@@ -7,55 +7,44 @@ import {
   FaRoad, 
   FaBuilding, 
   FaFileAlt,
-  FaSearch,
   FaMoon,
   FaSun
-} from "react-icons/fa";
-import "../styles/Sidebar.css";
-
-// Theme context (you would implement this)
-const ThemeContext = React.createContext({
-  darkMode: false,
-  toggleTheme: () => {}
-});
+} from 'react-icons/fa';
+import '../styles/Sidebar.css';
 
 const Sidebar = ({ activeTab, onTabChange }) => {
-  // Use the activeTab prop from Dashboard if available, otherwise use local state
-  const [localActiveTab, setLocalActiveTab] = useState("Dashboard");
-  const currentActiveTab = activeTab || localActiveTab;
-  
-  const [searchValue, setSearchValue] = useState("");
-  const { darkMode, toggleTheme } = useContext(ThemeContext);
+  const [searchValue, setSearchValue] = useState('');
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleSearchClear = () => {
-    setSearchValue("");
+  const clearSearch = () => {
+    setSearchValue('');
   };
-  
-  // Handle tab click
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle('dark-theme');
+  };
+
   const handleTabClick = (tab) => {
-    if (onTabChange) {
-      // If parent component provided a handler, use it
-      onTabChange(tab);
-    } else {
-      // Otherwise use local state
-      setLocalActiveTab(tab);
-    }
+    if (onTabChange) onTabChange(tab);
   };
 
   return (
     <div className={`sidebar ${darkMode ? 'dark-theme' : ''}`}>
+      {/* Logo Header */}
       <div className="sidebar-header">
         <h2 className="logo">VerQ</h2>
       </div>
 
+      {/* Search Bar */}
       <div className="search-container">
-        <input 
-          type="text" 
-          className="search-bar" 
+        <input
+          type="text"
+          className="search-bar"
           placeholder="Search..."
           value={searchValue}
           onChange={handleSearchChange}
@@ -63,7 +52,7 @@ const Sidebar = ({ activeTab, onTabChange }) => {
         {searchValue && (
           <button 
             className="clear-search" 
-            onClick={handleSearchClear}
+            onClick={clearSearch}
             aria-label="Clear search"
           >
             ×
@@ -71,50 +60,59 @@ const Sidebar = ({ activeTab, onTabChange }) => {
         )}
       </div>
 
+      {/* Navigation Menu */}
       <ul className="menu">
         <li
-          className={currentActiveTab === "Dashboard" ? "active" : ""}
+          className={activeTab === "Dashboard" ? "active" : ""}
           onClick={() => handleTabClick("Dashboard")}
         >
           <FaHome className="icon" /> Dashboard
         </li>
         <li
-          className={currentActiveTab === "Completed Drives" ? "active" : ""}
+          className={activeTab === "Completed Drives" ? "active" : ""}
           onClick={() => handleTabClick("Completed Drives")}
         >
           <FaCheckCircle className="icon" /> Completed Drives
         </li>
         <li
-          className={currentActiveTab === "Ongoing Drives" ? "active" : ""}
+          className={activeTab === "Ongoing Drives" ? "active" : ""}
           onClick={() => handleTabClick("Ongoing Drives")}
         >
           <FaSpinner className="icon" /> Ongoing Drives
         </li>
         <li
-          className={currentActiveTab === "Upcoming Drives" ? "active" : ""}
+          className={activeTab === "Upcoming Drives" ? "active" : ""}
           onClick={() => handleTabClick("Upcoming Drives")}
         >
           <FaCalendarAlt className="icon" /> Upcoming Drives
         </li>
         <li
-          className={currentActiveTab === "Roadmap" ? "active" : ""}
+          className={activeTab === "Roadmap" ? "active" : ""}
           onClick={() => handleTabClick("Roadmap")}
         >
           <FaRoad className="icon" /> Roadmap
         </li>
         <li
-          className={currentActiveTab === "Companies" ? "active" : ""}
+          className={activeTab === "Companies" ? "active" : ""}
           onClick={() => handleTabClick("Companies")}
         >
           <FaBuilding className="icon" /> Companies
         </li>
         <li
-          className={currentActiveTab === "Docs" ? "active" : ""}
+          className={activeTab === "Docs" ? "active" : ""}
           onClick={() => handleTabClick("Docs")}
         >
           <FaFileAlt className="icon" /> Docs
         </li>
       </ul>
+
+      {/* Theme Toggle - Bottom Aligned */}
+      <div className="theme-toggle">
+        <button onClick={toggleTheme} aria-label="Toggle theme">
+          {darkMode ? <FaSun className="icon" /> : <FaMoon className="icon" />}
+          <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+        </button>
+      </div>
     </div>
   );
 };
