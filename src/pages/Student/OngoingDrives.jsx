@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import Sidebar from "../../components/Sidebar";
 import '../../styles/student/OngoingDrives.css';
 import { Container } from 'react-bootstrap';
 
 function OngoingDrives() {
+  const [activeTab, setActiveTab] = useState("Ongoing Drives");
+  const [breadcrumbs, setBreadcrumbs] = useState([activeTab]);
+  const [darkMode, setDarkMode] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortOrder, setSortOrder] = useState('Deadline');
   const [viewMode, setViewMode] = useState('grid');
@@ -90,6 +94,18 @@ function OngoingDrives() {
     setSearchTerm(event.target.value);
   };
 
+  // Handle tab change
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setBreadcrumbs([tab]);
+  };
+
+  // Toggle dark mode
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle('dark-theme');
+  };
+
   // Filter drives based on active filter and search term
   const filteredDrives = ongoingDrives.filter(drive => {
     const matchesFilter = activeFilter === 'All' || roleCategories[drive.role] === activeFilter;
@@ -114,166 +130,192 @@ function OngoingDrives() {
   });
 
   return (
-    <Container fluid className="page-container">
-      <div className="drives-container">
-        <div className="header-section">
-          <h1 className="drives-header">Ongoing Recruitment Drives</h1>
-          <p className="drives-subtitle">Explore opportunities from top companies hiring on campus</p>
-        </div>
-        
-        {/* Filter categories */}
-        <div className="filter-categories">
-          {categories.map(category => (
-            <button 
-              key={category}
-              className={`category-button ${activeFilter === category ? 'active' : ''}`}
-              onClick={() => handleFilterClick(category)}
-            >
-              {category}
+    <div className={`dashboard-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+      <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
+      
+      <div className="main-content">
+        <div className="header">
+          <div className="breadcrumbs">
+            {breadcrumbs.map((crumb, index) => (
+              <React.Fragment key={index}>
+                <span>{crumb}</span>
+                {index < breadcrumbs.length - 1 && <span>›</span>}
+              </React.Fragment>
+            ))}
+          </div>
+          <div className="actions">
+            <button className="btn-manage" onClick={toggleTheme} aria-label="Toggle Dark Mode">
+              {darkMode ? 'Light' : 'Dark'}
             </button>
-          ))}
-        </div>
-        
-        {/* Search bar and controls */}
-        <div className="search-container">
-          <div className="search-box">
-            <input 
-              type="text" 
-              placeholder="Search companies, roles or locations" 
-              className="search-input"
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <button className="search-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
+            <button className="btn-share" aria-label="Notifications">
+              Notifications
+            </button>
+            <button className="btn-more" aria-label="Profile">
+              Settings
             </button>
           </div>
+        </div>
+
+        <div className="drives-container">
+          <div className="header-section">
+            <h1 className="drives-header">Ongoing Recruitment Drives</h1>
+            <p className="drives-subtitle">Explore opportunities from top companies hiring on campus</p>
+          </div>
           
-          {/* Sort and view options */}
-          <div className="sort-view-options">
-            <div className="sort-options">
-              <span className="sort-label">Sort by</span>
+          {/* Filter categories */}
+          <div className="filter-categories">
+            {categories.map(category => (
               <button 
-                className={`sort-button ${sortOrder === 'Deadline' ? 'active' : ''}`}
-                onClick={() => handleSortChange('Deadline')}
+                key={category}
+                className={`category-button ${activeFilter === category ? 'active' : ''}`}
+                onClick={() => handleFilterClick(category)}
               >
-                Deadline
+                {category}
               </button>
-              <button 
-                className={`sort-button ${sortOrder === 'Company A-Z' ? 'active' : ''}`}
-                onClick={() => handleSortChange('Company A-Z')}
-              >
-                A-Z
-              </button>
-              <button 
-                className={`sort-button ${sortOrder === 'Company Z-A' ? 'active' : ''}`}
-                onClick={() => handleSortChange('Company Z-A')}
-              >
-                Z-A
+            ))}
+          </div>
+          
+          {/* Search bar and controls */}
+          <div className="search-container">
+            <div className="search-box">
+              <input 
+                type="text" 
+                placeholder="Search companies, roles or locations" 
+                className="search-input"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <button className="search-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
               </button>
             </div>
             
-            <div className="view-options">
-              <button 
-                className={`view-button ${viewMode === 'grid' ? 'active' : ''}`}
-                onClick={() => handleViewChange('grid')}
-                aria-label="Grid view"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="3" width="7" height="7"></rect>
-                  <rect x="3" y="14" width="7" height="7"></rect>
-                  <rect x="14" y="14" width="7" height="7"></rect>
-                </svg>
-              </button>
-              <button 
-                className={`view-button ${viewMode === 'list' ? 'active' : ''}`}
-                onClick={() => handleViewChange('list')}
-                aria-label="List view"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-              </button>
+            {/* Sort and view options */}
+            <div className="sort-view-options">
+              <div className="sort-options">
+                <span className="sort-label">Sort by</span>
+                <button 
+                  className={`sort-button ${sortOrder === 'Deadline' ? 'active' : ''}`}
+                  onClick={() => handleSortChange('Deadline')}
+                >
+                  Deadline
+                </button>
+                <button 
+                  className={`sort-button ${sortOrder === 'Company A-Z' ? 'active' : ''}`}
+                  onClick={() => handleSortChange('Company A-Z')}
+                >
+                  A-Z
+                </button>
+                <button 
+                  className={`sort-button ${sortOrder === 'Company Z-A' ? 'active' : ''}`}
+                  onClick={() => handleSortChange('Company Z-A')}
+                >
+                  Z-A
+                </button>
+              </div>
+              
+              <div className="view-options">
+                <button 
+                  className={`view-button ${viewMode === 'grid' ? 'active' : ''}`}
+                  onClick={() => handleViewChange('grid')}
+                  aria-label="Grid view"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                  </svg>
+                </button>
+                <button 
+                  className={`view-button ${viewMode === 'list' ? 'active' : ''}`}
+                  onClick={() => handleViewChange('list')}
+                  aria-label="List view"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        
-        {/* Results summary */}
-        <div className="results-summary">
-          Showing {sortedDrives.length} of {ongoingDrives.length} drives
-          {activeFilter !== 'All' && ` in ${activeFilter}`}
-          {searchTerm && ` matching "${searchTerm}"`}
-        </div>
-        
-        {/* Drives display */}
-        <div className={`drives-display ${viewMode}`}>
-          {sortedDrives.length > 0 ? (
-            sortedDrives.map(drive => (
-              <div key={drive.id} className="drive-card">
-                <div className="drive-header">
-                  <div className="company-logo">
-                    <img src={drive.logo} alt={`${drive.company} logo`} />
-                  </div>
-                  <div className="deadline-info">
-                    {getStatusBadge(drive.deadline)}
-                    <div className="days-remaining">
-                      {getDaysRemaining(drive.deadline)} days left
+          
+          {/* Results summary */}
+          <div className="results-summary">
+            Showing {sortedDrives.length} of {ongoingDrives.length} drives
+            {activeFilter !== 'All' && ` in ${activeFilter}`}
+            {searchTerm && ` matching "${searchTerm}"`}
+          </div>
+          
+          {/* Drives display */}
+          <div className={`drives-display ${viewMode}`}>
+            {sortedDrives.length > 0 ? (
+              sortedDrives.map(drive => (
+                <div key={drive.id} className="drive-card">
+                  <div className="drive-header">
+                    <div className="company-logo">
+                      <img src={drive.logo} alt={`${drive.company} logo`} />
+                    </div>
+                    <div className="deadline-info">
+                      {getStatusBadge(drive.deadline)}
+                      <div className="days-remaining">
+                        {getDaysRemaining(drive.deadline)} days left
+                      </div>
                     </div>
                   </div>
-                </div>
-                
-                <div className="drive-content">
-                  <h3 className="company-name">{drive.company}</h3>
-                  <div className="role-badge">{drive.role}</div>
-                  <div className="drive-details">
-                    <div className="location-info">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                      </svg>
-                      <span>{drive.location}</span>
-                    </div>
-                    <div className="deadline-detail">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                      </svg>
-                      <span>Apply by {drive.deadline}</span>
+                  
+                  <div className="drive-content">
+                    <h3 className="company-name">{drive.company}</h3>
+                    <div className="role-badge">{drive.role}</div>
+                    <div className="drive-details">
+                      <div className="location-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span>{drive.location}</span>
+                      </div>
+                      <div className="deadline-detail">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Apply by {drive.deadline}</span>
+                      </div>
                     </div>
                   </div>
+                  
+                  <div className="drive-actions">
+                    <a href={drive.applyLink} target="_blank" rel="noopener noreferrer" className="apply-button">
+                      Apply Now
+                    </a>
+                    <a href={`/drive-details/${drive.id}`} className="details-button">
+                      View Details
+                    </a>
+                  </div>
                 </div>
-                
-                <div className="drive-actions">
-                  <a href={drive.applyLink} target="_blank" rel="noopener noreferrer" className="apply-button">
-                    Apply Now
-                  </a>
-                  <a href={`/drive-details/${drive.id}`} className="details-button">
-                    View Details
-                  </a>
-                </div>
+              ))
+            ) : (
+              <div className="no-results">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                </svg>
+                <p>No drives match your search criteria</p>
+                <button onClick={() => {setActiveFilter('All'); setSearchTerm('')}} className="reset-button">
+                  Reset Filters
+                </button>
               </div>
-            ))
-          ) : (
-            <div className="no-results">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
-              </svg>
-              <p>No drives match your search criteria</p>
-              <button onClick={() => {setActiveFilter('All'); setSearchTerm('')}} className="reset-button">
-                Reset Filters
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </Container>
+    </div>
   );
 }
 

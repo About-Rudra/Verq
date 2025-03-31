@@ -5,10 +5,10 @@ import UpcomingDrives from "./pages/Student/UpcomingDrives";
 import Auth from "./pages/Student/Auth";
 import TechDirectory from "./pages/Student/TechDirectory";
 import EditProfile from "./pages/Student/EditProfile";
-
+import Form from "./pages/Student/Form";
 
 function App() {
-    return <LandingPage />;
+    return <Form />;
 }
 
 export default App;
