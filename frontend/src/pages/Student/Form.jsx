@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/student/Form.css';
+
+
 const Form = () => {
   const [activeSection, setActiveSection] = useState('personal');
   const [formData, setFormData] = useState({
