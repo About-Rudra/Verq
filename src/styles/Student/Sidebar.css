@@ -1,191 +1,306 @@
-/* Sidebar.css - Improved Version */
-
-.sidebar {
-  width: 250px;
-  height: 110vh;
-  background: white;
-  border-radius: 16px;
+/* Prody Sidebar Styles */
+.prody-sidebar {
+  width: 280px;
+  height: 100vh;
+  background: #ffffff;
   padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  color: #334155;
-  border: 1px solid rgba(0, 0, 0, 0.02);
-  overflow-y: auto;
-  transition: all 0.3s ease;
+  border-right: 1px solid #f0f0f0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-y: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Header */
 .sidebar-header {
-  display: flex;
-  align-items: center;
-  height: 60px;
   margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
-  font-size: 26px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.5px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  transition: color 0.3s ease;
 }
 
-/* Search Bar */
-.search-container {
-  position: relative;
-  margin-bottom: 24px;
-}
-
-.search-bar {
-  width: 80%;
-  padding: 12px 16px;
-  padding-right: 36px;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background-color: #f8fafc;
-  outline: none;
-  color: #334155;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03) inset;
-}
-
-.search-bar:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-}
-
-.clear-search {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  background: transparent;
   border: none;
-  color: #94a3b8;
+  color: #6b7280;
   cursor: pointer;
-  font-size: 16px;
-  width: 20px;
-  height: 20px;
+  padding: 8px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.clear-search:hover {
-  color: #ef4444;
+.theme-toggle-btn:hover {
+  background-color: #f3f4f6;
+  color: #4b5563;
 }
 
-/* Menu */
-.menu {
+.theme-icon {
+  font-size: 18px;
+}
+
+.search-container {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: all 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.main-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.menu li {
+.main-menu li {
+  margin-bottom: 4px;
+}
+
+.main-menu a {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  border-radius: 10px;
+  padding: 10px 12px;
+  color: #4b5563;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
   font-weight: 500;
-  font-size: 15px;
-  color: #64748b;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-.menu li:hover {
-  background: #f1f5f9;
-  color: #334155;
-  transform: translateX(3px);
+.main-menu a:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
 }
 
-.menu li.active {
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
+.main-menu a.active {
+  background-color: #6366f1;
   color: white;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
 }
 
-.menu li.active .icon {
+.main-menu a.active .icon {
   color: white;
 }
 
 .icon {
   margin-right: 12px;
-  font-size: 18px;
-  color: #64748b;
-  transition: color 0.2s ease;
+  font-size: 16px;
+  color: #6b7280;
+  transition: color 0.3s ease;
 }
 
-.menu li:hover .icon {
-  color: #000000;
+.divider {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 24px 0;
+  transition: background-color 0.3s ease;
 }
 
-/* Dark theme support */
-.dark-theme .sidebar {
-  background-color: #1e293b;
-  border-color: rgba(255, 255, 255, 0.03);
+.help-section {
+  margin-bottom: 24px;
 }
 
-.dark-theme .logo {
-  background: linear-gradient(90deg, #60a5fa, #3b82f6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.help-title {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 16px;
+  transition: color 0.3s ease;
 }
 
-.dark-theme .search-bar {
-  background-color: #334155;
-  border-color: #475569;
-  color: #f1f5f9;
+.notification-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #4b5563;
+  position: relative;
+  margin-bottom: 16px;
+  transition: color 0.3s ease;
 }
 
-.dark-theme .search-bar:focus {
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+.notification-badge {
+  position: absolute;
+  right: 12px;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
 }
 
-.dark-theme .menu li {
-  color: #cbd5e1;
+.project-status {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+  transition: background-color 0.3s ease;
 }
 
-.dark-theme .menu li:hover {
-  background: #334155;
-  color: #f1f5f9;
+.project-status h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #1f2937;
+  transition: color 0.3s ease;
 }
 
-.dark-theme .icon {
-  color: #94a3b8;
+.project-status p {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  transition: color 0.3s ease;
 }
 
-.dark-theme .menu li:hover .icon {
-  color: #60a5fa;
+.progress-text {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+  transition: color 0.3s ease;
 }
 
-.dark-theme .menu li.active {
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
+.progress-bar {
+  height: 6px;
+  background-color: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
 }
 
-.dark-theme .clear-search {
-  color: #cbd5e1;
+.progress-fill {
+  height: 100%;
+  background-color: #6366f1;
+  border-radius: 3px;
 }
 
-.dark-theme .clear-search:hover {
-  color: #f87171;
+.upgrade-section {
+  margin-top: auto;
+  padding-top: 16px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    border-radius: 0;
-    padding: 16px;
-  }
+.upgrade-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.upgrade-button:hover {
+  background-color: #4f46e5;
+}
+
+/* Dark Mode Support */
+.dark-mode .prody-sidebar {
+  background-color: #1f2937;
+  border-right-color: #374151;
+}
+
+.dark-mode .logo {
+  color: #f9fafb;
+}
+
+.dark-mode .theme-toggle-btn {
+  color: #e5e7eb;
+}
+
+.dark-mode .theme-toggle-btn:hover {
+  background-color: #374151;
+  color: #f9fafb;
+}
+
+.dark-mode .search-input {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+.dark-mode .search-input:focus {
+  background-color: #1f2937;
+  border-color: #818cf8;
+  box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.1);
+}
+
+.dark-mode .main-menu a {
+  color: #d1d5db;
+}
+
+.dark-mode .main-menu a:hover {
+  background-color: #374151;
+  color: #f9fafb;
+}
+
+.dark-mode .main-menu a.active {
+  background-color: #6366f1;
+}
+
+.dark-mode .icon {
+  color: #9ca3af;
+}
+
+.dark-mode .divider {
+  background-color: #374151;
+}
+
+.dark-mode .help-title {
+  color: #9ca3af;
+}
+
+.dark-mode .notification-item {
+  color: #d1d5db;
+}
+
+.dark-mode .project-status {
+  background-color: #374151;
+}
+
+.dark-mode .project-status h4 {
+  color: #f9fafb;
+}
+
+.dark-mode .project-status p,
+.dark-mode .progress-text {
+  color: #9ca3af;
+}
+
+.dark-mode .progress-bar {
+  background-color: #4b5563;
 }

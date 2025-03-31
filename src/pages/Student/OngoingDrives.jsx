@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Sidebar from "../../components/Sidebar";
-import '../../styles/student/OngoingDrives.css';
 import { Container } from 'react-bootstrap';
+import '../../styles/student/OngoingDrives.css';
 
 function OngoingDrives() {
   const [activeTab, setActiveTab] = useState("Ongoing Drives");
@@ -131,8 +130,6 @@ function OngoingDrives() {
 
   return (
     <div className={`dashboard-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
-      
       <div className="main-content">
         <div className="header">
           <div className="breadcrumbs">

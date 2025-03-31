@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Sidebar from "../../components/Sidebar"; 
-import "../../styles/student/Dashboard.css";
+import '../../styles/student/Dashboard.css';
 
 // Tech Stack Card Component
 const TechStackCard = () => {
@@ -221,7 +220,6 @@ const Dashboard = () => {
 
   return (
     <div className={`dashboard-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
       
       <div className="main-content">
         <div className="header">

@@ -1,7 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import Sidebar from "../../components/Sidebar"; 
-import "../../styles/Student/UpcomingDrives.css";
+import "../../styles/student/UpcomingDrives.css";
 
 const upcomingDrives = [
   { 

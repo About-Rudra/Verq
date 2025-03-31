@@ -1,120 +1,107 @@
 import React, { useState, useContext } from "react";
 import { 
   FaHome, 
-  FaCheckCircle, 
-  FaSpinner, 
-  FaCalendarAlt, 
-  FaRoad, 
-  FaBuilding, 
+  FaProjectDiagram, 
+  FaChartLine, 
   FaFileAlt,
-  FaSearch,
-  FaMoon,
-  FaSun
+  FaPuzzlePiece,
+  FaBuilding,
+  FaUsers,
+  FaQuestionCircle,
+  FaBell,
+  FaChevronDown
 } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
 import "../styles/student/Sidebar.css";
 
-// Theme context (you would implement this)
-const ThemeContext = React.createContext({
-  darkMode: false,
-  toggleTheme: () => {}
-});
-
-const Sidebar = ({ activeTab, onTabChange }) => {
-  // Use the activeTab prop from Dashboard if available, otherwise use local state
-  const [localActiveTab, setLocalActiveTab] = useState("Dashboard");
-  const currentActiveTab = activeTab || localActiveTab;
-  
+const Sidebar = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { darkMode, toggleTheme } = useContext(ThemeContext);
-
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
-  };
-
-  const handleSearchClear = () => {
-    setSearchValue("");
-  };
-  
-  // Handle tab click
-  const handleTabClick = (tab) => {
-    if (onTabChange) {
-      // If parent component provided a handler, use it
-      onTabChange(tab);
-    } else {
-      // Otherwise use local state
-      setLocalActiveTab(tab);
-    }
-  };
+  const { darkMode } = useContext(ThemeContext);
 
   return (
-    <div className={`sidebar ${darkMode ? 'dark-theme' : ''}`}>
+    <div className="prody-sidebar">
       <div className="sidebar-header">
-        <h2 className="logo">VerQ</h2>
+        <h2 className="logo">Prody</h2>
       </div>
 
       <div className="search-container">
         <input 
           type="text" 
-          className="search-bar" 
+          className="search-input" 
           placeholder="Search..."
           value={searchValue}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
-        {searchValue && (
-          <button 
-            className="clear-search" 
-            onClick={handleSearchClear}
-            aria-label="Clear search"
-          >
-            ×
-          </button>
-        )}
       </div>
 
-      <ul className="menu">
-        <li
-          className={currentActiveTab === "Dashboard" ? "active" : ""}
-          onClick={() => handleTabClick("Dashboard")}
-        >
-          <FaHome className="icon" /> Dashboard
-        </li>
-        <li
-          className={currentActiveTab === "Completed Drives" ? "active" : ""}
-          onClick={() => handleTabClick("Completed Drives")}
-        >
-          <FaCheckCircle className="icon" /> Completed Drives
-        </li>
-        <li
-          className={currentActiveTab === "Ongoing Drives" ? "active" : ""}
-          onClick={() => handleTabClick("Ongoing Drives")}
-        >
-          <FaSpinner className="icon" /> Ongoing Drives
-        </li>
-        <li
-          className={currentActiveTab === "Upcoming Drives" ? "active" : ""}
-          onClick={() => handleTabClick("Upcoming Drives")}
-        >
-          <FaCalendarAlt className="icon" /> Upcoming Drives
-        </li>
-        <li
-          className={currentActiveTab === "Roadmap" ? "active" : ""}
-          onClick={() => handleTabClick("Roadmap")}
-        >
-          <FaRoad className="icon" /> Roadmap
-        </li>
-        <li
-          className={currentActiveTab === "Companies" ? "active" : ""}
-          onClick={() => handleTabClick("Companies")}
-        >
-          <FaBuilding className="icon" /> Companies
-        </li>
-        <li
-          className={currentActiveTab === "Docs" ? "active" : ""}
-          onClick={() => handleTabClick("Docs")}
-        >
-          <FaFileAlt className="icon" /> Docs
-        </li>
-      </ul>
+      <nav className="main-menu">
+        <ul>
+          <li>
+            <NavLink to="/Dashboard" end className={({ isActive }) => isActive ? "active" : ""}>
+              <FaHome className="icon" /> Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/ongoing-drives" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaProjectDiagram className="icon" /> OngoingDrives
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/upcoming-drives" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaChartLine className="icon" /> Upcoming Drives
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/tech-directory" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaFileAlt className="icon" /> Tech Directory
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/extensions" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaPuzzlePiece className="icon" /> Extensions
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/companies" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaBuilding className="icon" /> Companies
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/people" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaUsers className="icon" /> People
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+
+      <div className="divider"></div>
+
+      <div className="help-section">
+        <h3 className="help-title">
+          <FaQuestionCircle className="icon" /> Help center
+        </h3>
+        
+        <div className="notification-item">
+          <FaBell className="icon" /> Notifications
+          <span className="notification-badge">3</span>
+        </div>
+        
+        <div className="project-status">
+          <h4>Ember Crest</h4>
+          <p>Starter set overview</p>
+          <div className="progress-text">3 of 5 projects created</div>
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: '60%' }}></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="upgrade-section">
+        <button className="upgrade-button">
+          Get full access
+        </button>
+      </div>
     </div>
   );
 };
