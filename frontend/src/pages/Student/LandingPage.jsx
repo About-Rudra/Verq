@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/Student/LandingPage.css";
-import bgImage from "../../assets/bg.png"; // Import the image
+import bgImage from "../../assets/bg.png"; // Adjust the path as necessary
 
 const LandingPage = () => {
   return (

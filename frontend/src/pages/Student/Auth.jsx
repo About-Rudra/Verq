@@ -1,6 +1,6 @@
 // Auth.jsx
 import React, { useState } from 'react';
-import '../styles/Auth.css';
+import '../../styles/student/Auth.css';
 import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {

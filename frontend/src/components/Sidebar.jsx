@@ -1,16 +1,17 @@
 import React, { useState, useContext } from "react";
-import { 
-  FaHome, 
-  FaCheckCircle, 
-  FaSpinner, 
-  FaCalendarAlt, 
-  FaRoad, 
-  FaBuilding, 
-  FaFileAlt,
-  FaSearch,
-  FaMoon,
-  FaSun
-} from "react-icons/fa";
+// import { 
+//   FaHome, 
+//   FaCheckCircle, 
+//   FaSpinner, 
+//   FaCalendarAlt, 
+//   FaRoad, 
+//   FaBuilding, 
+//   FaFileAlt,
+//   FaSearch,
+//   FaMoon,
+//   FaSun
+// } from "react-icons/fa";
+import 'fa-icons';
 import "../styles/student/Sidebar.css";
 
 // Theme context (you would implement this)
