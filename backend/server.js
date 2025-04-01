@@ -14,12 +14,15 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json()); // Use only express.json() 
+app.use(cookieParser()); // Use cookie-parser to parse cookies
 
 // Routes
 
 const authRoutes = require("./routes/authRoutes"); 
+const volunteerRoutes = require("./routes/volunteerRoute");
 
 app.use("/api/auth", authRoutes);
+app.use("/api/volunteer-details", volunteerRoutes);
 
 // Error Middleware
 app.use(errorHandler);
