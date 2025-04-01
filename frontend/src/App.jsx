@@ -8,7 +8,7 @@ import EditProfile from "./pages/Student/EditProfile";
 import Form from "./pages/Student/Form";
 
 function App() {
-    return <Auth />;
+    return <Form />;
 }
 
 export default App;
