@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 import '../../styles/Student/Form.css';
 
 const Form = () => {
   const [activeSection, setActiveSection] = useState('personal');
+  const { darkMode } = useContext(ThemeContext);
   const [formData, setFormData] = useState({
     personal: {
       firstName: '',
@@ -137,7 +139,7 @@ const Form = () => {
   ];
 
   return (
-    <div className="registration-container">
+    <div className={`registration-container ${darkMode ? 'dark-theme' : ''}`}>
       <h1>Student Registration Form</h1>
 
       <div className="form-navigation">
