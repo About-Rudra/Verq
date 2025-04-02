@@ -21,30 +21,17 @@
   padding: 2rem 0;
 }
 .header-section {
-  margin-bottom: 2.5rem;
+  margin: 0px;
 }
 .header {
   font-size: 2.25rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
   color: var(--text-primary);
   position: relative;
   display: inline-block;
 }
-.header::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 4px;
-  background: var(--primary-color);
-  border-radius: 2px;
-  transition: width 0.4s ease;
-}
-.header:hover::after {
-  width: 100px;
-}
+
 .subtitle {
   font-size: 1.1rem;
   color: var(--text-secondary);

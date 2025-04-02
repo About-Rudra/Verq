@@ -1,148 +1,124 @@
-import React, { useState } from 'react';
-import '../../styles/Student/Roadmaps.css';
+import React from "react";
+import "../../styles/Student/Roadmaps.css";
 
-const Roadmaps = () => {
-  const [activeTab, setActiveTab] = useState('dsa');
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+const RoadmapFeature = () => {
+  // Data for all roadmaps
+  const roleBasedRoadmaps = [
+    { name: "Frontend Developer", url: "https://roadmap.sh/frontend" },
+    { name: "Backend Developer", url: "https://roadmap.sh/backend" },
+    { name: "DevOps Engineer", url: "https://roadmap.sh/devops" },
+    { name: "Full Stack Developer", url: "https://roadmap.sh/full-stack" },
+    { name: "AI Engineer", url: "https://roadmap.sh/ai-engineer" },
+    { name: "Data Analyst", url: "https://roadmap.sh/data-analyst" },
+    { name: "AI and Data Scientist", url: "https://roadmap.sh/ai-data-scientist" },
+    { name: "Android Developer", url: "https://roadmap.sh/android" },
+    { name: "iOS Developer", url: "https://roadmap.sh/ios" },
+    { name: "PostgreSQL Developer", url: "https://roadmap.sh/postgresql" },
+    { name: "Blockchain Developer", url: "https://roadmap.sh/blockchain" },
+    { name: "QA Engineer", url: "https://roadmap.sh/qa" },
+    { name: "Software Architect", url: "https://roadmap.sh/software-architect" },
+    { name: "Cyber Security Specialist", url: "https://roadmap.sh/cyber-security" },
+    { name: "UX Designer", url: "https://roadmap.sh/ux" },
+    { name: "Game Developer", url: "https://roadmap.sh/game" },
+    { name: "Technical Writer", url: "https://roadmap.sh/technical-writing" },
+    { name: "MLOps Engineer", url: "https://roadmap.sh/mlops" },
+    { name: "Product Manager", url: "https://roadmap.sh/product-manager" },
+    { name: "Engineering Manager", url: "https://roadmap.sh/engineering-manager" },
+    { name: "Developer Relations", url: "https://roadmap.sh/devrel" }
+  ];
 
-  const toggleStepCompletion = (roadmapId, stepId) => {
-    const key = `${roadmapId}-${stepId}`;
-    setCompletedSteps(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(key)) {
-        newSet.delete(key);
-      } else {
-        newSet.add(key);
-      }
-      return newSet;
-    });
-  };
-
-  const roadmaps = {
-    dsa: {
-      title: "Data Structures & Algorithms",
-      externalLink: "https://leetcode.com/discuss/general-discussion/494279/comprehensive-data-structure-and-algorithm-study-guide",
-      steps: [
-        { id: 1, title: "Basic Data Structures", topics: "Arrays, Strings, Linked Lists", duration: "2 weeks" },
-        { id: 2, title: "Sorting Algorithms", topics: "Bubble, Merge, Quick, Heap Sort", duration: "1 week" },
-        { id: 3, title: "Searching Algorithms", topics: "Binary Search, Hashing", duration: "1 week" },
-        { id: 4, title: "Advanced Data Structures", topics: "Trees, Graphs, Heaps", duration: "3 weeks" },
-        { id: 5, title: "Algorithm Paradigms", topics: "Recursion, DP, Greedy, Divide & Conquer", duration: "3 weeks" }
-      ]
-    },
-    daa: {
-      title: "Design & Analysis of Algorithms",
-      externalLink: "https://www.geeksforgeeks.org/fundamentals-of-algorithms/",
-      steps: [
-        { id: 1, title: "Asymptotic Analysis", topics: "Big-O, Omega, Theta notations", duration: "1 week" },
-        { id: 2, title: "Divide & Conquer", topics: "Master Theorem, Sample Problems", duration: "2 weeks" },
-        { id: 3, title: "Dynamic Programming", topics: "Memoization, Tabulation, Problems", duration: "3 weeks" },
-        { id: 4, title: "Graph Algorithms", topics: "Dijkstra, Floyd-Warshall, MST", duration: "3 weeks" },
-        { id: 5, title: "NP-Completeness", topics: "P vs NP, Reduction techniques", duration: "2 weeks" }
-      ]
-    },
-    cpp: {
-      title: "C++ Programming",
-      externalLink: "https://www.learncpp.com/",
-      steps: [
-        { id: 1, title: "C++ Basics", topics: "Syntax, Data Types, Operators", duration: "1 week" },
-        { id: 2, title: "OOP in C++", topics: "Classes, Objects, Inheritance", duration: "2 weeks" },
-        { id: 3, title: "STL", topics: "Containers, Algorithms, Iterators", duration: "2 weeks" },
-        { id: 4, title: "Advanced C++", topics: "Templates, Smart Pointers, Move Semantics", duration: "3 weeks" },
-        { id: 5, title: "C++ Projects", topics: "Build real-world applications", duration: "4 weeks" }
-      ]
-    },
-    leetcode: {
-      title: "LeetCode Preparation",
-      externalLink: "https://neetcode.io/roadmap",
-      steps: [
-        { id: 1, title: "Easy Problems", topics: "Arrays, Strings, Basic Algorithms", duration: "2 weeks" },
-        { id: 2, title: "Pattern Recognition", topics: "Two Pointers, Sliding Window", duration: "2 weeks" },
-        { id: 3, title: "Medium Problems", topics: "Trees, Graphs, Backtracking", duration: "3 weeks" },
-        { id: 4, title: "Hard Problems", topics: "Dynamic Programming, Advanced Graphs", duration: "3 weeks" },
-        { id: 5, title: "Mock Interviews", topics: "Timed sessions, System Design", duration: "2 weeks" }
-      ]
-    },
-    java: {
-      title: "Java Programming",
-      externalLink: "https://www.baeldung.com/java-tutorial",
-      steps: [
-        { id: 1, title: "Java Fundamentals", topics: "Syntax, OOP Concepts", duration: "2 weeks" },
-        { id: 2, title: "Collections Framework", topics: "List, Set, Map, Stream API", duration: "2 weeks" },
-        { id: 3, title: "Concurrency", topics: "Threads, Executors, Synchronization", duration: "3 weeks" },
-        { id: 4, title: "JVM Internals", topics: "Memory Model, Garbage Collection", duration: "2 weeks" },
-        { id: 5, title: "Frameworks", topics: "Spring, Hibernate, Microservices", duration: "4 weeks" }
-      ]
-    },
-    systemDesign: {
-      title: "System Design",
-      externalLink: "https://github.com/donnemartin/system-design-primer",
-      steps: [
-        { id: 1, title: "Basic Concepts", topics: "Scalability, Latency, Throughput", duration: "2 weeks" },
-        { id: 2, title: "Database Design", topics: "SQL vs NoSQL, Indexing, Sharding", duration: "2 weeks" },
-        { id: 3, title: "Caching Strategies", topics: "CDN, Redis, Memcached", duration: "2 weeks" },
-        { id: 4, title: "Distributed Systems", topics: "Load Balancing, Consensus", duration: "3 weeks" },
-        { id: 5, title: "Case Studies", topics: "Design Twitter, Uber, Netflix", duration: "3 weeks" }
-      ]
-    }
-  };
+  const skillBasedRoadmaps = [
+    { name: "Computer Science", url: "https://roadmap.sh/computer-science" },
+    { name: "React", url: "https://roadmap.sh/react" },
+    { name: "Vue", url: "https://roadmap.sh/vue" },
+    { name: "Angular", url: "https://roadmap.sh/angular" },
+    { name: "JavaScript", url: "https://roadmap.sh/javascript" },
+    { name: "Node.js", url: "https://roadmap.sh/nodejs" },
+    { name: "TypeScript", url: "https://roadmap.sh/typescript" },
+    { name: "Python", url: "https://roadmap.sh/python" },
+    { name: "SQL", url: "https://roadmap.sh/sql" },
+    { name: "System Design", url: "https://roadmap.sh/system-design" },
+    { name: "API Design", url: "https://roadmap.sh/api-design" },
+    { name: "ASP.NET Core", url: "https://roadmap.sh/aspnet-core" },
+    { name: "Java", url: "https://roadmap.sh/java" },
+    { name: "C++", url: "https://roadmap.sh/cpp" },
+    { name: "Flutter", url: "https://roadmap.sh/flutter" },
+    { name: "Spring Boot", url: "https://roadmap.sh/spring-boot" },
+    { name: "Go", url: "https://roadmap.sh/go" },
+    { name: "Rust", url: "https://roadmap.sh/rust" },
+    { name: "GraphQL", url: "https://roadmap.sh/graphql" },
+    { name: "Design and Architecture", url: "https://roadmap.sh/design-architecture" },
+    { name: "Design Systems", url: "https://roadmap.sh/design-systems" },
+    { name: "React Native", url: "https://roadmap.sh/react-native" },
+    { name: "AWS", url: "https://roadmap.sh/aws" },
+    { name: "Code Review", url: "https://roadmap.sh/code-review" },
+    { name: "Docker", url: "https://roadmap.sh/docker" },
+    { name: "Kubernetes", url: "https://roadmap.sh/kubernetes" },
+    { name: "Linux", url: "https://roadmap.sh/linux" },
+    { name: "MongoDB", url: "https://roadmap.sh/mongodb" },
+    { name: "Prompt Engineering", url: "https://roadmap.sh/prompt-engineering" },
+    { name: "Terraform", url: "https://roadmap.sh/terraform" },
+    { name: "Data Structures & Algorithms", url: "https://roadmap.sh/dsa" },
+    { name: "Git and GitHub", url: "https://roadmap.sh/git" },
+    { name: "Redis", url: "https://roadmap.sh/redis" },
+    { name: "PHP", url: "https://roadmap.sh/php" },
+    { name: "Cloudflare", url: "https://roadmap.sh/cloudflare" }
+  ];
 
   return (
-    <div className="roadmap-container">
-      <h1 className="roadmap-header">Learning Roadmaps</h1>
-      
-      <div className="roadmap-tabs">
-        {Object.keys(roadmaps).map(tab => (
-          <button
-            key={tab}
-            className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {roadmaps[tab].title}
-          </button>
-        ))}
+    <div className="main-content">
+      <div className="breadcrumb-container">
+        <div className="breadcrumbs">
+          <span>Developer Roadmaps</span>
+        </div>
       </div>
-      
-      <div className="roadmap-content">
-        <div className="roadmap-header-section">
-          <h2>{roadmaps[activeTab].title} Roadmap</h2>
-          {roadmaps[activeTab].externalLink && (
-            <a 
-              href={roadmaps[activeTab].externalLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="external-link"
-            >
-              View Detailed Roadmap ↗️
-            </a>
-          )}
-        </div>
-        
-        <div className="timeline">
-          {roadmaps[activeTab].steps.map(step => {
-            const stepKey = `${activeTab}-${step.id}`;
-            const isCompleted = completedSteps.has(stepKey);
-            
-            return (
-              <div 
-                key={step.id} 
-                className={`timeline-step ${isCompleted ? 'completed' : ''}`}
-                onClick={() => toggleStepCompletion(activeTab, step.id)}
-              >
-                <div className="timeline-bullet"></div>
-                <div className="timeline-content">
-                  <h3>{step.title}</h3>
-                  <p className="topics">{step.topics}</p>
-                  <p className="duration">{step.duration}</p>
-                  {isCompleted && <span className="completed-check">✓</span>}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+
+      <div className="roadmaps-container">
+        <p className="subtitle">Browse through comprehensive roadmaps to guide your learning journey</p>
+
+        <section className="roadmap-section">
+          <h2 className="section-title">Role-based Roadmaps</h2>
+          <div className="grid-container">
+            {roleBasedRoadmaps.map((roadmap) => (
+              <RoadmapCard 
+                key={roadmap.name} 
+                name={roadmap.name} 
+                url={roadmap.url} 
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="roadmap-section">
+          <h2 className="section-title">Skill-based Roadmaps</h2>
+          <div className="grid-container">
+            {skillBasedRoadmaps.map((roadmap) => (
+              <RoadmapCard 
+                key={roadmap.name} 
+                name={roadmap.name} 
+                url={roadmap.url}
+              />
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
 };
 
-export default Roadmaps;
+// RoadmapCard component remains the same
+const RoadmapCard = ({ name, url, delay }) => {
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="grid-card" style={{ animationDelay: `${delay}s` }}>
+      <h3>{name}</h3>
+      <div className="card-footer">
+        <span className="explore-link">
+          Explore Roadmap <span className="arrow">→</span>
+        </span>
+      </div>
+    </a>
+  );
+};
+
+
+export default RoadmapFeature;

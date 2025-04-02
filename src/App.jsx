@@ -12,6 +12,7 @@ import JobDetails from "./pages/Student/JobDetails"
 import Application from "./pages/Student/Application";
 import Sidebar from "./components/Sidebar";
 import "./styles/Student/Sidebar.css"
+import Settings from "./pages/Student/Settings";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                   <Route path="/job-details/:id" element={<JobDetails />} />
                   <Route path="/apply/:id" element={<Application />} />
                   <Route path="/roadmaps" element={<Roadmaps />} />
+                  <Route path="/settings" element={<Settings/>} />
                 </Routes>
               </main>
             </div>
