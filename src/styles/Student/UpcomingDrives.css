@@ -220,7 +220,6 @@
 }
 /* Add icon to apply button */
 .apply-button::before {
-  content: '📝';
   font-size: 1.1rem;
 }
 /* ===== Scrollbar styles ===== */

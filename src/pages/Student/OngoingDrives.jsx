@@ -41,18 +41,18 @@ function OngoingDrives() {
 
   // Ongoing Drives Data
   const ongoingDrives = [
-    { id: 1, company: "Google", role: "Software Engineer", location: "Remote", deadline: "March 10, 2025", applyLink: "https://careers.google.com/", logo: "/api/placeholder/80/80" },
-    { id: 2, company: "Microsoft", role: "Data Scientist", location: "Hyderabad, India", deadline: "March 15, 2025", applyLink: "https://careers.microsoft.com/", logo: "/api/placeholder/80/80" },
-    { id: 3, company: "Amazon", role: "Web Developer", location: "Bangalore, India", deadline: "March 18, 2025", applyLink: "https://www.amazon.jobs/", logo: "/api/placeholder/80/80" },
-    { id: 4, company: "Apple", role: "iOS Developer", location: "San Francisco, USA", deadline: "March 22, 2025", applyLink: "https://jobs.apple.com/", logo: "/api/placeholder/80/80" },
-    { id: 5, company: "Netflix", role: "Frontend Engineer", location: "Los Angeles, USA", deadline: "March 25, 2025", applyLink: "https://jobs.netflix.com/", logo: "/api/placeholder/80/80" },
-    { id: 6, company: "Meta", role: "Machine Learning Engineer", location: "Menlo Park, USA", deadline: "March 30, 2025", applyLink: "https://www.metacareers.com/", logo: "/api/placeholder/80/80" },
-    { id: 7, company: "Tesla", role: "Embedded Systems Engineer", location: "Palo Alto, USA", deadline: "April 2, 2025", applyLink: "https://www.tesla.com/careers", logo: "/api/placeholder/80/80" },
-    { id: 8, company: "Adobe", role: "UI/UX Designer", location: "Noida, India", deadline: "April 5, 2025", applyLink: "https://www.adobe.com/careers", logo: "/api/placeholder/80/80" },
-    { id: 9, company: "Facebook", role: "Backend Developer", location: "Menlo Park, USA", deadline: "April 10, 2025", applyLink: "https://www.metacareers.com/", logo: "/api/placeholder/80/80" },
-    { id: 10, company: "IBM", role: "Cloud Engineer", location: "Bangalore, India", deadline: "April 12, 2025", applyLink: "https://www.ibm.com/employment", logo: "/api/placeholder/80/80" },
-    { id: 11, company: "Oracle", role: "Database Administrator", location: "Austin, USA", deadline: "April 15, 2025", applyLink: "https://www.oracle.com/careers", logo: "/api/placeholder/80/80" },
-    { id: 12, company: "Salesforce", role: "CRM Developer", location: "San Francisco, USA", deadline: "April 18, 2025", applyLink: "https://www.salesforce.com/company/careers/", logo: "/api/placeholder/80/80" },
+    { id: 1, company: "Google", role: "Software Engineer", location: "Remote", deadline: "March 10, 2025", applyLink: "https://careers.google.com/", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" },
+    { id: 2, company: "Microsoft", role: "Data Scientist", location: "Hyderabad, India", deadline: "March 15, 2025", applyLink: "https://careers.microsoft.com/", logo: "https://yt3.googleusercontent.com/qgSeLfJk2OKnQicVDvc_VSlSISmAmWVHYtmSTckcC_iUn7hVfpURctMAqoSz0u4xfER6rlKDBA=s900-c-k-c0x00ffffff-no-rj" },
+    { id: 3, company: "Amazon", role: "Web Developer", location: "Bangalore, India", deadline: "March 18, 2025", applyLink: "https://www.amazon.jobs/", logo: "https://m.media-amazon.com/images/I/51HCHFclmmL.jpg" },
+    { id: 4, company: "Apple", role: "iOS Developer", location: "San Francisco, USA", deadline: "March 22, 2025", applyLink: "https://jobs.apple.com/", logo: "https://yt3.googleusercontent.com/u3FOfTv2qyiXVhL4c1qzeKimVzTqKIBjQdl3F4QNZxB49pmwvFoFf8EFljSG7DVIJOW0O8xLWq0=s900-c-k-c0x00ffffff-no-rj" },
+    { id: 5, company: "Netflix", role: "Frontend Engineer", location: "Los Angeles, USA", deadline: "March 25, 2025", applyLink: "https://jobs.netflix.com/", logo: "https://yt3.googleusercontent.com/CvgBA1ypUZNxOjiCX0l1V2FbAm7oSDPZE4YkMvkpT_4iLXQ3IXWVtBgWnznHxgtcUoj50TXqZA=s900-c-k-c0x00ffffff-no-rj" },
+    { id: 6, company: "Meta", role: "Machine Learning Engineer", location: "Menlo Park, USA", deadline: "March 30, 2025", applyLink: "https://www.metacareers.com/", logo: "https://cdn.pixabay.com/photo/2021/12/14/22/29/meta-6871457_1280.png" },
+    { id: 7, company: "Tesla", role: "Embedded Systems Engineer", location: "Palo Alto, USA", deadline: "April 2, 2025", applyLink: "https://www.tesla.com/careers", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tesla_logo.png/640px-Tesla_logo.png" },
+    { id: 8, company: "Adobe", role: "UI/UX Designer", location: "Noida, India", deadline: "April 5, 2025", applyLink: "https://www.adobe.com/careers", logo: "https://i.pinimg.com/736x/56/3a/a2/563aa2189ef92dc242a7db5b91078804.jpg" },
+    { id: 9, company: "Facebook", role: "Backend Developer", location: "Menlo Park, USA", deadline: "April 10, 2025", applyLink: "https://www.metacareers.com/", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1200px-Facebook_f_logo_%282019%29.svg.png" },
+    { id: 10, company: "IBM", role: "Cloud Engineer", location: "Bangalore, India", deadline: "April 12, 2025", applyLink: "https://www.ibm.com/employment", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/1200px-IBM_logo.svg.png" },
+    { id: 11, company: "Oracle", role: "Database Administrator", location: "Austin, USA", deadline: "April 15, 2025", applyLink: "https://www.oracle.com/careers", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVer_wMBRrUuTJfkLE_pq1nZRrlaHrWVkNUA&s" },
+    { id: 12, company: "Salesforce", role: "CRM Developer", location: "San Francisco, USA", deadline: "April 18, 2025", applyLink: "https://www.salesforce.com/company/careers/", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAx4OMNKDO78w1GtSY9IKw8zy3RPjRMbWyg&s" },
   ];
 
   // Function to get days remaining to deadline

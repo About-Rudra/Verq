@@ -277,13 +277,13 @@
   opacity: 1;
 }
 .company-logo {
-  padding: 1.5rem;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--bg-secondary);
   transition: all 0.3s ease;
-  margin: 5px;
+  margin: 15px;
 }
 .companies-container.list .company-logo {
   padding: 1rem;

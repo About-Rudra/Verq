@@ -29,26 +29,47 @@ function TechDirectory() {
   const allCompanies = [
     {
       id: 1,
-      name: "52°North Spatial Information",
-      description: "Innovative ideas & technologies in geoinformatics",
-      logo: "/api/placeholder/80/80",
-      category: "Data Science"
+      name: "OpenAI",
+      description: "Leading research and deployment of artificial intelligence",
+      logo: "https://yt3.googleusercontent.com/MopgmVAFV9BqlzOJ-UINtmutvEPcNe5IbKMmP_4vZZo3vnJXcZGtybUBsXaEVxkmxKyGqX9R=s900-c-k-c0x00ffffff-no-rj",
+      category: "Artificial Intelligence"
     },
     {
       id: 2,
-      name: "AboutCode",
-      description: "Scan code for origin, license and vulnerabilities",
-      logo: "/api/placeholder/80/80",
-      category: "Cyber Security"
+      name: "Snowflake",
+      description: "Cloud-based data warehousing and analytics platform",
+      logo: "https://companieslogo.com/img/orig/SNOW-35164165.png?t=1720244494",
+      category: "Data Science"
     },
     {
       id: 3,
-      name: "Accord Project",
-      description: "Open source software for smart legal contracts",
-      logo: "/api/placeholder/80/80",
-      category: "SDE"
+      name: "HashiCorp",
+      description: "Infrastructure automation tools for DevOps",
+      logo: "https://hashicorp.gallerycdn.vsassets.io/extensions/hashicorp/hcl/0.6.0/1729689056959/Microsoft.VisualStudio.Services.Icons.Default",
+      category: "Devops"
+    },
+    {
+      id: 4,
+      name: "JetBrains",
+      description: "Creators of intelligent development tools like IntelliJ IDEA",
+      logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/08/JetBrains_beam_logo.svg/2048px-JetBrains_beam_logo.svg.png",
+      category: "Development tools"
+    },
+    {
+      id: 5,
+      name: "CrowdStrike",
+      description: "AI-powered cybersecurity solutions for enterprises",
+      logo: "https://www.stratodesk.com/wp-content/uploads/2021/08/crowedstrike-and-Stratodesk-NoTouch.png",
+      category: "Cyber Security"
+    },
+    {
+      id: 6,
+      name: "Red Hat",
+      description: "Enterprise open-source solutions for operating systems and cloud computing",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbkBLhs9SXOgt2x4sCuex-Dxn5FswXontBUeE1pq02FqL0lD-2gF4dw_Ro_Xwmt6UcATQ&usqp=CAU",
+      category: "Operating systems"
     }
-  ];
+  ];  
   
   // Handle tab change - same as in Dashboard
   const handleTabChange = (tab) => {
