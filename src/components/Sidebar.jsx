@@ -56,7 +56,7 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/extensions" className={({ isActive }) => isActive ? "active" : ""}>
+            <NavLink to="/roadmaps" className={({ isActive }) => isActive ? "active" : ""}>
               <FaRoad className="icon" /> Roadmaps
             </NavLink>
           </li>

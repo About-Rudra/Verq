@@ -4,6 +4,7 @@ import Dashboard from "./pages/Student/Dashboard";
 import LandingPage from "./pages/Student/LandingPage";
 import OngoingDrives from "./pages/Student/OngoingDrives";
 import UpcomingDrives from "./pages/Student/UpcomingDrives";
+import Roadmaps from "./pages/Student/Roadmaps";
 import Auth from "./pages/Student/Auth";
 import TechDirectory from "./pages/Student/TechDirectory";
 import Form from "./pages/Student/Form";
@@ -28,6 +29,7 @@ function App() {
                   <Route path="/student-registration" element={<Form />} />
                   <Route path="/job-details/:id" element={<JobDetails />} />
                   <Route path="/apply/:id" element={<Application />} />
+                  <Route path="/roadmaps" element={<Roadmaps />} />
                 </Routes>
               </main>
             </div>
