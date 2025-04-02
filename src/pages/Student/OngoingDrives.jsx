@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/student/OngoingDrives.css';
+import '../../styles/Student/OngoingDrives.css';
 
 function OngoingDrives() {
   const [activeTab, setActiveTab] = useState("Ongoing Drives");

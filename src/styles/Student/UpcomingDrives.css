@@ -1,5 +1,4 @@
 /* UpcomingDrives.css - Premium Edition */
-
 /* ===== Base Layout ===== */
 .drives-container {
   padding: 2.5rem;
@@ -7,12 +6,16 @@
   margin: 0 auto;
   animation: dashboard-fadeIn 0.6s ease-out;
 }
-
 @keyframes dashboard-fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+ }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+ }
 }
-
 /* Enhanced header section */
 .header {
   display: flex;
@@ -21,7 +24,6 @@
   margin-bottom: 2rem;
   position: relative;
 }
-
 .header::after {
   content: '';
   position: absolute;
@@ -29,13 +31,8 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, 
-             transparent 0%, 
-             var(--border-color) 20%, 
-             var(--border-color) 80%, 
-             transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, var(--border-color) 20%, var(--border-color) 80%, transparent 100%);
 }
-
 /* Enhanced Breadcrumbs styles */
 .breadcrumbs {
   display: flex;
@@ -44,13 +41,11 @@
   font-size: 0.95rem;
   align-items: center;
 }
-
 .breadcrumbs span:last-child {
   font-weight: 600;
   color: var(--text-primary);
   position: relative;
 }
-
 .breadcrumbs span:last-child::after {
   content: '';
   position: absolute;
@@ -61,23 +56,19 @@
   background: var(--primary-color);
   border-radius: 1px;
 }
-
 .breadcrumbs span:not(:last-child) {
   color: var(--text-secondary);
   opacity: 0.8;
   transition: opacity 0.3s ease;
 }
-
 .breadcrumbs span:not(:last-child):hover {
   opacity: 1;
 }
-
 .breadcrumbs span.separator {
   color: var(--text-secondary);
   font-size: 1.1rem;
   line-height: 1;
 }
-
 /* Enhanced title/heading */
 .drives-container h1 {
   font-size: 2.25rem;
@@ -87,7 +78,6 @@
   position: relative;
   display: inline-block;
 }
-
 .drives-container h1::after {
   content: '';
   position: absolute;
@@ -99,11 +89,9 @@
   border-radius: 2px;
   transition: width 0.4s ease;
 }
-
 .drives-container h1:hover::after {
   width: 100px;
 }
-
 /* ===== Grid Layout ===== */
 .grid-container {
   display: grid;
@@ -111,7 +99,6 @@
   gap: 2rem;
   margin-top: 2rem;
 }
-
 .grid-card {
   background: var(--bg-primary);
   border-radius: var(--border-radius);
@@ -120,8 +107,8 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
-
 .grid-card::before {
   content: '';
   position: absolute;
@@ -133,17 +120,14 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .grid-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   border-color: rgba(67, 97, 238, 0.2);
 }
-
 .grid-card:hover::before {
   opacity: 1;
 }
-
 /* ===== Card Content ===== */
 .grid-card h3 {
   font-size: 1.5rem;
@@ -153,7 +137,6 @@
   position: relative;
   display: inline-block;
 }
-
 .grid-card h3::after {
   content: '';
   position: absolute;
@@ -165,18 +148,15 @@
   border-radius: 1.5px;
   transition: width 0.3s ease;
 }
-
 .grid-card:hover h3::after {
   width: 50px;
 }
-
 .grid-card h5 {
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 1.25rem;
   color: var(--primary-color);
 }
-
 .grid-card p {
   margin-bottom: 0.75rem;
   font-size: 0.95rem;
@@ -185,16 +165,13 @@
   display: flex;
   gap: 0.5rem;
 }
-
 .grid-card p strong {
   font-weight: 600;
   color: var(--text-primary);
 }
-
 .grid-card p::before {
   font-size: 1.1rem;
 }
-
 /* ===== Apply Button ===== */
 .apply-button {
   display: inline-block;
@@ -215,14 +192,14 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin-top: auto; /* This pushes the button to the bottom */
-  align-self: flex-end; /* Ensures full width */
+  margin-top: auto;
+ /* This pushes the button to the bottom */
+  align-self: flex-end;
+ /* Ensures full width */
 }
-
 .apply-button{
   margin-top: 0;
 }
-
 .apply-button::after {
   content: '';
   position: absolute;
@@ -234,107 +211,94 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .apply-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
 }
-
 .apply-button:hover::after {
   opacity: 1;
 }
-
 /* Add icon to apply button */
 .apply-button::before {
   content: '📝';
   font-size: 1.1rem;
 }
-
 /* ===== Scrollbar styles ===== */
 .drives-container {
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) transparent;
 }
-
 .drives-container::-webkit-scrollbar {
   width: 8px;
 }
-
 .drives-container::-webkit-scrollbar-thumb {
   background-color: var(--primary-color);
   border-radius: 4px;
 }
-
 /* ===== Responsive Design ===== */
 @media (max-width: 1024px) {
   .grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+ }
 }
-
 @media (max-width: 768px) {
   .drives-container {
-    padding: 1.75rem;
-  }
-  
+      padding: 1.75rem;
+ }
   .drives-container h1 {
-    font-size: 1.75rem;
-    margin: 1.75rem 0;
-  }
-  
+      font-size: 1.75rem;
+      margin: 1.75rem 0;
+ }
   .drives-container h1::after {
-    height: 3px;
-    bottom: -6px;
-  }
-  
+      height: 3px;
+      bottom: -6px;
+ }
   .grid-container {
-    gap: 1.5rem;
-  }
-  
+      gap: 1.5rem;
+ }
   .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.25rem;
-  }
-  
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+ }
   .actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
+      width: 100%;
+      justify-content: flex-end;
+ }
 }
-
 @media (max-width: 480px) {
   .drives-container {
-    padding: 1.5rem 1rem;
-  }
-  
+      padding: 1.5rem 1rem;
+ }
   .grid-container {
-    grid-template-columns: 1fr;
-  }
-  
+      grid-template-columns: 1fr;
+ }
   .grid-card {
-    padding: 1.5rem;
-    flex: 1; /* This makes the content take up remaining space */
-    margin-bottom: 1.5rem;
-  }
-  
+      padding: 1.5rem;
+      flex: 1;
+     /* This makes the content take up remaining space */
+      margin-bottom: 1.5rem;
+ }
   .apply-button {
-    padding: 0.75rem;
-  }
+      padding: 0.75rem;
+ }
 }
-
 /* Collapsible sidebar support */
 .sidebar.collapsed ~ .drives-container {
   width: calc(100% - 80px);
   margin-left: 80px;
 }
-
 /* Animation for card loading */
 @keyframes cardAppear {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+ }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+ }
 }
-
 .grid-card {
   animation: cardAppear 0.6s ease-out forwards;
 }

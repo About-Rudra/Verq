@@ -3,22 +3,20 @@
   display: flex;
   min-height: 100vh;
 }
-
 .main-content {
   flex: 1;
   margin-left: var(--sidebar-width);
   padding: 30px;
   background: var(--bg-secondary);
 }
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
+      width: 100%;
+      height: auto;
+      position: relative;
+ }
   .main-content {
-    margin-left: 0;
-  }
+      margin-left: 0;
+ }
 }

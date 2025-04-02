@@ -1,280 +1,235 @@
 /* ====== Form.css - Student Registration Form Styling ====== */
-
 /* Import core variables if they're not already available */
 :root {
   /* Color Scheme */
-  --primary-color: #4361ee;
-  --primary-light: rgba(67, 97, 238, 0.1);
-  --text-primary: #2c3e50;
-  --text-secondary: #7f8c8d;
-  --bg-primary: #ffffff;
-  --bg-secondary: #f5f5f5;
-  --border-color: rgba(0, 0, 0, 0.1);
-  --border-radius: 8px;
-  --success-color: #2ecc71;
-  --danger-color: #e74c3c;
-  --warning-color: #f39c12;
+   --primary-color: #4361ee;
+   --primary-light: rgba(67, 97, 238, 0.1);
+   --text-primary: #2c3e50;
+   --text-secondary: #7f8c8d;
+   --bg-primary: #ffffff;
+   --bg-secondary: #f5f5f5;
+   --border-color: rgba(0, 0, 0, 0.1);
+   --border-radius: 8px;
+   --success-color: #2ecc71;
+   --danger-color: #e74c3c;
+   --warning-color: #f39c12;
 }
-
 /* Form Container */
 .registration-container {
-  max-width: 900px;
-  margin: 2rem auto;
-  background: var(--bg-primary);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 2rem;
+   max-width: 900px;
+   margin: 2rem auto;
+   background: var(--bg-primary);
+   border-radius: var(--border-radius);
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+   padding: 2rem;
 }
-
 .registration-container h1 {
-  color: var(--primary-color);
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  border-bottom: 2px solid var(--primary-light);
-  padding-bottom: 0.8rem;
+   color: var(--primary-color);
+   font-size: 1.8rem;
+   margin-bottom: 1.5rem;
+   text-align: center;
+   border-bottom: 2px solid var(--primary-light);
+   padding-bottom: 0.8rem;
 }
-
 /* Form Navigation */
 .form-navigation {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 1rem;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 0.5rem;
+   margin-bottom: 2rem;
+   border-bottom: 1px solid var(--border-color);
+   padding-bottom: 1rem;
 }
-
 .nav-button {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: all 0.2s ease;
+   background: var(--bg-secondary);
+   border: 1px solid var(--border-color);
+   border-radius: var(--border-radius);
+   padding: 0.5rem 1rem;
+   font-size: 0.85rem;
+   cursor: pointer;
+   color: var(--text-secondary);
+   transition: all 0.2s ease;
 }
-
 .nav-button:hover {
-  background: var(--primary-light);
-  color: var(--primary-color);
+   background: var(--primary-light);
+   color: var(--primary-color);
 }
-
 .nav-button.active {
-  background: var(--primary-color);
-  color: white;
-  border-color: var(--primary-color);
-  box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2);
+   background: var(--primary-color);
+   color: white;
+   border-color: var(--primary-color);
+   box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2);
 }
-
 /* Form Sections */
 .form-section {
-  background: var(--bg-primary);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+   background: var(--bg-primary);
+   border-radius: var(--border-radius);
+   padding: 1.5rem;
+   margin-bottom: 1.5rem;
 }
-
 .form-section h2 {
-  color: var(--primary-color);
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
+   color: var(--primary-color);
+   font-size: 1.5rem;
+   margin-bottom: 1.5rem;
+   display: flex;
+   align-items: center;
 }
-
 .form-section h2::after {
-  content: '';
-  flex-grow: 1;
-  height: 1px;
-  background: var(--primary-light);
-  margin-left: 1rem;
+   content: '';
+   flex-grow: 1;
+   height: 1px;
+   background: var(--primary-light);
+   margin-left: 1rem;
 }
-
 /* Input Groups */
 .input-group {
-  margin-bottom: 1.2rem;
+   margin-bottom: 1.2rem;
 }
-
 .input-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
-  font-weight: 500;
-  font-size: 0.95rem;
+   display: block;
+   margin-bottom: 0.5rem;
+   color: var(--text-primary);
+   font-weight: 500;
+   font-size: 0.95rem;
 }
-
-.input-group input,
-.input-group select,
+.input-group input, .input-group select, .input-group textarea {
+   width: 100%;
+   padding: 0.8rem;
+   border: 1px solid var(--border-color);
+   border-radius: var(--border-radius);
+   background: var(--bg-primary);
+   color: var(--text-primary);
+   font-size: 1rem;
+   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+   border-color: var(--primary-color);
+   outline: none;
+   box-shadow: 0 0 0 3px var(--primary-light);
+}
 .input-group textarea {
-  width: 100%;
-  padding: 0.8rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: 1rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+   min-height: 100px;
+   resize: vertical;
 }
-
-.input-group input:focus,
-.input-group select:focus,
-.input-group textarea:focus {
-  border-color: var(--primary-color);
-  outline: none;
-  box-shadow: 0 0 0 3px var(--primary-light);
-}
-
-.input-group textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
 /* File Upload */
 .input-group input[type="file"] {
-  padding: 0.5rem 0;
-  border: none;
-  background: transparent;
+   padding: 0.5rem 0;
+   border: none;
+   background: transparent;
 }
-
 .file-info {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  margin-top: 0.5rem;
+   font-size: 0.8rem;
+   color: var(--text-secondary);
+   margin-top: 0.5rem;
 }
-
 /* Repeatable Items */
 .repeatable-item {
-  background: var(--bg-secondary);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-  border-left: 3px solid var(--primary-color);
+   background: var(--bg-secondary);
+   border-radius: var(--border-radius);
+   padding: 1.5rem;
+   margin-bottom: 1.5rem;
+   position: relative;
+   border-left: 3px solid var(--primary-color);
 }
-
 .repeatable-item h3 {
-  font-size: 1.2rem;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px dashed var(--border-color);
+   font-size: 1.2rem;
+   color: var(--text-primary);
+   margin-bottom: 1rem;
+   padding-bottom: 0.5rem;
+   border-bottom: 1px dashed var(--border-color);
 }
-
 /* Buttons */
-.add-button,
-.remove-button,
-button[type="submit"],
-.navigation-buttons button {
-  padding: 0.8rem 1.5rem;
-  border-radius: var(--border-radius);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
+.add-button, .remove-button, button[type="submit"], .navigation-buttons button {
+   padding: 0.8rem 1.5rem;
+   border-radius: var(--border-radius);
+   font-weight: 500;
+   cursor: pointer;
+   transition: all 0.2s ease;
+   border: none;
 }
-
 .add-button {
-  background: var(--primary-light);
-  color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 1rem;
+   background: var(--primary-light);
+   color: var(--primary-color);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   margin-top: 1rem;
 }
-
 .add-button:hover {
-  background: var(--primary-color);
-  color: white;
+   background: var(--primary-color);
+   color: white;
 }
-
 .remove-button {
-  background: rgba(231, 76, 60, 0.1);
-  color: var(--danger-color);
-  font-size: 0.9rem;
-  padding: 0.6rem 1.2rem;
+   background: rgba(231, 76, 60, 0.1);
+   color: var(--danger-color);
+   font-size: 0.9rem;
+   padding: 0.6rem 1.2rem;
 }
-
 .remove-button:hover {
-  background: var(--danger-color);
-  color: white;
+   background: var(--danger-color);
+   color: white;
 }
-
 /* Navigation Buttons */
 .navigation-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
+   display: flex;
+   justify-content: space-between;
+   margin-top: 2rem;
 }
-
 .navigation-buttons button {
-  background: var(--primary-color);
-  color: white;
-  min-width: 120px;
+   background: var(--primary-color);
+   color: white;
+   min-width: 120px;
 }
-
 .navigation-buttons button:hover {
-  background: #3050d8;
-  box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+   background: #3050d8;
+   box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
 }
-
 button[type="submit"] {
-  background: var(--success-color);
-  color: white;
-  min-width: 150px;
-  font-size: 1.1rem;
+   background: var(--success-color);
+   color: white;
+   min-width: 150px;
+   font-size: 1.1rem;
 }
-
 button[type="submit"]:hover {
-  background: #27ae60;
-  box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+   background: #27ae60;
+   box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
 }
-
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-  .registration-container {
-    padding: 1.5rem;
-    margin: 1rem;
+   .registration-container {
+       padding: 1.5rem;
+       margin: 1rem;
   }
-  
-  .form-navigation {
-    overflow-x: auto;
-    padding-bottom: 0.8rem;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
+   .form-navigation {
+       overflow-x: auto;
+       padding-bottom: 0.8rem;
+       -webkit-overflow-scrolling: touch;
+       scroll-snap-type: x mandatory;
   }
-  
-  .nav-button {
-    scroll-snap-align: start;
-    white-space: nowrap;
-    flex: 0 0 auto;
+   .nav-button {
+       scroll-snap-align: start;
+       white-space: nowrap;
+       flex: 0 0 auto;
   }
-  
-  .repeatable-item {
-    padding: 1rem;
+   .repeatable-item {
+       padding: 1rem;
   }
-  
-  .navigation-buttons button {
-    padding: 0.7rem 1rem;
-    min-width: auto;
+   .navigation-buttons button {
+       padding: 0.7rem 1rem;
+       min-width: auto;
   }
 }
-
 /* Dark mode compatibility */
 [data-theme="dark"] .registration-container {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-
 [data-theme="dark"] .repeatable-item {
-  background: var(--bg-primary);
+   background: var(--bg-primary);
 }
-
 [data-theme="dark"] .add-button {
-  background: rgba(67, 97, 238, 0.2);
+   background: rgba(67, 97, 238, 0.2);
 }
-
 [data-theme="dark"] .remove-button {
-  background: rgba(231, 76, 60, 0.15);
+   background: rgba(231, 76, 60, 0.15);
 }

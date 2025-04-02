@@ -5,14 +5,14 @@ const Auth = () => {
   // State to toggle between login and signup views
   const [isLogin, setIsLogin] = useState(true);
 
-  // Login form state
+  // State for login form inputs
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
     remember: false
   });
 
-  // Signup form state
+  // State for signup form inputs
   const [signupData, setSignupData] = useState({
     name: '',
     email: '',
@@ -21,13 +21,13 @@ const Auth = () => {
     terms: false
   });
 
-  // Validation errors state
+  // State for validation errors
   const [errors, setErrors] = useState({
     password: false,
     confirmPassword: false
   });
 
-  // Handle login form changes
+  // Handles changes in the login form inputs
   const handleLoginChange = (e) => {
     const { name, value, type, checked } = e.target;
     setLoginData(prevState => ({
@@ -36,7 +36,7 @@ const Auth = () => {
     }));
   };
 
-  // Handle signup form changes
+  // Handles changes in the signup form inputs
   const handleSignupChange = (e) => {
     const { name, value, type, checked } = e.target;
     setSignupData(prevState => ({
@@ -45,26 +45,27 @@ const Auth = () => {
     }));
   };
 
-  // Handle login form submission
+  // Handles login form submission
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    // Add login logic here
+    // TODO: Implement login logic
     console.log('Login form submitted', loginData);
   };
 
-  // Handle signup form submission
+  // Handles signup form submission with validation
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     
-    // Form validation
     let isValid = true;
     const newErrors = { password: false, confirmPassword: false };
     
+    // Password length validation
     if (signupData.password.length < 8) {
       newErrors.password = true;
       isValid = false;
     }
     
+    // Confirm password validation
     if (signupData.password !== signupData.confirmPassword) {
       newErrors.confirmPassword = true;
       isValid = false;
@@ -73,12 +74,12 @@ const Auth = () => {
     setErrors(newErrors);
     
     if (isValid) {
-      // Add signup logic here
+      // TODO: Implement signup logic
       console.log('Signup form submitted', signupData);
     }
   };
 
-  // Toggle between login and signup views
+  // Toggles between login and signup views
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
   };
@@ -208,48 +209,10 @@ const Auth = () => {
                 )}
               </div>
               
-              <div className="remember-me" style={{ marginBottom: '20px' }}>
-                <input 
-                  type="checkbox" 
-                  id="terms" 
-                  name="terms" 
-                  className="checkbox-input" 
-                  required
-                  checked={signupData.terms}
-                  onChange={handleSignupChange}
-                />
-                <label htmlFor="terms" className="checkbox-label">
-                  I agree to the <a href="#" className="forgot-password">Terms of Service</a> and <a href="#" className="forgot-password">Privacy Policy</a>
-                </label>
-              </div>
-              
               <button type="submit" className="btn-auth">Create Account</button>
             </form>
           </>
         )}
-        
-        <div className="auth-divider">
-          <div className="divider-line"></div>
-          <span className="divider-text">Or continue with</span>
-          <div className="divider-line"></div>
-        </div>
-        
-        <div className="social-buttons">
-          <button className="btn-social">
-            Google
-          </button>
-          <button className="btn-social">
-            GitHub
-          </button>
-        </div>
-        
-        <div className="auth-redirect">
-          {isLogin ? (
-            <>Don't have an account? <a href="#" onClick={toggleAuthMode}>Sign up</a></>
-          ) : (
-            <>Already have an account? <a href="#" onClick={toggleAuthMode}>Sign in</a></>
-          )}
-        </div>
       </div>
     </div>
   );

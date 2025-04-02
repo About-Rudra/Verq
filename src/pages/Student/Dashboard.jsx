@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/student/Dashboard.css';
+import '../../styles/Student/Dashboard.css';
 
 // Tech Stack Card Component
 const TechStackCard = () => {

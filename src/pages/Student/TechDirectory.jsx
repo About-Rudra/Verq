@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/student/TechDirectory.css';
+import '../../styles/Student/TechDirectory.css';
 
 function TechDirectory() {
   const [activeFilter, setActiveFilter] = useState('All');

@@ -12,23 +12,20 @@
   border-right: 1px solid var(--border-color);
   z-index: 100;
 }
-
 .sidebar-header {
   padding: 0 0.5rem 1.25rem;
   margin-bottom: 0.5rem;
+  cursor: pointer;
 }
-
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--primary-color);
   letter-spacing: -0.5px;
 }
-
 .search-container {
   padding: 0 0.5rem 1.5rem;
 }
-
 .search-input {
   width: 100%;
   padding: 0.65rem 1rem;
@@ -38,23 +35,19 @@
   color: var(--text-primary);
   font-size: 0.9rem;
 }
-
 .search-input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
 }
-
 .main-menu {
   flex: 1;
   overflow-y: auto;
 }
-
 .main-menu ul {
   list-style: none;
   padding: 0.5rem 0;
 }
-
 .main-menu li a {
   display: flex;
   align-items: center;
@@ -66,34 +59,28 @@
   text-decoration: none;
   font-size: 0.95rem;
 }
-
 .main-menu li a:hover {
   background: var(--primary-light);
 }
-
 .main-menu li a.active {
   background: var(--primary-color);
   color: white;
   font-weight: 500;
 }
-
 .main-menu li a.active .icon {
   color: white;
 }
-
 .icon {
   font-size: 1.1rem;
   color: var(--text-secondary);
   min-width: 24px;
 }
-
 .divider {
   height: 1px;
   background: var(--border-color);
   margin: 1rem 0;
   opacity: 0.5;
 }
-
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -106,7 +93,6 @@
   cursor: pointer;
   font-size: 0.95rem;
 }
-
 .theme-toggle:hover {
   background: var(--primary-light);
 }
