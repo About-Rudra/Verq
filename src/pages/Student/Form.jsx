@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/student/Form.css';
+
 const Form = () => {
   const [activeSection, setActiveSection] = useState('personal');
   const [formData, setFormData] = useState({
@@ -11,12 +12,36 @@ const Form = () => {
       dob: '',
       address: '',
     },
-    internships: [{ company: '', position: '', startDate: '', endDate: '', description: '', supervisor: '' }],
+    internships: [{ 
+      company: '', 
+      position: '', 
+      location: '', 
+      sector: '', 
+      startDate: '', 
+      endDate: '', 
+      stipend: '', 
+      description: '', 
+      supervisor: '' 
+    }],
     volunteering: [{ organization: '', role: '', startDate: '', endDate: '', hours: '', description: '' }],
     skills: [{ name: '', category: '', proficiency: '' }],
     projects: [{ title: '', duration: '', technologies: '', role: '', outcome: '', link: '' }],
-    accomplishments: [{ title: '', description: '', date: '' }],
-    extraCurricular: [{ activity: '', role: '', organization: '', duration: '' }],
+    accomplishments: [{ 
+      title: '', 
+      description: '', 
+      date: '', 
+      institution: '',
+      type: '',
+      rank: '',
+      percentile: '',
+      score: ''
+    }],
+    extraCurricular: [{ 
+      activity: '', 
+      role: '', 
+      organization: '', 
+      duration: '' 
+    }],
     resume: null,
     jobSearch: {
       industries: [],
@@ -89,9 +114,26 @@ const Form = () => {
     { id: 'accomplishments', label: 'Accomplishments' },
     { id: 'extraCurricular', label: 'Extra-Curricular Activities' },
     { id: 'resume', label: 'Resume Upload' },
-    { id: 'jobSearch', label: 'Job & Internship Search' },
     { id: 'competitions', label: 'Competitions & Events' },
-    { id: 'settings', label: 'Settings' },
+    
+  ];
+
+  // Sector options for internships
+  const sectorOptions = [
+    'Technology', 'Finance', 'Healthcare', 'Education', 'Marketing', 
+    'Engineering', 'Retail', 'Manufacturing', 'Media', 'Consulting', 
+    'Non-profit', 'Government', 'Other'
+  ];
+
+  // Duration options for extracurricular activities
+  const durationOptions = [
+    '< 6 months', '6 months', '1 year', '2 years', '3 years', '4+ years'
+  ];
+
+  // Types of accomplishments
+  const accomplishmentTypes = [
+    'Award', 'Certification', 'Competition', 'Workshop', 
+    'Patent', 'Publication', 'Scholarship', 'Other'
   ];
 
   return (
@@ -168,7 +210,7 @@ const Form = () => {
           </div>
         )}
 
-        {/* Internships Section */}
+        {/* Internships Section - Enhanced */}
         {activeSection === 'internships' && (
           <div className="form-section">
             <h2>Internships</h2>
@@ -192,6 +234,27 @@ const Form = () => {
                   />
                 </div>
                 <div className="input-group">
+                  <label>Location:</label>
+                  <input
+                    type="text"
+                    value={internship.location}
+                    onChange={(e) => handleInputChange('internships', 'location', e.target.value, index)}
+                    placeholder="City, Country"
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Sector:</label>
+                  <select
+                    value={internship.sector}
+                    onChange={(e) => handleInputChange('internships', 'sector', e.target.value, index)}
+                  >
+                    <option value="">Select sector</option>
+                    {sectorOptions.map(sector => (
+                      <option key={sector} value={sector}>{sector}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="input-group">
                   <label>Start Date:</label>
                   <input
                     type="date"
@@ -205,6 +268,15 @@ const Form = () => {
                     type="date"
                     value={internship.endDate}
                     onChange={(e) => handleInputChange('internships', 'endDate', e.target.value, index)}
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Stipend/Salary:</label>
+                  <input
+                    type="number"
+                    value={internship.stipend}
+                    onChange={(e) => handleInputChange('internships', 'stipend', e.target.value, index)}
+                    placeholder="Amount per month"
                   />
                 </div>
                 <div className="input-group">
@@ -425,7 +497,7 @@ const Form = () => {
           </div>
         )}
 
-        {/* Accomplishments Section */}
+        {/* Accomplishments Section - Enhanced */}
         {activeSection === 'accomplishments' && (
           <div className="form-section">
             <h2>Accomplishments</h2>
@@ -439,6 +511,26 @@ const Form = () => {
                     value={accomplishment.title}
                     onChange={(e) => handleInputChange('accomplishments', 'title', e.target.value, index)}
                   />
+                </div>
+                <div className="input-group">
+                  <label>Institution:</label>
+                  <input
+                    type="text"
+                    value={accomplishment.institution}
+                    onChange={(e) => handleInputChange('accomplishments', 'institution', e.target.value, index)}
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Type:</label>
+                  <select
+                    value={accomplishment.type}
+                    onChange={(e) => handleInputChange('accomplishments', 'type', e.target.value, index)}
+                  >
+                    <option value="">Select type</option>
+                    {accomplishmentTypes.map(type => (
+                      <option key={type} value={type}>{type}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="input-group">
                   <label>Description:</label>
@@ -455,6 +547,35 @@ const Form = () => {
                     onChange={(e) => handleInputChange('accomplishments', 'date', e.target.value, index)}
                   />
                 </div>
+                <div className="input-group">
+                  <label>Rank (if applicable):</label>
+                  <input
+                    type="text"
+                    value={accomplishment.rank}
+                    onChange={(e) => handleInputChange('accomplishments', 'rank', e.target.value, index)}
+                    placeholder="e.g., 1st, 2nd, Finalist"
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Percentile (if applicable):</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={accomplishment.percentile}
+                    onChange={(e) => handleInputChange('accomplishments', 'percentile', e.target.value, index)}
+                    placeholder="e.g., 95"
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Score (if applicable):</label>
+                  <input
+                    type="text"
+                    value={accomplishment.score}
+                    onChange={(e) => handleInputChange('accomplishments', 'score', e.target.value, index)}
+                    placeholder="e.g., 98/100, A+"
+                  />
+                </div>
                 {formData.accomplishments.length > 1 && (
                   <button type="button" className="remove-button" onClick={() => removeItem('accomplishments', index)}>
                     Remove Accomplishment
@@ -468,7 +589,7 @@ const Form = () => {
           </div>
         )}
 
-        {/* Extra-Curricular Activities Section */}
+        {/* Extra-Curricular Activities Section - Enhanced */}
         {activeSection === 'extraCurricular' && (
           <div className="form-section">
             <h2>Extra-Curricular Activities</h2>
@@ -501,12 +622,15 @@ const Form = () => {
                 </div>
                 <div className="input-group">
                   <label>Duration:</label>
-                  <input
-                    type="text"
+                  <select
                     value={activity.duration}
                     onChange={(e) => handleInputChange('extraCurricular', 'duration', e.target.value, index)}
-                    placeholder="e.g., 2 years, Sep 2022 - Present"
-                  />
+                  >
+                    <option value="">Select duration</option>
+                    {durationOptions.map(duration => (
+                      <option key={duration} value={duration}>{duration}</option>
+                    ))}
+                  </select>
                 </div>
                 {formData.extraCurricular.length > 1 && (
                   <button type="button" className="remove-button" onClick={() => removeItem('extraCurricular', index)}>
@@ -537,102 +661,7 @@ const Form = () => {
           </div>
         )}
 
-        {/* Job & Internship Search Section */}
-        {activeSection === 'jobSearch' && (
-          <div className="form-section">
-            <h2>Job & Internship Search</h2>
-            <div className="input-group">
-              <label>Preferred Industries:</label>
-              <div className="checkbox-group">
-                {['Technology', 'Finance', 'Healthcare', 'Education', 'Marketing', 'Engineering', 'Other'].map((industry) => (
-                  <div key={industry} className="checkbox-item">
-                    <input
-                      type="checkbox"
-                      id={`industry-${industry}`}
-                      checked={formData.jobSearch.industries.includes(industry)}
-                      onChange={(e) => {
-                        const updatedIndustries = e.target.checked
-                          ? [...formData.jobSearch.industries, industry]
-                          : formData.jobSearch.industries.filter((item) => item !== industry);
-                        handleInputChange('jobSearch', 'industries', updatedIndustries);
-                      }}
-                    />
-                    <label htmlFor={`industry-${industry}`}>{industry}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="input-group">
-              <label>Desired Roles:</label>
-              <div className="checkbox-group">
-                {['Intern', 'Entry Level', 'Junior', 'Mid Level', 'Senior', 'Management', 'Other'].map((role) => (
-                  <div key={role} className="checkbox-item">
-                    <input
-                      type="checkbox"
-                      id={`role-${role}`}
-                      checked={formData.jobSearch.roles.includes(role)}
-                      onChange={(e) => {
-                        const updatedRoles = e.target.checked
-                          ? [...formData.jobSearch.roles, role]
-                          : formData.jobSearch.roles.filter((item) => item !== role);
-                        handleInputChange('jobSearch', 'roles', updatedRoles);
-                      }}
-                    />
-                    <label htmlFor={`role-${role}`}>{role}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="input-group">
-              <label>Location Preferences:</label>
-              <div className="checkbox-group">
-                {['Local', 'Regional', 'National', 'International', 'No Preference'].map((location) => (
-                  <div key={location} className="checkbox-item">
-                    <input
-                      type="checkbox"
-                      id={`location-${location}`}
-                      checked={formData.jobSearch.locations.includes(location)}
-                      onChange={(e) => {
-                        const updatedLocations = e.target.checked
-                          ? [...formData.jobSearch.locations, location]
-                          : formData.jobSearch.locations.filter((item) => item !== location);
-                        handleInputChange('jobSearch', 'locations', updatedLocations);
-                      }}
-                    />
-                    <label htmlFor={`location-${location}`}>{location}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="input-group">
-              <label>Work Arrangement:</label>
-              <select
-                value={formData.jobSearch.workArrangement}
-                onChange={(e) => handleInputChange('jobSearch', 'workArrangement', e.target.value)}
-              >
-                <option value="">Select preference</option>
-                <option value="remote">Remote</option>
-                <option value="hybrid">Hybrid</option>
-                <option value="onsite">On-site</option>
-                <option value="flexible">Flexible</option>
-              </select>
-            </div>
-            <div className="input-group">
-              <label>Availability:</label>
-              <select
-                value={formData.jobSearch.availability}
-                onChange={(e) => handleInputChange('jobSearch', 'availability', e.target.value)}
-              >
-                <option value="">Select availability</option>
-                <option value="fulltime">Full-time</option>
-                <option value="parttime">Part-time</option>
-                <option value="contract">Contract</option>
-                <option value="seasonal">Seasonal</option>
-                <option value="internship">Internship</option>
-              </select>
-            </div>
-          </div>
-        )}
+       
 
         {/* Competitions & Events Section */}
         {activeSection === 'competitions' && (
@@ -683,7 +712,7 @@ const Form = () => {
                 </div>
                 {formData.competitions.length > 1 && (
                   <button type="button" className="remove-button" onClick={() => removeItem('competitions', index)}>
-                    Remove Competition/Event
+                    Remove Competition
                   </button>
                 )}
               </div>
@@ -694,73 +723,36 @@ const Form = () => {
           </div>
         )}
 
-        {/* Settings Section */}
-        {activeSection === 'settings' && (
-          <div className="form-section">
-            <h2>Settings</h2>
-            <div className="input-group checkbox-item">
-              <input
-                type="checkbox"
-                id="notifications"
-                checked={formData.settings.notifications}
-                onChange={(e) => handleInputChange('settings', 'notifications', e.target.checked)}
-              />
-              <label htmlFor="notifications">Receive email notifications about new opportunities</label>
-            </div>
-            <div className="input-group">
-              <label>Profile Visibility:</label>
-              <select
-                value={formData.settings.profileVisibility}
-                onChange={(e) => handleInputChange('settings', 'profileVisibility', e.target.value)}
-              >
-                <option value="public">Public (visible to all employers)</option>
-                <option value="limited">Limited (visible only to approved employers)</option>
-                <option value="private">Private (visible only when you apply)</option>
-              </select>
-            </div>
-            <div className="input-group checkbox-item">
-              <input
-                type="checkbox"
-                id="marketingEmails"
-                checked={formData.settings.marketingEmails}
-                onChange={(e) => handleInputChange('settings', 'marketingEmails', e.target.checked)}
-              />
-              <label htmlFor="marketingEmails">Receive marketing emails and newsletters</label>
-            </div>
-          </div>
-        )}
+    
 
-        <div className="form-navigation-buttons">
-          {sections.findIndex(section => section.id === activeSection) > 0 && (
-            <button
-              type="button"
-              className="nav-button"
-              onClick={() => {
-                const currentIndex = sections.findIndex(section => section.id === activeSection);
-                setActiveSection(sections[currentIndex - 1].id);
-              }}
-            >
-              Previous
-            </button>
-          )}
-          
-          {sections.findIndex(section => section.id === activeSection) < sections.length - 1 ? (
-            <button
-              type="button"
-              className="nav-button next"
-              onClick={() => {
-                const currentIndex = sections.findIndex(section => section.id === activeSection);
-                setActiveSection(sections[currentIndex + 1].id);
-              }}
-            >
-              Next
-            </button>
-          ) : (
-            <button type="submit" className="submit-button">
-              Submit Registration
-            </button>
-          )}
-        </div>
+{/* Navigation Buttons */}
+<div className="navigation-buttons">
+  {sections.findIndex(section => section.id === activeSection) > 0 && (
+    <button
+      onClick={() => {
+        const currentIndex = sections.findIndex(section => section.id === activeSection);
+        setActiveSection(sections[currentIndex - 1].id);
+      }}
+    >
+      Previous
+    </button>
+  )}
+  
+  {sections.findIndex(section => section.id === activeSection) < sections.length - 1 ? (
+    <button
+      onClick={() => {
+        const currentIndex = sections.findIndex(section => section.id === activeSection);
+        setActiveSection(sections[currentIndex + 1].id);
+      }}
+    >
+      Next
+    </button>
+  ) : (
+    <button type="submit">
+      Submit Registration
+    </button>
+  )}
+</div>
       </form>
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
 import '../../styles/student/OngoingDrives.css';
 
 function OngoingDrives() {
@@ -99,12 +98,6 @@ function OngoingDrives() {
     setBreadcrumbs([tab]);
   };
 
-  // Toggle dark mode
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    document.body.classList.toggle('dark-theme');
-  };
-
   // Filter drives based on active filter and search term
   const filteredDrives = ongoingDrives.filter(drive => {
     const matchesFilter = activeFilter === 'All' || roleCategories[drive.role] === activeFilter;
@@ -140,22 +133,10 @@ function OngoingDrives() {
               </React.Fragment>
             ))}
           </div>
-          <div className="actions">
-            <button className="btn-manage" onClick={toggleTheme} aria-label="Toggle Dark Mode">
-              {darkMode ? 'Light' : 'Dark'}
-            </button>
-            <button className="btn-share" aria-label="Notifications">
-              Notifications
-            </button>
-            <button className="btn-more" aria-label="Profile">
-              Settings
-            </button>
-          </div>
         </div>
 
         <div className="drives-container">
           <div className="header-section">
-            <h1 className="drives-header">Ongoing Recruitment Drives</h1>
             <p className="drives-subtitle">Explore opportunities from top companies hiring on campus</p>
           </div>
           
@@ -164,7 +145,7 @@ function OngoingDrives() {
             {categories.map(category => (
               <button 
                 key={category}
-                className={`category-button ${activeFilter === category ? 'active' : ''}`}
+                className={`custom-button category-button ${activeFilter === category ? 'active' : ''}`}
                 onClick={() => handleFilterClick(category)}
               >
                 {category}
@@ -177,17 +158,11 @@ function OngoingDrives() {
             <div className="search-box">
               <input 
                 type="text" 
-                placeholder="Search companies, roles or locations" 
+                placeholder="Search organizations, technology or topics" 
                 className="search-input"
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
-              <button className="search-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-              </button>
             </div>
             
             {/* Sort and view options */}
@@ -195,19 +170,19 @@ function OngoingDrives() {
               <div className="sort-options">
                 <span className="sort-label">Sort by</span>
                 <button 
-                  className={`sort-button ${sortOrder === 'Deadline' ? 'active' : ''}`}
+                  className={`custom-button sort-button ${sortOrder === 'Deadline' ? 'active' : ''}`}
                   onClick={() => handleSortChange('Deadline')}
                 >
                   Deadline
                 </button>
                 <button 
-                  className={`sort-button ${sortOrder === 'Company A-Z' ? 'active' : ''}`}
+                  className={`custom-button sort-button ${sortOrder === 'Company A-Z' ? 'active' : ''}`}
                   onClick={() => handleSortChange('Company A-Z')}
                 >
                   A-Z
                 </button>
                 <button 
-                  className={`sort-button ${sortOrder === 'Company Z-A' ? 'active' : ''}`}
+                  className={`custom-button sort-button ${sortOrder === 'Company Z-A' ? 'active' : ''}`}
                   onClick={() => handleSortChange('Company Z-A')}
                 >
                   Z-A
@@ -216,7 +191,7 @@ function OngoingDrives() {
               
               <div className="view-options">
                 <button 
-                  className={`view-button ${viewMode === 'grid' ? 'active' : ''}`}
+                  className={`custom-button view-button ${viewMode === 'grid' ? 'active' : ''}`}
                   onClick={() => handleViewChange('grid')}
                   aria-label="Grid view"
                 >
@@ -228,7 +203,7 @@ function OngoingDrives() {
                   </svg>
                 </button>
                 <button 
-                  className={`view-button ${viewMode === 'list' ? 'active' : ''}`}
+                  className={`custom-button view-button ${viewMode === 'list' ? 'active' : ''}`}
                   onClick={() => handleViewChange('list')}
                   aria-label="List view"
                 >
@@ -288,10 +263,10 @@ function OngoingDrives() {
                   </div>
                   
                   <div className="drive-actions">
-                    <a href={drive.applyLink} target="_blank" rel="noopener noreferrer" className="apply-button">
+                    <a href={drive.applyLink} target="_blank" rel="noopener noreferrer" className="custom-button apply-button">
                       Apply Now
                     </a>
-                    <a href={`/drive-details/${drive.id}`} className="details-button">
+                    <a href={`/drive-details/${drive.id}`} className="custom-button details-button">
                       View Details
                     </a>
                   </div>
@@ -304,7 +279,10 @@ function OngoingDrives() {
                   <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
                 </svg>
                 <p>No drives match your search criteria</p>
-                <button onClick={() => {setActiveFilter('All'); setSearchTerm('')}} className="reset-button">
+                <button 
+                  onClick={() => {setActiveFilter('All'); setSearchTerm('')}} 
+                  className="custom-button reset-button"
+                >
                   Reset Filters
                 </button>
               </div>

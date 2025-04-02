@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/student/Dashboard.css';
 
 // Tech Stack Card Component
 const TechStackCard = () => {
-  const [techStack, setTechStack] = useState([
-    
-  ]);
+  const [techStack, setTechStack] = useState([]);
   
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTech, setNewTech] = useState('');
@@ -102,7 +101,7 @@ const TechStackCard = () => {
 };
 
 // Profile Card Component
-const ProfileCard = () => {
+const ProfileCard = ({ onEditProfile }) => {
   return (
     <div className="card profile-card">
       <h2>Profile</h2>
@@ -120,7 +119,7 @@ const ProfileCard = () => {
           </p>
         </div>
       </div>
-      <button className="btn-action">Edit Profile</button>
+      <button className="btn-action" onClick={onEditProfile}>Edit Profile</button>
     </div>
   );
 };
@@ -190,9 +189,9 @@ const ResumeCard = () => {
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Dashboard");
-  const [breadcrumbs, setBreadcrumbs] = useState([activeTab]); // Initialize with the active tab
-  const [darkMode, setDarkMode] = useState(false);
+  const [breadcrumbs, setBreadcrumbs] = useState([activeTab]);
 
   // Function to get the greeting based on the current time
   const getGreeting = () => {
@@ -208,19 +207,18 @@ const Dashboard = () => {
     }
   };
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    setBreadcrumbs([tab]); // Update breadcrumbs to only show the current tab
+  // Function to navigate to forms page
+  const goToFormsPage = () => {
+    navigate('/student-registration');
   };
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    document.body.classList.toggle('dark-theme');
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setBreadcrumbs([tab]);
   };
 
   return (
-    <div className={`dashboard-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      
+    <div className="dashboard-container">      
       <div className="main-content">
         <div className="header">
           <div className="breadcrumbs">
@@ -231,17 +229,6 @@ const Dashboard = () => {
               </React.Fragment>
             ))}
           </div>
-          <div className="actions">
-            <button className="btn-manage" onClick={toggleTheme} aria-label="Toggle Dark Mode">
-              {darkMode ? 'Light' : 'Dark'}
-            </button>
-            <button className="btn-share" aria-label="Notifications">
-              Notifications
-            </button>
-            <button className="btn-more" aria-label="Profile">
-              Settings
-            </button>
-          </div>
         </div>
         <div>
           {/* Dynamically display the greeting */}
@@ -250,10 +237,11 @@ const Dashboard = () => {
         
         {/* Cards Grid Container */}
         <div className="cards-grid">
-          <ProfileCard />
+          <ProfileCard onEditProfile={goToFormsPage} />
           <TechStackCard />
           <ProjectsCard />
           <ResumeCard />
+          {/* Registration card has been removed */}
         </div>
       </div>
     </div>

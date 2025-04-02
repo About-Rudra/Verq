@@ -6,7 +6,6 @@ import OngoingDrives from "./pages/Student/OngoingDrives";
 import UpcomingDrives from "./pages/Student/UpcomingDrives";
 import Auth from "./pages/Student/Auth";
 import TechDirectory from "./pages/Student/TechDirectory";
-import EditProfile from "./pages/Student/EditProfile";
 import Form from "./pages/Student/Form";
 import Sidebar from "./components/Sidebar";
 import "./styles/Student/Sidebar.css"
@@ -23,9 +22,7 @@ function App() {
                   <Route path="/tech-directory" element={<TechDirectory />} />
                   <Route path="/ongoing-drives" element={<OngoingDrives />} />
                   <Route path="/upcoming-drives" element={<UpcomingDrives />} />
-                  {/* <Route path="/roadmap" element={<Roadmap />} /> 
-                    <Route path="/companies" element={<Companies />} />
-                  <Route path="/docs" element={<Docs />} /> */}
+                  <Route path="/student-registration" element={<Form />} />
                 </Routes>
               </main>
             </div>
