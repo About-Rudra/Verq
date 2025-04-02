@@ -3,6 +3,7 @@
 .page-container {
   animation: none;
 }
+
 @keyframes fadeIn {
   from {
       opacity: 0;

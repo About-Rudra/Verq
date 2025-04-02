@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/Student/OngoingDrives.css';
 
 function OngoingDrives() {
@@ -263,12 +264,20 @@ function OngoingDrives() {
                   </div>
                   
                   <div className="drive-actions">
-                    <a href={drive.applyLink} target="_blank" rel="noopener noreferrer" className="custom-button apply-button">
-                      Apply Now
-                    </a>
-                    <a href={`/drive-details/${drive.id}`} className="custom-button details-button">
+                    <Link 
+                    to={{
+                        pathname: `/apply/${drive.id}`,
+                        state: { 
+                        jobData: drive,
+                        from: 'ongoing-drives' 
+                          }
+                      }}
+                    className="custom-button apply-button">
+                    Apply Now
+                    </Link>
+                    <Link to={`/job-details/${drive.id}`} className="custom-button details-button">
                       View Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               ))

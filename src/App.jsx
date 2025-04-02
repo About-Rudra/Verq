@@ -7,8 +7,11 @@ import UpcomingDrives from "./pages/Student/UpcomingDrives";
 import Auth from "./pages/Student/Auth";
 import TechDirectory from "./pages/Student/TechDirectory";
 import Form from "./pages/Student/Form";
+import JobDetails from "./pages/Student/JobDetails"
+import Application from "./pages/Student/Application";
 import Sidebar from "./components/Sidebar";
 import "./styles/Student/Sidebar.css"
+
 
 function App() {
     return (
@@ -23,6 +26,8 @@ function App() {
                   <Route path="/ongoing-drives" element={<OngoingDrives />} />
                   <Route path="/upcoming-drives" element={<UpcomingDrives />} />
                   <Route path="/student-registration" element={<Form />} />
+                  <Route path="/job-details/:id" element={<JobDetails />} />
+                  <Route path="/apply/:id" element={<Application />} />
                 </Routes>
               </main>
             </div>
