@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/Student/TechDirectory.css';
 
 function TechDirectory() {
@@ -238,9 +239,9 @@ function TechDirectory() {
                     <p className="company-description">{company.description}</p>
                   </div>
                   <div className="company-actions">
-                    <a href={`/tech-details/${company.id}`} className="view-button">
+                    <Link to={`/job-details/${company.id}`} className="custom-button details-button">
                       View Details
-                    </a>
+                    </Link>
                   </div>
                 </div>
               ))

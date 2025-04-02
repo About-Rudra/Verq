@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import "../../styles/Student/UpcomingDrives.css";
 
 const upcomingDrives = [
@@ -148,14 +149,17 @@ function UpcomingDrives() {
                 <p><strong>Stipend:</strong> {drive.stipend}</p>
                 <p><strong>Prerequisites:</strong> {drive.prerequisites}</p>
                 <p><strong>Eligibility:</strong> {drive.eligibility}</p>
-                <a 
-                  href={drive.applyLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="apply-button"
-                >
-                  Apply Now
-                </a>
+                <Link 
+                    to={{
+                        pathname: `/apply/${drive.id}`,
+                        state: { 
+                        jobData: drive,
+                        from: 'ongoing-drives' 
+                          }
+                      }}
+                    className="custom-button apply-button">
+                    Apply Now
+                    </Link>
               </div>
             ))}
           </div>
