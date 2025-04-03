@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../styles/Student/TechDirectory.css';
+import '../../styles/Student/ParticipatedDrives.css';
 
-function TechDirectory() {
+function ParticipatedDrives() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortOrder, setSortOrder] = useState('A-Z');
   const [viewMode, setViewMode] = useState('grid');
@@ -264,4 +264,4 @@ function TechDirectory() {
   );
 }
 
-export default TechDirectory;
+export default ParticipatedDrives;

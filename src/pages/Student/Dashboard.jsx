@@ -119,7 +119,7 @@ const ProfileCard = ({ onEditProfile }) => {
           </p>
         </div>
       </div>
-      <button className="btn-action" onClick={onEditProfile}>Edit Profile</button>
+      <button className="btn-action">Edit Profile</button>
     </div>
   );
 };

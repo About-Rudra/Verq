@@ -14,18 +14,24 @@ import {
   FaBuilding,
   FaBookOpen
 } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom"; // Added useNavigate
 import { ThemeContext } from "../context/ThemeContext";
 import "../styles/student/Sidebar.css";
 
 const Sidebar = () => {
   const [searchValue, setSearchValue] = useState("");
   const { darkMode, toggleDarkMode } = useContext(ThemeContext);
+  const navigate = useNavigate(); // Initialize navigate function
+
+  // Function to handle logo click
+  const handleLogoClick = () => {
+    navigate("/"); // Navigate to dashboard
+  };
 
   return (
     <div className={`sidebar ${darkMode ? "dark" : ""}`}>
       <div className="sidebar-header">
-        <h2 className="logo">VerQ</h2>
+        <h2 className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>VerQ</h2>
       </div>
       
       <div className="search-container">
@@ -46,6 +52,11 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/roadmaps" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaMapSigns className="icon" /> Roadmaps
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/ongoing-drives" className={({ isActive }) => isActive ? "active" : ""}>
               <FaProjectDiagram className="icon" /> Ongoing Drives
             </NavLink>
@@ -56,13 +67,8 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/tech-directory" className={({ isActive }) => isActive ? "active" : ""}>
-              <FaCode className="icon" /> Tech Directory
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/roadmaps" className={({ isActive }) => isActive ? "active" : ""}>
-              <FaMapSigns className="icon" /> Roadmaps
+            <NavLink to="/participated-drives" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaCode className="icon" /> Participated Drives
             </NavLink>
           </li>
           <li>
