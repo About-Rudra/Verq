@@ -5,37 +5,32 @@
   position: relative;
   background-color: black;
 }
-
 .scrolling-content {
-  width: 200vw; /* Extend width for smooth scrolling */
+  width: 200vw;
+ /* Extend width for smooth scrolling */
   height: 100%;
   background-size: contain;
   background-repeat: repeat-x;
   position: absolute;
   animation: scroll 30s linear infinite;
 }
-
 @keyframes scroll {
   from {
-    transform: translateX(0);
-  }
+      transform: translateX(0);
+ }
   to {
-    transform: translateX(-5%);
-  }
+      transform: translateX(-5%);
+ }
 }
-
 .scrolling-container {
   display: flex;
   overflow: hidden;
   white-space: nowrap;
 }
-
 .scrolling-content {
   display: inline-block;
   animation: scroll 10s linear infinite;
 }
-
-
 /* Full-height box covering half the width */
 .overlay-box {
   width: 50vw;
@@ -48,18 +43,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 40px; /* Added padding for better spacing */
+  padding: 40px;
+ /* Added padding for better spacing */
 }
-
 /* Container for buttons */
 .auth-buttons {
   display: flex;
-  gap: 10px; /* Increase gap for better spacing */
+  gap: 10px;
+ /* Increase gap for better spacing */
   position: absolute;
-  top: 15px; /* Adjust spacing from top */
-  right: 15px; /* Move to the right corner */
+  top: 15px;
+ /* Adjust spacing from top */
+  right: 15px;
+ /* Move to the right corner */
 }
-
 /* Button styles */
 .btn {
   background-color: #383838;
@@ -74,13 +71,11 @@
   min-width: 110px;
   text-align: center;
 }
-
 /* Hover effect */
 .btn:hover {
   background-color: #454545;
   transform: scale(1.02);
 }
-
 /* Centered Text */
 .text-content {
   text-align: left;
@@ -90,17 +85,17 @@
   height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 .main-heading {
-  font-size: 55px; /* Reduced for better fit */
+  font-size: 55px;
+ /* Reduced for better fit */
   font-weight: 800;
   text-transform: uppercase;
   color: black;
-  max-width: 90%; /* Prevents text overflow */
+  max-width: 90%;
+ /* Prevents text overflow */
   line-height: 1.1;
   margin-bottom: 10px;
 }
-
 .subtext {
   font-size: 20px;
   color: black;

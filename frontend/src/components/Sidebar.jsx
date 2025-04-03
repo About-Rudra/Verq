@@ -1,121 +1,101 @@
 import React, { useState, useContext } from "react";
-// import { 
-//   FaHome, 
-//   FaCheckCircle, 
-//   FaSpinner, 
-//   FaCalendarAlt, 
-//   FaRoad, 
-//   FaBuilding, 
-//   FaFileAlt,
-//   FaSearch,
-//   FaMoon,
-//   FaSun
-// } from "react-icons/fa";
-import 'fa-icons';
+import { 
+  FaHome, 
+  FaProjectDiagram, 
+  FaCalendarAlt,
+  FaCode,
+  FaMapSigns,
+  FaBell,
+  FaUserCog,
+  FaCog,
+  FaMoon,
+  FaSun,
+  FaSearch,
+  FaBuilding,
+  FaBookOpen
+} from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
 import "../styles/student/Sidebar.css";
 
-// Theme context (you would implement this)
-const ThemeContext = React.createContext({
-  darkMode: false,
-  toggleTheme: () => {}
-});
-
-const Sidebar = ({ activeTab, onTabChange }) => {
-  // Use the activeTab prop from Dashboard if available, otherwise use local state
-  const [localActiveTab, setLocalActiveTab] = useState("Dashboard");
-  const currentActiveTab = activeTab || localActiveTab;
-  
+const Sidebar = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { darkMode, toggleTheme } = useContext(ThemeContext);
-
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
-  };
-
-  const handleSearchClear = () => {
-    setSearchValue("");
-  };
-  
-  // Handle tab click
-  const handleTabClick = (tab) => {
-    if (onTabChange) {
-      // If parent component provided a handler, use it
-      onTabChange(tab);
-    } else {
-      // Otherwise use local state
-      setLocalActiveTab(tab);
-    }
-  };
+  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
 
   return (
-    <div className={`sidebar ${darkMode ? 'dark-theme' : ''}`}>
+    <div className={`sidebar ${darkMode ? "dark" : ""}`}>
       <div className="sidebar-header">
         <h2 className="logo">VerQ</h2>
       </div>
-
+      
       <div className="search-container">
         <input 
           type="text" 
-          className="search-bar" 
+          className="search-input" 
           placeholder="Search..."
           value={searchValue}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
-        {searchValue && (
-          <button 
-            className="clear-search" 
-            onClick={handleSearchClear}
-            aria-label="Clear search"
-          >
-            ×
-          </button>
-        )}
       </div>
 
-      <ul className="menu">
-        <li
-          className={currentActiveTab === "Dashboard" ? "active" : ""}
-          onClick={() => handleTabClick("Dashboard")}
-        >
-          <FaHome className="icon" /> Dashboard
-        </li>
-        <li
-          className={currentActiveTab === "Completed Drives" ? "active" : ""}
-          onClick={() => handleTabClick("Completed Drives")}
-        >
-          <FaCheckCircle className="icon" /> Completed Drives
-        </li>
-        <li
-          className={currentActiveTab === "Ongoing Drives" ? "active" : ""}
-          onClick={() => handleTabClick("Ongoing Drives")}
-        >
-          <FaSpinner className="icon" /> Ongoing Drives
-        </li>
-        <li
-          className={currentActiveTab === "Upcoming Drives" ? "active" : ""}
-          onClick={() => handleTabClick("Upcoming Drives")}
-        >
-          <FaCalendarAlt className="icon" /> Upcoming Drives
-        </li>
-        <li
-          className={currentActiveTab === "Roadmap" ? "active" : ""}
-          onClick={() => handleTabClick("Roadmap")}
-        >
-          <FaRoad className="icon" /> Roadmap
-        </li>
-        <li
-          className={currentActiveTab === "Companies" ? "active" : ""}
-          onClick={() => handleTabClick("Companies")}
-        >
-          <FaBuilding className="icon" /> Companies
-        </li>
-        <li
-          className={currentActiveTab === "Docs" ? "active" : ""}
-          onClick={() => handleTabClick("Docs")}
-        >
-          <FaFileAlt className="icon" /> Docs
-        </li>
-      </ul>
+      <nav className="main-menu">
+        <ul>
+          <li>
+            <NavLink to="/dashboard" end className={({ isActive }) => isActive ? "active" : ""}>
+              <FaHome className="icon" /> Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/ongoing-drives" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaProjectDiagram className="icon" /> Ongoing Drives
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/upcoming-drives" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaCalendarAlt className="icon" /> Upcoming Drives
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/tech-directory" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaCode className="icon" /> Tech Directory
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/roadmaps" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaMapSigns className="icon" /> Roadmaps
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/notifications" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaBell className="icon" /> Notifications
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaUserCog className="icon" /> Profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/settings" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaCog className="icon" /> Settings
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+
+      <div className="divider"></div>
+      
+      <button className="theme-toggle" onClick={toggleDarkMode}>
+        {darkMode ? (
+          <>
+            <FaSun className="icon" /> Light Mode
+          </>
+        ) : (
+          <>
+            <FaMoon className="icon" /> Dark Mode
+          </>
+        )}
+      </button>
     </div>
   );
 };

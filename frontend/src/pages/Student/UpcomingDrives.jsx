@@ -1,6 +1,5 @@
-import React from "react";
-import { Container } from "react-bootstrap";
-import Sidebar from "../../components/Sidebar"; 
+import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import "../../styles/Student/UpcomingDrives.css";
 
 const upcomingDrives = [
@@ -117,26 +116,56 @@ const upcomingDrives = [
 ];
 
 function UpcomingDrives() {
+  const [activeTab] = useState("Upcoming Drives");
+  const [breadcrumbs] = useState([activeTab]);
+
   return (
-    <Container fluid className="drives-container">
-      <h1>Upcoming Recruitment Drives</h1>
-      <div className="grid-container">
-        {upcomingDrives.map((drive) => (
-          <div key={drive.id} className="grid-card">
-            <h3>{drive.company}</h3>
-            <h5>{drive.role}</h5>
-            <p>📍 <strong>Location:</strong> {drive.location}</p>
-            <p>📅 <strong>Date:</strong> {drive.date}</p>
-            <p>💰 <strong>Stipend:</strong> {drive.stipend}</p>
-            <p>📌 <strong>Prerequisites:</strong> {drive.prerequisites}</p>
-            <p>🎓 <strong>Eligibility:</strong> {drive.eligibility}</p>
-            <a href={drive.applyLink} target="_blank" rel="noopener noreferrer" className="apply-button">
-              Apply Now
-            </a>
+    <div className="dashboard-container">
+      <div className="main-content">
+        <div className="header">
+          <div className="breadcrumbs">
+            {breadcrumbs.map((crumb, index) => (
+              <React.Fragment key={index}>
+                <span>{crumb}</span>
+                {index < breadcrumbs.length - 1 && <span className="separator">›</span>}
+              </React.Fragment>
+            ))}
           </div>
-        ))}
+          
+        </div>
+
+        <div className="drives-container">
+          <div className="header-section">
+            <p className="drives-subtitle">Explore upcoming opportunities from top companies</p>
+          </div>
+
+          <div className="grid-container">
+            {upcomingDrives.map((drive) => (
+              <div key={drive.id} className="grid-card">
+                <h3>{drive.company}</h3>
+                <h5>{drive.role}</h5>
+                <p><strong>Location:</strong> {drive.location}</p>
+                <p><strong>Date:</strong> {drive.date}</p>
+                <p><strong>Stipend:</strong> {drive.stipend}</p>
+                <p><strong>Prerequisites:</strong> {drive.prerequisites}</p>
+                <p><strong>Eligibility:</strong> {drive.eligibility}</p>
+                <Link 
+                    to={{
+                        pathname: `/apply/${drive.id}`,
+                        state: { 
+                        jobData: drive,
+                        from: 'ongoing-drives' 
+                          }
+                      }}
+                    className="custom-button apply-button">
+                    Apply Now
+                    </Link>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </Container>
+    </div>
   );
 }
 
