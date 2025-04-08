@@ -1,24 +1,25 @@
 import React, { useState, useContext } from 'react';
-import { 
-  FaLock, 
-  FaBell, 
-  FaShieldAlt, 
-  FaDatabase, 
-  FaBriefcase, 
-  FaPlug, 
-  FaQuestionCircle,
-  FaEye,
-  FaEyeSlash,
-  FaTrash,
-  FaDownload,
-  FaCalendarAlt,
-  FaMapMarkerAlt,
-  FaMoneyBillWave,
-  FaGithub,
-  FaLinkedin,
-  FaGoogle,
-  FaEnvelope
-} from 'react-icons/fa';
+// import { 
+//   FaLock, 
+//   FaBell, 
+//   FaShieldAlt, 
+//   FaDatabase, 
+//   FaBriefcase, 
+//   FaPlug, 
+//   FaQuestionCircle,
+//   FaEye,
+//   FaEyeSlash,
+//   FaTrash,
+//   FaDownload,
+//   FaCalendarAlt,
+//   FaMapMarkerAlt,
+//   FaMoneyBillWave,
+//   FaGithub,
+//   FaLinkedin,
+//   FaGoogle,
+//   FaEnvelope
+// } from 'react-icons/fa';
+import 'fa-icons';
 import { ThemeContext } from '../../context/ThemeContext';
 import '../../styles/student/Settings.css';
 

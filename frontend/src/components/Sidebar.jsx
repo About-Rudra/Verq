@@ -14,6 +14,7 @@ import {
   FaBuilding,
   FaBookOpen
 } from "react-icons/fa";
+import 'fa-icons';
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
 import "../styles/student/Sidebar.css";

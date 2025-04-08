@@ -12,7 +12,7 @@ const LandingPage = () => {
       <div className="overlay-box">
         {/* Buttons */}
         <div className="auth-buttons">
-          <button className="btn">Sign In</button>
+          <button className="btn">Recruiter</button>
           <button className="btn">Sign Up</button>
         </div>
         <div className="text-content">
