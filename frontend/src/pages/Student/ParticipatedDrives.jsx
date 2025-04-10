@@ -9,7 +9,7 @@ function ParticipatedDrives() {
   const [searchTerm, setSearchTerm] = useState('');
   
   // Add state for activeTab and breadcrumbs
-  const [activeTab, setActiveTab] = useState("Tech Directory");
+  const [activeTab, setActiveTab] = useState("Participated Drives");
   const [breadcrumbs, setBreadcrumbs] = useState([activeTab]); // Initialize with the active tab
   
   const categories = [

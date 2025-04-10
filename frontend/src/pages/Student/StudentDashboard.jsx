@@ -2,32 +2,53 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Student/Dashboard.css';
 
-// Tech Stack Card Component
 const TechStackCard = () => {
   const [techStack, setTechStack] = useState([]);
-  
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTech, setNewTech] = useState('');
+  const [error, setError] = useState('');
   
-  // Common tech options for quick selection
   const techOptions = [
-    'HTML', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 
-    'PostgreSQL', 'Python', 'Django', 'Java', 'Spring', 
-    'Docker', 'AWS', 'Firebase'
+    'HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 
+    'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Python', 
+    'Django', 'Java', 'Spring', 'Docker', 'AWS', 'Firebase'
   ];
   
-  const handleAddTech = () => {
-    if (newTech.trim() !== '') {
-      const newId = techStack.length > 0 ? Math.max(...techStack.map(tech => tech.id)) + 1 : 1;
-      setTechStack([...techStack, { id: newId, name: newTech.trim() }]);
-      setNewTech('');
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleAddTech();
     }
   };
   
+  const handleAddTech = () => {
+    const techName = newTech.trim();
+    
+    if (!techName) {
+      setError('Please enter a technology name');
+      return;
+    }
+    
+    if (techStack.some(tech => 
+      tech.name.toLowerCase() === techName.toLowerCase()
+    )) {
+      setError('This technology is already in your stack');
+      return;
+    }
+    
+    const newId = techStack.length > 0 ? Math.max(...techStack.map(tech => tech.id)) + 1 : 1;
+    setTechStack([...techStack, { id: newId, name: techName }]);
+    setNewTech('');
+    setError('');
+  };
+  
   const handleQuickAdd = (tech) => {
-    if (!techStack.some(item => item.name.toLowerCase() === tech.toLowerCase())) {
+    if (!techStack.some(item => 
+      item.name.toLowerCase() === tech.toLowerCase()
+    )) {
       const newId = techStack.length > 0 ? Math.max(...techStack.map(tech => tech.id)) + 1 : 1;
       setTechStack([...techStack, { id: newId, name: tech }]);
+    } else {
+      setError('This technology is already in your stack');
     }
   };
   
@@ -40,18 +61,22 @@ const TechStackCard = () => {
       <h2>Tech Stack</h2>
       
       <div className="tech-list">
-        {techStack.map(tech => (
-          <div key={tech.id} className="tech-item">
-            <span>{tech.name}</span>
-            <button 
-              className="remove-tech-btn" 
-              onClick={() => handleRemoveTech(tech.id)}
-              aria-label={`Remove ${tech.name}`}
-            >
-              ×
-            </button>
-          </div>
-        ))}
+        {techStack.length > 0 ? (
+          techStack.map(tech => (
+            <div key={tech.id} className="tech-item">
+              <span>{tech.name}</span>
+              <button 
+                className="remove-tech-btn" 
+                onClick={() => handleRemoveTech(tech.id)}
+                aria-label={`Remove ${tech.name}`}
+              >
+                ×
+              </button>
+            </div>
+          ))
+        ) : (
+          <p className="empty-state">No technologies added yet</p>
+        )}
       </div>
       
       {showAddForm ? (
@@ -59,39 +84,52 @@ const TechStackCard = () => {
           <input
             type="text"
             value={newTech}
-            onChange={(e) => setNewTech(e.target.value)}
+            onChange={(e) => {
+              setNewTech(e.target.value);
+              setError('');
+            }}
+            onKeyDown={handleKeyDown}
             placeholder="Enter technology name"
             className="tech-input"
+            autoFocus
           />
+          {error && <p className="error-message">{error}</p>}
+          
           <div className="tech-form-actions">
             <button className="btn-add-tech" onClick={handleAddTech}>Add</button>
             <button className="btn-cancel" onClick={() => {
               setShowAddForm(false);
               setNewTech('');
+              setError('');
             }}>Cancel</button>
           </div>
           
           <div className="quick-add-options">
             <p>Quick add:</p>
             <div className="tech-options">
-              {techOptions.filter(tech => 
-                !techStack.some(item => item.name.toLowerCase() === tech.toLowerCase())
-              ).slice(0, 6).map((tech, index) => (
-                <button 
-                  key={index} 
-                  className="quick-add-btn"
-                  onClick={() => handleQuickAdd(tech)}
-                >
-                  {tech}
-                </button>
-              ))}
+              {techOptions
+                .filter(tech => !techStack.some(item => 
+                  item.name.toLowerCase() === tech.toLowerCase()
+                ))
+                .map((tech, index) => (
+                  <button 
+                    key={index} 
+                    className="quick-add-btn"
+                    onClick={() => handleQuickAdd(tech)}
+                  >
+                    {tech}
+                  </button>
+                ))}
             </div>
           </div>
         </div>
       ) : (
         <button 
           className="btn-action add-tech-btn" 
-          onClick={() => setShowAddForm(true)}
+          onClick={() => {
+            setShowAddForm(true);
+            setError('');
+          }}
         >
           + Add Technology
         </button>

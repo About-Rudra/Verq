@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
-import "../styles/recruiter/RSidebar.css";
+import "../styles/Recruiter/RecruiterSidebar.css";
 
 const RSidebar = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -42,7 +42,7 @@ const RSidebar = () => {
         <ul>
           <li>
             <NavLink 
-              to="/dashboard" 
+              to="/recruiter-dashboard" 
               className={({ isActive }) => isActive ? "active" : ""}
             >
               <FaHome className="icon" /> Dashboard
