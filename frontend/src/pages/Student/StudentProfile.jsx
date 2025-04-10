@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
-import '../../styles/Student/Form.css';
+import '../../styles/Student/StudentProfile.css';
 
-const Form = () => {
+const StudentProfile = () => {
   const [activeSection, setActiveSection] = useState('personal');
+  const [activeTab] = useState("Profile");
+  const [breadcrumbs] = useState([activeTab]);
   const { darkMode } = useContext(ThemeContext);
   const [formData, setFormData] = useState({
     personal: {
@@ -139,9 +141,9 @@ const Form = () => {
   ];
 
   return (
+    
     <div className={`registration-container ${darkMode ? 'dark-theme' : ''}`}>
-      <h1>Student Registration Form</h1>
-
+      
       <div className="form-navigation">
         {sections.map((section) => (
           <button
@@ -760,4 +762,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default StudentProfile;

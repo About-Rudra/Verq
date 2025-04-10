@@ -11,13 +11,14 @@ import UpcomingDrives from "./pages/Student/UpcomingDrives";
 import ParticipatedDrives from "./pages/Student/ParticipatedDrives";
 import Roadmaps from "./pages/Student/Roadmaps";
 import Settings from "./pages/Student/Settings";
-import Form from "./pages/Student/Form";
+import StudentProfile from "./pages/Student/StudentProfile";
 import JobDetails from "./pages/Student/JobDetails"
 import Application from "./pages/Student/Application";
 import StudentSidebar from "./components/StudentSidebar";
 import StudentPerks from "./pages/Student/StudentPerks";
 import Projects from "./pages/Student/Projects";
 import Notifications from "./pages/Student/Notifications";
+import Forum from "./pages/Student/Forum";
 import "./styles/Student/StudentSidebar.css"
  
 import RecruiterDashboard from "./pages/Recruiter/RecruiterDashboard";
@@ -39,15 +40,17 @@ function App() {
                   <Route path="/participated-drives" element={<ParticipatedDrives />} />
                   <Route path="/ongoing-drives" element={<OngoingDrives />} />
                   <Route path="/upcoming-drives" element={<UpcomingDrives />} />
-                  <Route path="/student-registration" element={<Form />} />
+                  <Route path="/student-profile" element={<StudentProfile />} />
                   <Route path="/job-details/:id" element={<JobDetails />} />
                   <Route path="/apply/:id" element={<Application />} />
                   <Route path="/roadmaps" element={<Roadmaps />} />
                   <Route path="/student-perks" element={<StudentPerks />} />
                   <Route path="/settings" element={<Settings />} />
-                  <Route path="profile" element={<Form />} />
+                  <Route path="profile" element={<StudentProfile />} />
                   <Route path="projects" element={<Projects />} />
                   <Route path="notifications" element={<Notifications />} />
+                  <Route path="forum" element={<Forum />} />
+                  
                 </Routes>
               </main>
 

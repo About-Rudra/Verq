@@ -61,7 +61,7 @@ const StudentSidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
+            <NavLink to="/student-profile" className={({ isActive }) => isActive ? "active" : ""}>
               <FaUserAlt className="icon" /> Profile
             </NavLink>
           </li>
@@ -126,7 +126,7 @@ const StudentSidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/discussion-forum" className={({ isActive }) => isActive ? "active" : ""}>
+            <NavLink to="/forum" className={({ isActive }) => isActive ? "active" : ""}>
               <FaUsers className="icon" /> Discussion Forum
             </NavLink>
           </li>

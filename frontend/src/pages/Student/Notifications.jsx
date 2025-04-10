@@ -113,20 +113,10 @@ const Notifications = () => {
           </div>
         </div>
 
-        <div className="notifications-container">
-          <div className="notifications-header">
+        <div className="notifications-header">
             <div className="header-top flex items-center justify-between">
               <h1>
                 Notifications
-                {hasNew && !isLoading && (
-                  <motion.span 
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="new-indicator"
-                  >
-                    New
-                  </motion.span>
-                )}
               </h1>
               <div className="flex items-center gap-2">
                 <span className={`unread-count ${unreadCount > 0 ? 'has-unread' : ''}`}>
@@ -245,7 +235,6 @@ const Notifications = () => {
               </AnimatePresence>
             )}
           </div>
-        </div>
       </div>
     </div>
   );
