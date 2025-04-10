@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaSearch, FaThumbsUp, FaThumbsDown, FaComment, FaBookmark, FaShare, FaEllipsisH } from 'react-icons/fa';
+import { FaSearch, FaThumbsUp, FaThumbsDown, FaComment, FaBookmark, FaShare, FaEllipsisH, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import '../../styles/Student/Forum.css';
 
@@ -11,9 +11,17 @@ const Forum = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTabName] = useState("Forum");
   const [breadcrumbs] = useState([activeTabName]);
+  const [showNewThreadModal, setShowNewThreadModal] = useState(false);
+  const [newThread, setNewThread] = useState({
+    title: '',
+    content: '',
+    category: 'Interview Prep',
+    tags: []
+  });
+  const [tagInput, setTagInput] = useState('');
 
   // Sample forum threads
-  const forumThreads = [
+  const [forumThreads, setForumThreads] = useState([
     {
       id: 1,
       title: "How to prepare for Google SWE interviews?",
@@ -74,7 +82,72 @@ const Forum = () => {
       isBookmarked: false,
       isAnnouncement: false,
     },
-  ];
+  ]);
+
+  // Handle new thread input changes
+  const handleNewThreadChange = (e) => {
+    const { name, value } = e.target;
+    setNewThread(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Add tag to new thread
+  const handleAddTag = () => {
+    if (tagInput.trim() && !newThread.tags.includes(tagInput.trim())) {
+      setNewThread(prev => ({
+        ...prev,
+        tags: [...prev.tags, tagInput.trim()]
+      }));
+      setTagInput('');
+    }
+  };
+
+  // Remove tag from new thread
+  const handleRemoveTag = (tagToRemove) => {
+    setNewThread(prev => ({
+      ...prev,
+      tags: prev.tags.filter(tag => tag !== tagToRemove)
+    }));
+  };
+
+  // Submit new thread
+  const handleSubmitThread = (e) => {
+    e.preventDefault();
+    
+    const newThreadObj = {
+      id: Math.max(...forumThreads.map(t => t.id)) + 1,
+      title: newThread.title,
+      author: "Current User", // Replace with actual user data
+      avatar: "CU",
+      date: "Just now",
+      category: newThread.category,
+      tags: newThread.tags,
+      content: newThread.content,
+      upvotes: 0,
+      downvotes: 0,
+      comments: 0,
+      isBookmarked: false,
+      isAnnouncement: false
+    };
+
+    setForumThreads([newThreadObj, ...forumThreads]);
+    setShowNewThreadModal(false);
+    setNewThread({
+      title: '',
+      content: '',
+      category: 'Interview Prep',
+      tags: []
+    });
+  };
+
+  // Handle upvote/downvote
+  const handleVote = (id, type) => {
+    console.log(`${type} thread ${id}`);
+  };
+
+  // Handle bookmark
+  const toggleBookmark = (id) => {
+    console.log(`Toggled bookmark for thread ${id}`);
+  };
 
   // Filter threads based on active tab & search query
   const filteredThreads = forumThreads.filter(thread => {
@@ -89,16 +162,6 @@ const Forum = () => {
     
     return matchesTab && matchesSearch;
   });
-
-  // Handle upvote/downvote
-  const handleVote = (id, type) => {
-    console.log(`${type} thread ${id}`);
-  };
-
-  // Handle bookmark
-  const toggleBookmark = (id) => {
-    console.log(`Toggled bookmark for thread ${id}`);
-  };
 
   return (
     <div className={`dashboard-container ${darkMode ? 'dark-theme' : ''}`}>
@@ -243,11 +306,133 @@ const Forum = () => {
             className="create-thread-btn"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => setShowNewThreadModal(true)}
           >
             + New Thread
           </motion.button>
         </div>
       </div>
+
+      {/* New Thread Modal */}
+      <AnimatePresence>
+        {showNewThreadModal && (
+          <motion.div 
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowNewThreadModal(false)}
+          >
+            <motion.div 
+              className="new-thread-modal"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="modal-header">
+                <h2>Create New Thread</h2>
+                <button 
+                  className="close-modal"
+                  onClick={() => setShowNewThreadModal(false)}
+                >
+                  <FaTimes />
+                </button>
+              </div>
+              
+              <form onSubmit={handleSubmitThread}>
+                <div className="form-group">
+                  <label>Title</label>
+                  <input
+                    type="text"
+                    name="title"
+                    value={newThread.title}
+                    onChange={handleNewThreadChange}
+                    required
+                    placeholder="What's your question or topic?"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Category</label>
+                  <select
+                    name="category"
+                    value={newThread.category}
+                    onChange={handleNewThreadChange}
+                    required
+                  >
+                    <option value="Interview Prep">Interview Prep</option>
+                    <option value="Internships">Internships</option>
+                    <option value="Study Resources">Study Resources</option>
+                    <option value="Announcements">Announcements</option>
+                  </select>
+                </div>
+                
+                <div className="form-group">
+                  <label>Content</label>
+                  <textarea
+                    name="content"
+                    value={newThread.content}
+                    onChange={handleNewThreadChange}
+                    required
+                    placeholder="Provide details about your question or topic..."
+                    rows={6}
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Tags</label>
+                  <div className="tags-input">
+                    <input
+                      type="text"
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                      placeholder="Add tags (press Enter)"
+                      onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+                    />
+                    <button 
+                      type="button" 
+                      className="add-tag-btn"
+                      onClick={handleAddTag}
+                    >
+                      Add
+                    </button>
+                  </div>
+                  <div className="tags-list">
+                    {newThread.tags.map((tag, index) => (
+                      <span key={index} className="tag">
+                        {tag}
+                        <button 
+                          type="button"
+                          onClick={() => handleRemoveTag(tag)}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="form-actions">
+                  <button 
+                    type="button"
+                    className="cancel-btn"
+                    onClick={() => setShowNewThreadModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    type="submit"
+                    className="submit-btn"
+                  >
+                    Post Thread
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
