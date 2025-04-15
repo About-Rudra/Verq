@@ -1,31 +1,31 @@
-import React, { useState, useContext } from 'react';
-// import { 
-//   FaLock, 
-//   FaBell, 
-//   FaShieldAlt, 
-//   FaDatabase, 
-//   FaBriefcase, 
-//   FaPlug, 
-//   FaQuestionCircle,
-//   FaEye,
-//   FaEyeSlash,
-//   FaTrash,
-//   FaDownload,
-//   FaCalendarAlt,
-//   FaMapMarkerAlt,
-//   FaMoneyBillWave,
-//   FaGithub,
-//   FaLinkedin,
-//   FaGoogle,
-//   FaEnvelope
-// } from 'react-icons/fa';
-import 'fa-icons';
+import React, { useState, useContext, useEffect } from 'react';
+import { 
+  FaLock, 
+  FaBell, 
+  FaShieldAlt, 
+  FaDatabase, 
+  FaBriefcase, 
+  FaPlug, 
+  FaQuestionCircle,
+  FaEye,
+  FaEyeSlash,
+  FaTrash,
+  FaDownload,
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+  FaMoneyBillWave,
+  FaGithub,
+  FaLinkedin,
+  FaGoogle,
+  FaEnvelope
+} from 'react-icons/fa';
 import { ThemeContext } from '../../context/ThemeContext';
 import '../../styles/student/Settings.css';
 
 const Settings = () => {
   const { darkMode } = useContext(ThemeContext);
   const [activeTab, setActiveTab] = useState('security');
+  const [breadcrumbs, setBreadcrumbs] = useState(['Settings', 'Security']);
   
   // State for various settings
   const [twoFactorAuth, setTwoFactorAuth] = useState(false);
@@ -44,9 +44,30 @@ const Settings = () => {
     { id: 'help', icon: <FaQuestionCircle />, label: 'Help & Support' }
   ];
 
+  // Update breadcrumbs when active tab changes
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    const tabLabel = tabs.find(tab => tab.id === tabId)?.label || '';
+    setBreadcrumbs(['Settings', tabLabel]);
+  };
+
+  // Initialize breadcrumbs on component mount
+  useEffect(() => {
+    const tabLabel = tabs.find(tab => tab.id === activeTab)?.label || '';
+    setBreadcrumbs(['Settings', tabLabel]);
+  }, []);
+
   return (
     <div className={`settings-page ${darkMode ? 'dark' : ''}`}>
       <div className="settings-header">
+        <div className="breadcrumbs">
+          {breadcrumbs.map((crumb, index) => (
+            <React.Fragment key={index}>
+              <span>{crumb}</span>
+              {index < breadcrumbs.length - 1 && <span>›</span>}
+            </React.Fragment>
+          ))}
+        </div>
         <h1>Settings</h1>
         <p>Manage your account preferences and security</p>
       </div>
@@ -57,7 +78,7 @@ const Settings = () => {
             <button
               key={tab.id}
               className={`sidebar-tab ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
             >
               {tab.icon}
               <span>{tab.label}</span>

@@ -131,7 +131,6 @@ function UpcomingDrives() {
               </React.Fragment>
             ))}
           </div>
-          
         </div>
 
         <div className="drives-container">
