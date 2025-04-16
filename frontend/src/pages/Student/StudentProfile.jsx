@@ -350,14 +350,7 @@ const StudentProfile = () => {
                     onChange={(e) => handleInputChange('volunteering', 'endDate', e.target.value, index)}
                   />
                 </div>
-                <div className="input-group">
-                  <label>Hours Contributed:</label>
-                  <input
-                    type="number"
-                    value={volunteer.hours}
-                    onChange={(e) => handleInputChange('volunteering', 'hours', e.target.value, index)}
-                  />
-                </div>
+                
                 <div className="input-group">
                   <label>Description of Activities:</label>
                   <textarea

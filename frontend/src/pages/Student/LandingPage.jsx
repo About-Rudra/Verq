@@ -13,7 +13,7 @@ const LandingPage = () => {
         {/* Buttons */}
         <div className="auth-buttons">
           <button className="btn">Recruiter</button>
-          <button className="btn">Sign Up</button>
+          <button className="btn">Student</button>
         </div>
         <div className="text-content">
           <h1 className="main-heading">BRIDGING THE GAP BETWEEN COLLEGE AND CAREER, ONE OPPORTUNITY AT A TIME.</h1>

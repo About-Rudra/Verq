@@ -1,6 +1,5 @@
 // Auth.jsx
 import React, { useState } from 'react';
-<<<<<<<< HEAD:frontend/src/pages/Recruiter/RecruiterAuth.jsx
 import '../styles/Auth.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,14 +12,10 @@ const RecruiterAuth = () => {
     navigate('/dashboard');
   };
 
-========
-import '../../styles/student/Auth.css';
-import { useNavigate } from 'react-router-dom';
 
-const Auth = () => {
-  const navigate = useNavigate();
+// Removed duplicate imports and unused Auth component
 
->>>>>>>> 370286f8f2aa46daa4fa6f4ff388ba07695566d4:frontend/src/pages/Student/Auth.jsx
+
   // State to toggle between login and signup views
   const [isLogin, setIsLogin] = useState(true);
 
@@ -65,7 +60,7 @@ const Auth = () => {
 
   // Handle login form submission
   const handleLoginSubmit = async (e) => {
-<<<<<<<< HEAD:frontend/src/pages/Recruiter/RecruiterAuth.jsx
+
     e.preventDefault();
     
     console.log("Login Data:", {
@@ -104,46 +99,9 @@ const Auth = () => {
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     
-    console.log("Signup Data:", {
-      email: signupData.email,
-      password: signupData.password,
-    });
-    
-========
-    e.preventDefault();
+  // Removed duplicate handleSignupSubmit function
 
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: loginData.email,
-          password: loginData.password,
-        }),
-      });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert(data.message); // "Login successful"
-        localStorage.setItem('token', data.token); // Save token for authentication
-        navigate('/dashboard');
-      } else {
-        alert(data.message); // Show error message
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('Login failed');
-    }
-  };
-
-  // Handle signup form submission
-  const handleSignupSubmit = async (e) => {
-    e.preventDefault();
-
->>>>>>>> 370286f8f2aa46daa4fa6f4ff388ba07695566d4:frontend/src/pages/Student/Auth.jsx
     // Form validation
     let isValid = true;
     const newErrors = { password: false, confirmPassword: false };
@@ -162,24 +120,24 @@ const Auth = () => {
 
     if (isValid) {
       try {
-<<<<<<<< HEAD:frontend/src/pages/Recruiter/RecruiterAuth.jsx
+
         const response = await fetch("http://localhost:5000/api/auth", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-========
+
         const response = await fetch('http://localhost:5000/api/auth/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
->>>>>>>> 370286f8f2aa46daa4fa6f4ff388ba07695566d4:frontend/src/pages/Student/Auth.jsx
+
           },
           body: JSON.stringify({
             email: signupData.email,
             password: signupData.password,
           }),
         });
-<<<<<<<< HEAD:frontend/src/pages/Recruiter/RecruiterAuth.jsx
+
   
         const data = await response.json();
 
@@ -193,7 +151,7 @@ const Auth = () => {
     } catch (error) {
       console.error("Signup error:", error);
       alert("Registration failed");
-========
+
 
         const data = await response.json();
 
@@ -204,15 +162,10 @@ const Auth = () => {
         } else {
           alert(data.message); // Show error message
         }
-      } catch (error) {
-        console.error('Signup error:', error);
-        alert('Registration failed');
-      }
->>>>>>>> 370286f8f2aa46daa4fa6f4ff388ba07695566d4:frontend/src/pages/Student/Auth.jsx
-    }
-  }
-};
-
+        const response = await fetch('http://localhost:5000/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
   // Toggle between login and signup views
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
@@ -373,8 +326,7 @@ const Auth = () => {
   );
 };
 
-<<<<<<<< HEAD:frontend/src/pages/Recruiter/RecruiterAuth.jsx
+
 export default RecruiterAuth;
-========
-export default Auth;
->>>>>>>> 370286f8f2aa46daa4fa6f4ff388ba07695566d4:frontend/src/pages/Student/Auth.jsx
+
+

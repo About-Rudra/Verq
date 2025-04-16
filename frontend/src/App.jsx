@@ -18,10 +18,8 @@ import StudentSidebar from "./components/StudentSidebar";
 import StudentPerks from "./pages/Student/StudentPerks";
 import Projects from "./pages/Student/Projects";
 import Notifications from "./pages/Student/Notifications";
-import FAQ from "./pages/Student/FAQ";
 import Forum from "./pages/Student/Forum";
 import "./styles/Student/StudentSidebar.css"
- 
 import RecruiterDashboard from "./pages/Recruiter/RecruiterDashboard";
 import PostJobs from "./pages/Recruiter/PostJobs";
 import CompanyProfile from "./pages/Recruiter/CompanyProfile";
@@ -33,10 +31,10 @@ function App() {
         <ThemeProvider>
           <Router>
             <div className="app">
-              <StudentSidebar />
-              <main className="main-content">
+              <LandingPage />
+              {/* <main className="main-content"> */}
                 <Routes>
-                  <Route path="/" element={<Default />} />
+                  <Route path="/default" element={<Default />} />
                   <Route path="/student-dashboard" element={<StudentDashboard />} />
                   <Route path="/participated-drives" element={<ParticipatedDrives />} />
                   <Route path="/ongoing-drives" element={<OngoingDrives />} />
@@ -51,9 +49,9 @@ function App() {
                   <Route path="projects" element={<Projects />} />
                   <Route path="notifications" element={<Notifications />} />
                   <Route path="forum" element={<Forum />} />
-                  <Route path="/faqs" element={<FAQ />} />
+                  
                 </Routes>
-              </main>
+              {/* </main> */}
 
               {/* <RecruiterSidebar />
               <main className="main-content">
