@@ -20,9 +20,11 @@ app.use(cookieParser()); // Use cookie-parser to parse cookies
 
 const authRoutes = require("./routes/authRoutes"); 
 const volunteerRoutes = require("./routes/volunteerRoute");
+const personalInformationRoutes = require("./routes/personalInformationRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/volunteer-details", volunteerRoutes);
+app.use("/api/personal-information", personalInformationRoutes);
 
 // Error Middleware
 app.use(errorHandler);

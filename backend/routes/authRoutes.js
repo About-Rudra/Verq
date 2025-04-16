@@ -34,6 +34,8 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
+    console.log("Token generated:", token); 
+
     // Send the token as an HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
@@ -72,7 +74,7 @@ router.post("/signup", async (req, res) => {
       "INSERT INTO authentication (primary_email, password) VALUES ($1, $2) RETURNING *";
     const newUserResult = await pool.query(insertQuery, [email, hashedPassword]);
 
-    const newUser = newUserResult.rows[0];
+    const user = newUserResult.rows[0];
 
     // Generate JWT token with email in the payload
     const token = jwt.sign({ id: user.id, email: user.primary_email }, process.env.JWT_SECRET, {
