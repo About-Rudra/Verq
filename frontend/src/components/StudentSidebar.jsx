@@ -10,19 +10,13 @@ import {
   FaCog,
   FaSun,
   FaMoon,
-  FaQuestionCircle,
   FaBuilding,
   FaBookOpen,
   FaGift,
   FaLaptop,
-  FaBullhorn,
-  FaChartBar,
   FaFileAlt,
-  FaGraduationCap,
   FaUsers,
   FaMicrophone,
-  FaCode,
-  FaMedal
 } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
@@ -128,11 +122,6 @@ const StudentSidebar = () => {
           <li>
             <NavLink to="/forum" className={({ isActive }) => isActive ? "active" : ""}>
               <FaUsers className="icon" /> Discussion Forum
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/faqs" className={({ isActive }) => isActive ? "active" : ""}>
-              <FaQuestionCircle className="icon" /> FAQ's
             </NavLink>
           </li>
         </ul>

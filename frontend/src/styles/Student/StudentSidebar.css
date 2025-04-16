@@ -24,10 +24,7 @@
   color: var(--primary-color);
   letter-spacing: -0.5px;
 }
-.search-container {
-  padding: 0.5rem;
-  margin-bottom: 0px;
-}
+
 
 .search-input {
   width: 100%;

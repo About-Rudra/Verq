@@ -18,7 +18,6 @@ import StudentSidebar from "./components/StudentSidebar";
 import StudentPerks from "./pages/Student/StudentPerks";
 import Projects from "./pages/Student/Projects";
 import Notifications from "./pages/Student/Notifications";
-import FAQ from "./pages/Student/FAQ";
 import Forum from "./pages/Student/Forum";
 import "./styles/Student/StudentSidebar.css"
  
@@ -51,7 +50,6 @@ function App() {
                   <Route path="projects" element={<Projects />} />
                   <Route path="notifications" element={<Notifications />} />
                   <Route path="forum" element={<Forum />} />
-                  <Route path="/faqs" element={<FAQ />} />
                 </Routes>
               </main>
 

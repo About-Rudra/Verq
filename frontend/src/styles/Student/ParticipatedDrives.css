@@ -36,7 +36,9 @@
   font-size: 1.1rem;
   color: var(--text-secondary);
   max-width: 600px;
+  margin-bottom: 0px;
 }
+
 /* ===== Filter Categories ===== */
 .filter-categories {
   display: flex;

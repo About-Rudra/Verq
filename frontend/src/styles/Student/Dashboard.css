@@ -113,7 +113,6 @@
   cursor: pointer;
 }
 .card::before {
-  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -139,7 +138,6 @@
   display: inline-block;
 }
 .card h2::after {
-  content: '';
   position: absolute;
   bottom: -6px;
   left: 0;
@@ -369,6 +367,7 @@
 }
 .quick-add-btn {
   background: var(--bg-secondary);
+  color: var(--text-primary);
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1rem;
