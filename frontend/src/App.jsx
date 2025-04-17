@@ -1,31 +1,34 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 
-import LandingPage from "./pages/Student/LandingPage";
+import LandingPage from "./pages/LandingPage";
 import Auth from "./pages/Student/Auth";
+
+import StudentSidebar from "./components/StudentSidebar";
+
+import RecruiterSidebar from "./components/RecruiterSidebar";
 
 import Default from "./pages/Student/Default";
 import StudentDashboard from "./pages/Student/StudentDashboard";
+import StudentProfile from "./pages/Student/StudentProfile";
+import Roadmaps from "./pages/Student/Roadmaps";
+import JobDetails from "./pages/Student/JobDetails";
+import Application from "./pages/Student/Application";
 import OngoingDrives from "./pages/Student/OngoingDrives";
 import UpcomingDrives from "./pages/Student/UpcomingDrives";
 import ParticipatedDrives from "./pages/Student/ParticipatedDrives";
-import Roadmaps from "./pages/Student/Roadmaps";
-import Settings from "./pages/Student/Settings";
-import StudentProfile from "./pages/Student/StudentProfile";
-import JobDetails from "./pages/Student/JobDetails"
-import Application from "./pages/Student/Application";
-import StudentSidebar from "./components/StudentSidebar";
-import StudentPerks from "./pages/Student/StudentPerks";
+import Companies from "./pages/Student/Companies";
 import Projects from "./pages/Student/Projects";
-import Notifications from "./pages/Student/Notifications";
 import Forum from "./pages/Student/Forum";
-import "./styles/Student/StudentSidebar.css"
+import ATS from "./pages/Student/ATS";
+import MockInterviews from "./pages/Student/MockInterviews";
+import StudentPerks from "./pages/Student/StudentPerks";
+import Notifications from "./pages/Student/Notifications";
+import Settings from "./pages/Student/Settings";
  
 import RecruiterDashboard from "./pages/Recruiter/RecruiterDashboard";
 import PostJobs from "./pages/Recruiter/PostJobs";
 import CompanyProfile from "./pages/Recruiter/CompanyProfile";
-import RecruiterSidebar from "./components/RecruiterSidebar";
-import "./styles/Recruiter/RecruiterSidebar.css";
 
 function App() {
     return (
@@ -49,7 +52,10 @@ function App() {
                   <Route path="profile" element={<StudentProfile />} />
                   <Route path="projects" element={<Projects />} />
                   <Route path="notifications" element={<Notifications />} />
+                  <Route path="companies" element={<Companies />} />       
                   <Route path="forum" element={<Forum />} />
+                  <Route path="ats-checker" element={<ATS />} />
+                  <Route path="mock-interviews" element={<MockInterviews />} />
                 </Routes>
               </main>
 

@@ -166,17 +166,11 @@ const Forum = () => {
   return (
     <div className={`dashboard-container ${darkMode ? 'dark-theme' : ''}`}>
       <div className="main-content">
-        <div className="header">
+        <div className="breadcrumb-container">
           <div className="breadcrumbs">
-            {breadcrumbs.map((crumb, index) => (
-              <React.Fragment key={index}>
-                <span>{crumb}</span>
-                {index < breadcrumbs.length - 1 && <span className="separator">›</span>}
-              </React.Fragment>
-            ))}
+            <span>Forum</span>
           </div>
         </div>
-
         <div className="forum-container">
           {/* Forum Header */}
           <div className="forum-header">

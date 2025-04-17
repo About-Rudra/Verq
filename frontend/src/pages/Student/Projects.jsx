@@ -145,14 +145,9 @@ const Projects = () => {
 
   return (
     <div className="projects-page">
-      <div className="header">
+      <div className="breadcrumb-container">
         <div className="breadcrumbs">
-          {breadcrumbs.map((crumb, index) => (
-            <React.Fragment key={index}>
-              <span>{crumb}</span>
-              {index < breadcrumbs.length - 1 && <span>›</span>}
-            </React.Fragment>
-          ))}
+          <span>Projects</span>
         </div>
       </div>
       <div className="page-content">

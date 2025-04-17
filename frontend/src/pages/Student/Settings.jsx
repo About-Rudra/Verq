@@ -68,7 +68,6 @@ const Settings = () => {
             </React.Fragment>
           ))}
         </div>
-        <h1>Settings</h1>
         <p>Manage your account preferences and security</p>
       </div>
 

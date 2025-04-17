@@ -1,19 +1,26 @@
 import React from "react";
-import "../../styles/Student/LandingPage.css";
-import bgImage from "../../assets/bg.png"; // Import the image
+import { useNavigate } from "react-router-dom";
+import "../styles/LandingPage.css";
+import bgImage from "../assets/bg.png";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
+  const handleStudentClick = () => {
+    navigate("/auth", { state: { userType: "student" } });
+  };
+
+  const handleRecruiterClick = () => {
+    navigate("/auth", { state: { userType: "recruiter" } });
+  };
+
   return (
     <div className="scroll-container">
-      {/* Scrolling Background */}
       <div className="scrolling-content" style={{ backgroundImage: `url(${bgImage})` }}></div>
-
-      {/* Static Box */}
       <div className="overlay-box">
-        {/* Buttons */}
         <div className="auth-buttons">
-          <button className="btn">Sign In</button>
-          <button className="btn">Sign Up</button>
+          <button className="btn" onClick={handleRecruiterClick}>Recruiter</button>
+          <button className="btn" onClick={handleStudentClick}>Student</button>
         </div>
         <div className="text-content">
           <h1 className="main-heading">BRIDGING THE GAP BETWEEN COLLEGE AND CAREER, ONE OPPORTUNITY AT A TIME.</h1>

@@ -124,18 +124,11 @@ function ParticipatedDrives() {
   return (
     <div className="page-container">
       <div className="main-content">
-        {/* Move the header with breadcrumbs to the top, just like in Dashboard */}
-        <div className="header">
+        <div className="breadcrumb-container">
           <div className="breadcrumbs">
-            {breadcrumbs.map((crumb, index) => (
-              <React.Fragment key={index}>
-                <span>{crumb}</span>
-                {index < breadcrumbs.length - 1 && <span>›</span>}
-              </React.Fragment>
-            ))}
+            <span>Participated Drives</span>
           </div>
         </div>
-        
         <div className="tech-directory">
           <div className="header-section">
             <p className="subtitle">Explore technology organizations and open source projects</p>

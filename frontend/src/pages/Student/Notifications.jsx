@@ -5,64 +5,52 @@ import { FiBriefcase, FiFileText, FiClock, FiCalendar, FiBell, FiCheck, FiTrash2
 import '../../styles/student/Notifications.css';
 
 const Notifications = () => {
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      title: 'New Internship at Google',
+      message: 'Google has posted new internship opportunities for summer 2023 matching your profile',
+      time: '2 hours ago',
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+      read: false,
+      type: 'job',
+      priority: 'high'
+    },
+    {
+      id: 2,
+      title: 'Application Status Update',
+      message: 'Your application at Microsoft has moved to the final interview stage. Check your email for details.',
+      time: '1 day ago',
+      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
+      read: true,
+      type: 'application',
+      priority: 'medium'
+    },
+    {
+      id: 3,
+      title: 'Deadline Approaching',
+      message: 'Amazon internship applications close in 3 days. Complete your application soon!',
+      time: '2 days ago',
+      timestamp: new Date(Date.now() - 48 * 60 * 60 * 1000),
+      read: false,
+      type: 'reminder',
+      priority: 'high'
+    },
+    {
+      id: 4,
+      title: 'Workshop Invitation',
+      message: 'You\'ve been invited to attend a technical interview preparation workshop tomorrow at 2 PM.',
+      time: '3 days ago',
+      timestamp: new Date(Date.now() - 72 * 60 * 60 * 1000),
+      read: true,
+      type: 'event',
+      priority: 'low'
+    }
+  ]);
   const [filter, setFilter] = useState('all');
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasNew, setHasNew] = useState(false);
+  const [hasNew, setHasNew] = useState(true);
   const [activeTab] = useState("Notifications");
   const [breadcrumbs] = useState([activeTab]);
-
-  // Simulate loading notifications
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setNotifications([
-        {
-          id: 1,
-          title: 'New Internship at Google',
-          message: 'Google has posted new internship opportunities for summer 2023 matching your profile',
-          time: '2 hours ago',
-          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-          read: false,
-          type: 'job',
-          priority: 'high'
-        },
-        {
-          id: 2,
-          title: 'Application Status Update',
-          message: 'Your application at Microsoft has moved to the final interview stage. Check your email for details.',
-          time: '1 day ago',
-          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
-          read: true,
-          type: 'application',
-          priority: 'medium'
-        },
-        {
-          id: 3,
-          title: 'Deadline Approaching',
-          message: 'Amazon internship applications close in 3 days. Complete your application soon!',
-          time: '2 days ago',
-          timestamp: new Date(Date.now() - 48 * 60 * 60 * 1000),
-          read: false,
-          type: 'reminder',
-          priority: 'high'
-        },
-        {
-          id: 4,
-          title: 'Workshop Invitation',
-          message: 'You\'ve been invited to attend a technical interview preparation workshop tomorrow at 2 PM.',
-          time: '3 days ago',
-          timestamp: new Date(Date.now() - 72 * 60 * 60 * 1000),
-          read: true,
-          type: 'event',
-          priority: 'low'
-        }
-      ]);
-      setIsLoading(false);
-      setHasNew(true);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const markAsRead = (id) => {
     setNotifications(notifications.map(notification => 
@@ -102,22 +90,14 @@ const Notifications = () => {
   return (
     <div className="dashboard-container">
       <div className="main-content">
-        <div className="header">
+        <div className="breadcrumb-container">
           <div className="breadcrumbs">
-            {breadcrumbs.map((crumb, index) => (
-              <React.Fragment key={index}>
-                <span>{crumb}</span>
-                {index < breadcrumbs.length - 1 && <span>›</span>}
-              </React.Fragment>
-            ))}
+            <span>Notifications</span>
           </div>
         </div>
 
         <div className="notifications-header">
             <div className="header-top flex items-center justify-between">
-              <h1>
-                Notifications
-              </h1>
               <div className="flex items-center gap-2">
                 <span className={`unread-count ${unreadCount > 0 ? 'has-unread' : ''}`}>
                   {unreadCount} unread
@@ -167,19 +147,7 @@ const Notifications = () => {
           </div>
 
           <div className="notifications-list">
-            {isLoading ? (
-              <div className="loading-state">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="notification-skeleton">
-                    <div className="skeleton-icon"></div>
-                    <div className="skeleton-content">
-                      <div className="skeleton-line short"></div>
-                      <div className="skeleton-line medium"></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : filteredNotifications.length === 0 ? (
+            {filteredNotifications.length === 0 ? (
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

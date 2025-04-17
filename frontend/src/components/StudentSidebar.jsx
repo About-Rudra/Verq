@@ -85,13 +85,13 @@ const StudentSidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/resources" className={({ isActive }) => isActive ? "active" : ""}>
-              <FaBookOpen className="icon" /> Resources
+            <NavLink to="/projects" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaLaptop className="icon" /> Projects
             </NavLink>
           </li>
           <li>
-            <NavLink to="/projects" className={({ isActive }) => isActive ? "active" : ""}>
-              <FaLaptop className="icon" /> Projects
+            <NavLink to="/forum" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaUsers className="icon" /> Discussion Forum
             </NavLink>
           </li>
           <li>
@@ -110,18 +110,13 @@ const StudentSidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/settings" className={({ isActive }) => isActive ? "active" : ""}>
-              <FaCog className="icon" /> Settings
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/notifications" className={({ isActive }) => isActive ? "active" : ""}>
               <FaBell className="icon" /> Notifications
             </NavLink>
           </li>
           <li>
-            <NavLink to="/forum" className={({ isActive }) => isActive ? "active" : ""}>
-              <FaUsers className="icon" /> Discussion Forum
+            <NavLink to="/settings" className={({ isActive }) => isActive ? "active" : ""}>
+              <FaCog className="icon" /> Settings
             </NavLink>
           </li>
         </ul>
