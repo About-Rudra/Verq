@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import '../../styles/Student/StudentProfile.css';
 
-const StudentProfile = () => {
+const StudentDetailsForm = () => {
   const [activeSection, setActiveSection] = useState('personal');
   const [activeTab] = useState("Profile");
   const [breadcrumbs] = useState([activeTab]);
@@ -755,4 +755,4 @@ const StudentProfile = () => {
   );
 };
 
-export default StudentProfile;
+export default StudentDetailsForm;

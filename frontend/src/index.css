@@ -55,3 +55,24 @@ body {
 .main-content{
    width: 84%;
 }
+
+.app-container {
+   display: flex;
+   min-height: 100vh;
+ }
+ 
+ .main-content {
+   flex: 1;
+   padding: 20px;
+   margin-left: 250px; /* Adjust based on your sidebar width */
+ }
+ 
+ .loading-screen {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   font-size: 1.5rem;
+ }
+ 
+ 

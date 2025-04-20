@@ -258,15 +258,12 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">      
       <div className="main-content">
-        <div className="header">
+        <div className="breadcrumb-container">
           <div className="breadcrumbs">
-            {breadcrumbs.map((crumb, index) => (
-              <React.Fragment key={index}>
-                <span>{crumb}</span>
-                {index < breadcrumbs.length - 1 && <span>›</span>}
-              </React.Fragment>
-            ))}
+            <span>Dashboard</span>
           </div>
+        </div>
+        <div className="header">
         </div>
         <div>
           {/* Dynamically display the greeting */}
