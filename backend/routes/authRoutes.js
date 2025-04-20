@@ -96,4 +96,14 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// Add this new route
+router.get("/verify", authenticateToken, (req, res) => {
+  res.status(200).json({ valid: true });
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("token"); // Deletes the HTTP-only cookie
+  res.json({ message: "Logged out successfully" });
+});
+
 module.exports = router;

@@ -10,6 +10,17 @@ const pool = new Pool({
 
 module.exports = pool;
 
+async function testConnection() {
+  try {
+    const res = await pool.query('SELECT NOW()');
+    console.log(" Connected to Supabase! Time is:", res.rows[0]);
+  } catch (err) {
+    console.error(" Error connecting to Supabase:", err.message);
+  }
+}
+
+testConnection();
+
 
 // const { Pool } = require("pg");
 
