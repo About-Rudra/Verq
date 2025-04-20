@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { ThemeContext } from '../../context/ThemeContext';
 import { FiBriefcase, FiFileText, FiClock, FiCalendar, FiBell, FiCheck, FiTrash2, FiFilter, FiChevronRight } from 'react-icons/fi';
 import '../../styles/student/Notifications.css';
 
@@ -50,7 +50,7 @@ const Notifications = () => {
   const [filter, setFilter] = useState('all');
   const [hasNew, setHasNew] = useState(true);
   const [activeTab] = useState("Notifications");
-  const [breadcrumbs] = useState([activeTab]);
+  const { darkMode } = useContext(ThemeContext);
 
   const markAsRead = (id) => {
     setNotifications(notifications.map(notification => 
@@ -88,9 +88,8 @@ const Notifications = () => {
   };
 
   return (
-    <div className="dashboard-container">
-      <div className="main-content">
-        <div className="breadcrumb-container">
+    <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
+      <div className="breadcrumb-container">
           <div className="breadcrumbs">
             <span>Notifications</span>
           </div>
@@ -203,7 +202,6 @@ const Notifications = () => {
               </AnimatePresence>
             )}
           </div>
-      </div>
     </div>
   );
 };

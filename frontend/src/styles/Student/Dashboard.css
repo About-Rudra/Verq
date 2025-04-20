@@ -16,10 +16,7 @@
       transform: translateX(100%);
  }
 }
-.dashboard-container {
-  padding: 0;
-  animation: fadeIn 0.4s ease-out;
-}
+
 .main-content {
   width: calc(100% - var(--sidebar-width));
   position: fixed;

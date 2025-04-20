@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
-import '../../styles/Student/StudentProfile.css';
+import { useNavigate } from 'react-router-dom';
+import '../../styles/Student/StudentDetailsForm.css';
 
-const StudentProfile = () => {
+const StudentDetailsForm = ({ onFormSubmit }) => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('personal');
   const [activeTab] = useState("Profile");
   const [breadcrumbs] = useState([activeTab]);
@@ -120,7 +122,23 @@ const StudentProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
+    
+    // Call the onFormSubmit function that was passed as prop (if provided)
+    if (onFormSubmit) {
+      onFormSubmit();
+    }
+    
     alert('Profile updated successfully!');
+    navigate('/default');
+  };
+
+  const handleSkipToDefault = () => {
+    // Call the onFormSubmit function that was passed as prop (if provided)
+    if (onFormSubmit) {
+      onFormSubmit();
+    }
+    
+    navigate('/default');
   };
 
   const sections = [
@@ -155,17 +173,23 @@ const StudentProfile = () => {
   ];
 
   return (
-    <div className={`registration-container ${darkMode ? 'dark-theme' : ''}`}>
-      <div className="form-navigation">
-        {sections.map((section) => (
-          <button
-            key={section.id}
-            className={activeSection === section.id ? 'nav-button active' : 'nav-button'}
-            onClick={() => setActiveSection(section.id)}
-          >
-            {section.label}
-          </button>
-        ))}
+    <div className={`profile-container ${darkMode ? 'dark-theme' : ''}`}>
+      {/* Sidebar Navigation */}
+      <div className="sidebar">
+        <div className="sidebar-header">
+          <h3>Profile Sections</h3>
+        </div>
+        <nav className="sidebar-nav">
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              className={`sidebar-item ${activeSection === section.id ? 'active' : ''}`}
+              onClick={() => setActiveSection(section.id)}
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -708,6 +732,18 @@ const StudentProfile = () => {
                 <p className="file-info">Accepted formats: PDF, DOC, DOCX. Maximum size: 5MB</p>
               </label>
             </div>
+            
+            {/* Skip to Dashboard Button - Only visible in the resume section */}
+            <div className="skip-section">
+              <p>You can complete your profile later.</p>
+              <button 
+                type="button" 
+                className="skip-button" 
+                onClick={handleSkipToDefault}
+              >
+                Skip to Dashboard
+              </button>
+            </div>
           </div>
         )}
 
@@ -746,4 +782,4 @@ const StudentProfile = () => {
   );
 };
 
-export default StudentProfile;
+export default StudentDetailsForm;

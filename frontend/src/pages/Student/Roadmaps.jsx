@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useContext } from 'react';
 import "../../styles/Student/Roadmaps.css";
+import { ThemeContext } from '../../context/ThemeContext';
 
 const RoadmapFeature = () => {
   // Data for all roadmaps
@@ -65,8 +66,10 @@ const RoadmapFeature = () => {
     { name: "Cloudflare", url: "https://roadmap.sh/cloudflare" }
   ];
 
+  const { darkMode } = useContext(ThemeContext);
+
   return (
-    <div className="main-content">
+    <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
       <div className="breadcrumb-container">
         <div className="breadcrumbs">
           <span>Developer Roadmaps</span>

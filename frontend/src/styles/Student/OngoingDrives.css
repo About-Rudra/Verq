@@ -48,7 +48,7 @@
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   border: 1px solid transparent;
-  background-color: var(--bg-secondary);
+  background-color: var(--primary-color);
   color: var(--text-primary);
   margin: 0;
   position: relative;
@@ -71,6 +71,7 @@
   background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
   opacity: 0;
   transition: opacity 0.3s ease;
+  background-color: var(--primary-color);
 }
 .custom-button:hover::after {
   opacity: 1;
@@ -273,6 +274,7 @@
   color: var(--text-secondary);
   font-size: 0.9rem;
   margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--border-color);
 }
@@ -314,7 +316,6 @@
   width: 100px;
   height: 100px;
   border-radius: 12px;
-  background: var(--bg-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -326,6 +327,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 10px;
 }
 .deadline-info {
   display: flex;
@@ -411,28 +413,260 @@
   font-size: 1.1rem;
 }
 
-@media (max-width: 1024px) {
-  .drives-display.grid {
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
- }
+.drives-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
+
+/* Mobile-first responsive approach */
 @media (max-width: 768px) {
   .drives-container {
-      padding: 0 1rem;
- }
-  .sort-view-options {
-      flex-direction: column;
-      align-items: flex-start;
- }
-  .view-options {
-      align-self: flex-end;
- }
-}
-@media (max-width: 480px) {
-  .drive-actions {
-      flex-direction: column;
- }
+    padding: 0 1rem;
+  }
+  
+  .header-section {
+    margin-bottom: 1.5rem;
+  }
+  
   .drives-header {
-      font-size: 1.5rem;
- }
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .drives-header::after {
+    width: 40px;
+    height: 3px;
+    bottom: -5px;
+  }
+  
+  .drives-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  
+  .filter-categories {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    gap: 0.5rem;
+    padding-right: 1rem; /* Allow space for scrolling */
+  
+  
+    .filter-categories::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+  
+    .category-button {
+      flex: 0 0 auto; /* Don't allow buttons to shrink */
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+  
+  .search-container {
+    gap: 1rem;
+  }
+  
+  .search-input {
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .search-button {
+    left: 0.75rem;
+  }
+  
+  .sort-view-options {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .sort-options {
+    gap: 0.5rem;
+  }
+  
+  .sort-label {
+    width: 100%;
+  }
+  
+  .sort-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .view-options {
+    align-self: flex-start;
+    padding: 0.4rem;
+  }
+  
+  .view-button {
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .results-summary {
+    font-size: 0.85rem;
+    margin: 1rem 0;
+    padding-bottom: 0.75rem;
+  }
+  
+  .drives-display {
+    gap: 1.25rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .drives-display.grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .drive-card {
+    padding: 1.25rem;
+  }
+  
+  .drive-header {
+    margin-bottom: 1rem;
+  }
+  
+  .company-logo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .status-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+  
+  .days-remaining {
+    font-size: 0.75rem;
+  }
+  
+  .company-name {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .role-badge {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+    margin-left: 0;
+  }
+  
+  .drive-details {
+    gap: 0.5rem;
+  }
+  
+  .location-info, 
+  .deadline-detail {
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+  
+  .drive-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+  
+  .custom-button {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .no-results {
+    padding: 2.5rem 0;
+  }
+  
+  .no-results p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Very small devices (phones, 480px and down) */
+@media (max-width: 480px) {
+  .drives-header {
+    font-size: 1.5rem;
+  }
+  .filter-categories {
+    gap: 0.4rem;
+  }
+  .drives-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .category-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .search-input {
+    padding: 0.65rem 0.9rem 0.65rem 2.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .sort-button {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  
+  .company-logo {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .drive-card {
+    padding: 1rem;
+  }
+  
+  .company-name {
+    font-size: 1rem;
+  }
+  
+  .role-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .location-info, 
+  .deadline-detail {
+    font-size: 0.8rem;
+  }
+}
+
+/* Tablet adjustments (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .drives-display.grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  
+  .company-logo {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .drive-card {
+    padding: 1.25rem;
+  }
+}
+
+/* Dark theme mobile adjustments */
+@media (max-width: 768px) {
+  .dark-theme .drive-card {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .dark-theme .drive-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dark-theme .filter-categories::after {
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, var(--bg-secondary) 100%);
+  }
+}
 }

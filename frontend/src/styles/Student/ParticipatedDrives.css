@@ -259,9 +259,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--bg-secondary);
   transition: all 0.3s ease;
-  margin: 15px;
+  margin: 10px;
 }
 .companies-container.list .company-logo {
   padding: 1rem;

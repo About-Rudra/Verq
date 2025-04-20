@@ -1,226 +1,211 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import '../../styles/student/Auth.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { ThemeProvider } from "./context/ThemeContext";
+import { useState, useEffect } from "react";
+import { verifyToken } from "./api/Auth";
 
-const Auth = ({ onLogin }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [userType, setUserType] = useState('student');
-  const [isLogin, setIsLogin] = useState(true);
-  const [loginData, setLoginData] = useState({ email: '', password: '', remember: false });
-  const [signupData, setSignupData] = useState({ email: '', password: '', confirmPassword: '', terms: false });
-  const [errors, setErrors] = useState({ 
-    password: false, 
-    confirmPassword: false,
-    form: null // For backend errors
-  });
-  const [isLoading, setIsLoading] = useState(false);
+import LandingPage from "./pages/LandingPage";
+import Auth from "./pages/Auth";
 
+// Student Pages
+import Default from "./pages/Student/Default";
+import StudentDashboard from "./pages/Student/StudentDashboard";
+import OngoingDrives from "./pages/Student/OngoingDrives";
+import UpcomingDrives from "./pages/Student/UpcomingDrives";
+import ParticipatedDrives from "./pages/Student/ParticipatedDrives";
+import Roadmaps from "./pages/Student/Roadmaps";
+import Settings from "./pages/Student/Settings";
+import JobDetails from "./pages/Student/JobDetails";
+import Application from "./pages/Student/Application";
+import StudentPerks from "./pages/Student/StudentPerks";
+import ATS from "./pages/Student/ATS";
+import MockInterviews from "./pages/Student/MockInterviews";
+import Projects from "./pages/Student/Projects";
+import Companies from "./pages/Student/Companies";
+import Notifications from "./pages/Student/Notifications";
+import Forum from "./pages/Student/Forum";
+import StudentDetailsForm from "./pages/Student/StudentDetailsForm";
+
+// Recruiter Pages
+import RecruiterDashboard from "./pages/Recruiter/RecruiterDashboard";
+import PostJobs from "./pages/Recruiter/PostJobs";
+import CompanyProfile from "./pages/Recruiter/CompanyProfile";
+
+// Layout Component
+import AppLayout from "./components/AppLayout";
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isNewUser, setIsNewUser] = useState(false);
+
+  // Check auth status on initial load
   useEffect(() => {
-    if (location.state?.userType) {
-      setUserType(location.state.userType);
-    }
-    // Clear errors when switching between login/signup
-    setErrors({ password: false, confirmPassword: false, form: null });
-  }, [location, isLogin]);
-
-  const handleLoginChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setLoginData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-    // Clear errors when user types
-    if (errors.form) setErrors(prev => ({ ...prev, form: null }));
-  };
-
-  const handleSignupChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setSignupData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-    // Clear errors when user types
-    if (errors.form || errors.password || errors.confirmPassword) {
-      setErrors(prev => ({ 
-        ...prev, 
-        form: null,
-        password: false,
-        confirmPassword: false 
-      }));
-    }
-  };
-
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setErrors({ ...errors, form: null });
-
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: loginData.email,
-          password: loginData.password,
-          userType
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        onLogin(data.token, userType);
-        navigate(userType === 'student' ? '/student-dashboard' : '/recruiter-dashboard');
-      } else {
-        setErrors(prev => ({ ...prev, form: data.message || 'Login failed' }));
+    const checkAuth = async () => {
+      try {
+        const isValid = await verifyToken();
+        if (isValid) {
+          const storedUserType = localStorage.getItem("userType");
+          const newUserFlag = localStorage.getItem("isNewUser") === "true";
+          
+          setIsLoggedIn(true);
+          setUserType(storedUserType);
+          setIsNewUser(newUserFlag);
+        } else {
+          // Clear any potentially stale auth data
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("userType");
+          localStorage.removeItem("isNewUser");
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error);
+        // Clear auth data on error
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("userType");
+        localStorage.removeItem("isNewUser");
+      } finally {
+        setIsCheckingAuth(false);
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      setErrors(prev => ({ ...prev, form: 'Server error. Please try again later.' }));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSignupSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    // Frontend validation
-    const passwordValid = signupData.password.length >= 8;
-    const passwordsMatch = signupData.password === signupData.confirmPassword;
-    const termsAccepted = signupData.terms;
-
-    const newErrors = {
-      password: !passwordValid,
-      confirmPassword: !passwordsMatch,
-      form: null
     };
 
-    if (!termsAccepted) {
-      newErrors.form = 'You must accept the terms and conditions';
+    checkAuth();
+  }, []);
+
+  // Handle login
+  const handleLogin = (token, type, isNewSignup = false) => {
+    localStorage.setItem("authToken", token);
+    localStorage.setItem("userType", type);
+    
+    if (isNewSignup && type === 'student') {
+      localStorage.setItem("isNewUser", "true");
+      setIsNewUser(true);
     }
-
-    setErrors(newErrors);
-
-    if (!passwordValid || !passwordsMatch || !termsAccepted) {
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: signupData.email,
-          password: signupData.password,
-          userType
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        onLogin(data.token, userType);
-        navigate(userType === 'student' ? '/student-dashboard' : '/recruiter-dashboard');
-      } else {
-        setErrors(prev => ({ ...prev, form: data.message || 'Registration failed' }));
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-      setErrors(prev => ({ ...prev, form: 'Server error. Please try again later.' }));
-    } finally {
-      setIsLoading(false);
-    }
+    
+    setIsLoggedIn(true);
+    setUserType(type);
   };
 
-  const toggleAuthMode = () => setIsLogin(!isLogin);
+  // Handle completion of student details form
+  const handleFormCompletion = () => {
+    localStorage.removeItem("isNewUser");
+    setIsNewUser(false);
+  };
+
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await fetch('http://localhost:5001/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+    
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userType");
+    localStorage.removeItem("isNewUser");
+    setIsLoggedIn(false);
+    setUserType(null);
+    setIsNewUser(false);
+  };
+
+  if (isCheckingAuth) {
+    return <div className="loading-screen">Loading...</div>;
+  }
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="user-type-tabs">
-          <button className={`tab ${userType === 'student' ? 'active' : ''}`} onClick={() => setUserType('student')}>Student</button>
-          <button className={`tab ${userType === 'recruiter' ? 'active' : ''}`} onClick={() => setUserType('recruiter')}>Recruiter</button>
-        </div>
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage isLoggedIn={isLoggedIn} userType={userType} />} />
+          
+          <Route
+            path="/auth"
+            element={
+              isLoggedIn ? (
+                userType === 'student' && isNewUser ? 
+                <Navigate to="/student-form" /> :
+                <Navigate to={
+                  userType === 'student' 
+                    ? "/default"
+                    : "/recruiter-dashboard"
+                } />
+              ) : (
+                <Auth onLogin={handleLogin} />
+              )
+            }
+          />
+          
+          {/* Student Details Form with completion handler */}
+          <Route
+            path="/student-form"
+            element={
+              isLoggedIn && userType === 'student'
+                ? <StudentDetailsForm onFormSubmit={handleFormCompletion} />
+                : <Navigate to="/auth" />
+            }
+          />
 
-        {/* Display backend error message */}
-        {errors.form && (
-          <div className="form-error-message">
-            {errors.form}
-          </div>
-        )}
+          {/* Protected Student Routes */}
+          {isLoggedIn && userType === 'student' && (
+            <Route 
+              element={
+                isNewUser 
+                  ? <Navigate to="/student-form" />
+                  : <AppLayout onLogout={handleLogout} userType={userType} />
+              }
+            >
+              <Route path="/default" element={<Default />} />
+              <Route path="/student-dashboard" element={<StudentDashboard />} />
+              <Route path="/ongoing-drives" element={<OngoingDrives />} />
+              <Route path="/upcoming-drives" element={<UpcomingDrives />} />
+              <Route path="/participated-drives" element={<ParticipatedDrives />} />
+              <Route path="/job-details/:id" element={<JobDetails />} />
+              <Route path="/apply/:id" element={<Application />} />
+              <Route path="/roadmaps" element={<Roadmaps />} />
+              <Route path="/student-perks" element={<StudentPerks />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/companies" element={<Companies />} />
+              <Route path="/ats-checker" element={<ATS />} />
+              <Route path="/mock-interviews" element={<MockInterviews />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/forum" element={<Forum />} />
+            </Route>
+          )}
 
-        {isLogin ? (
-          <>
-            <div className="auth-header">
-              <div className="auth-logo">VerQ</div>
-              <h1 className="auth-title">Welcome back {userType}</h1>
-              <p className="auth-subtitle">Enter your credentials to access your account</p>
-            </div>
+          {/* Protected Recruiter Routes */}
+          {isLoggedIn && userType === 'recruiter' && (
+            <Route element={<AppLayout onLogout={handleLogout} userType={userType} />}>
+              <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
+              <Route path="/post-jobs" element={<PostJobs />} />
+              <Route path="/company-profile" element={<CompanyProfile />} />
+            </Route>
+          )}
 
-            <form onSubmit={handleLoginSubmit}>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" required value={loginData.email} onChange={handleLoginChange} />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" name="password" required value={loginData.password} onChange={handleLoginChange} />
-              </div>
-
-              <div className="form-footer">
-                <div className="remember-me">
-                  <input type="checkbox" id="remember" name="remember" checked={loginData.remember} onChange={handleLoginChange} />
-                  <label htmlFor="remember">Remember me</label>
-                </div>
-                <a href="#" className="forgot-password">Forgot password?</a>
-              </div>
-
-              <button type="submit" className="btn-auth" disabled={isLoading}>
-                {isLoading ? 'Signing In...' : 'Sign In'}
-              </button>
-            </form>
-          </>
-        ) : (
-          <>
-            <div className="auth-header">
-              <div className="auth-logo">VerQ</div>
-              <h1 className="auth-title">Create {userType} account</h1>
-              <p className="auth-subtitle">Start your journey with us today</p>
-            </div>
-
-            <form onSubmit={handleSignupSubmit}>
-              <div className="form-group">
-                <label htmlFor="signup-email">Email</label>
-                <input type="email" id="signup-email" name="email" required value={signupData.email} onChange={handleSignupChange} />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="signup-password">Password</label>
-                <input type="password" id="signup-password" name="password" required value={signupData.password} onChange={handleSignupChange} />
-                {errors.password && <div className="form-error">Password must be at least 8 characters</div>}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required value={signupData.confirmPassword} onChange={handleSignupChange} />
-                {errors.confirmPassword && <div className="form-error">Passwords don't match</div>}
-              </div>
-
-              <div className="remember-me">
-                <input type="checkbox" id="terms" name="terms" required checked={signupData.terms} onChange={handleSignupChange} />
-                <label htmlFor="terms">I agree to the Terms and Privacy Policy</label>
-              </div>
-
-              <button type="submit" className="btn-auth" disabled={isLoading}>
-                {isLoading ? 'Creating Account...' : 'Create Account'}
-              </button>
-            </form>
-          </>
-        )}
-
-        {/* ... rest of your JSX remains the same ... */}
-      </div>
-    </div>
+          {/* Fallback Routes */}
+          <Route
+            path="*"
+            element={
+              isLoggedIn ? (
+                userType === 'student' && isNewUser ? 
+                <Navigate to="/student-form" /> :
+                <Navigate to={
+                  userType === 'student' 
+                    ? "/default"
+                    : "/recruiter-dashboard"
+                } />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
-};
+}
 
-export default Auth;
+export default App;

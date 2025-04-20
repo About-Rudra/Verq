@@ -262,4 +262,3 @@ SELECT * FROM Job_Eligibility;
 SELECT * FROM Job_Applications;
 SELECT * FROM Hiring_Workflow;
 SELECT * FROM Resume;
-

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FaGithub, FaCode, FaLaptopCode, FaMobileAlt, FaRobot, FaChartLine, FaFilter, FaTimes } from 'react-icons/fa';
 import '../../styles/student/Projects.css';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Projects = () => {
   const [selectedLevel, setSelectedLevel] = useState('all');
@@ -8,6 +9,7 @@ const Projects = () => {
   const [activeFilters, setActiveFilters] = useState([]);
   const [activeTab, setActiveTab] = useState("Projects");
   const [breadcrumbs, setBreadcrumbs] = useState([activeTab]);
+  const { darkMode } = useContext(ThemeContext);
 
   const projectCategories = {
     beginner: {
@@ -144,7 +146,7 @@ const Projects = () => {
   };
 
   return (
-    <div className="projects-page">
+    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
       <div className="breadcrumb-container">
         <div className="breadcrumbs">
           <span>Projects</span>

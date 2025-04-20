@@ -11,7 +11,6 @@ import {
   FaCog,
   FaMoon,
   FaSun,
-  FaSearch,
   FaBell
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";

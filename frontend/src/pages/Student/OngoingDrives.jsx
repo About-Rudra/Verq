@@ -123,8 +123,7 @@ function OngoingDrives() {
   });
 
   return (
-    <div className={`dashboard-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      <div className="main-content">
+    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
         <div className="breadcrumb-container">
           <div className="breadcrumbs">
             <span>Ongoing Drives</span>
@@ -292,7 +291,6 @@ function OngoingDrives() {
             )}
           </div>
         </div>
-      </div>
     </div>
   );
 }

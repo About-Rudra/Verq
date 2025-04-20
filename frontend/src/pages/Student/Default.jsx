@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import '../../styles/student/Default.css';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Default = () => {
   const controls = useAnimation();
@@ -11,6 +12,7 @@ const Default = () => {
   const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
   const [activeTab, setActiveTab] = useState('roadmap');
   const [highlightedStep, setHighlightedStep] = useState(null);
+  const { darkMode } = useContext(ThemeContext);
   
   useEffect(() => {
     if (isInView) {
@@ -108,7 +110,7 @@ const Default = () => {
   ];
 
   return (
-    <div className="default-container">
+    <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
       <div className="hero-section">
         <motion.div
           className="hero-content"

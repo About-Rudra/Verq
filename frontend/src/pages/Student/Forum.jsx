@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSearch, FaThumbsUp, FaThumbsDown, FaComment, FaBookmark, FaShare, FaEllipsisH, FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import '../../styles/Student/Forum.css';
 
 const Forum = () => {
@@ -164,8 +163,7 @@ const Forum = () => {
   });
 
   return (
-    <div className={`dashboard-container ${darkMode ? 'dark-theme' : ''}`}>
-      <div className="main-content">
+    <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
         <div className="breadcrumb-container">
           <div className="breadcrumbs">
             <span>Forum</span>
@@ -179,7 +177,6 @@ const Forum = () => {
             
             {/* Search Bar */}
             <div className="forum-search">
-              <FaSearch className="search-icon" />
               <input
                 type="text"
                 placeholder="Search discussions..."
@@ -305,7 +302,6 @@ const Forum = () => {
             + New Thread
           </motion.button>
         </div>
-      </div>
 
       {/* New Thread Modal */}
       <AnimatePresence>

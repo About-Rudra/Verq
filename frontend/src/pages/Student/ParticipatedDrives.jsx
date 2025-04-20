@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/Student/ParticipatedDrives.css';
+import { ThemeContext } from '../../context/ThemeContext';
 
 function ParticipatedDrives() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortOrder, setSortOrder] = useState('A-Z');
   const [viewMode, setViewMode] = useState('grid');
   const [searchTerm, setSearchTerm] = useState('');
+  const { darkMode } = useContext(ThemeContext);
   
   // Add state for activeTab and breadcrumbs
   const [activeTab, setActiveTab] = useState("Participated Drives");
@@ -122,8 +124,7 @@ function ParticipatedDrives() {
   });
   
   return (
-    <div className="page-container">
-      <div className="main-content">
+    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
         <div className="breadcrumb-container">
           <div className="breadcrumbs">
             <span>Participated Drives</span>
@@ -252,7 +253,6 @@ function ParticipatedDrives() {
             )}
           </div>
         </div>
-      </div>
     </div>
   );
 }
