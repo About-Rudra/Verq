@@ -20,7 +20,7 @@ const allowedOrigins = [
 // Middleware
 app.use(cors({
   
-    origin: allowedOrigins,
+    origin: 'https://verq-pi.vercel.app',
     credentials: true, // if you're sending cookies or auth headers
 }));
 app.use(express.json()); // Use only express.json() 
