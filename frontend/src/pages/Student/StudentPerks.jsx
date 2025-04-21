@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/Student/StudentPerks.css';
+import { ThemeContext } from '../../context/ThemeContext';
 
 function StudentPerks() {
   const [activeTab, setActiveTab] = useState("Student Perks");
@@ -145,19 +146,12 @@ function StudentPerks() {
   });
 
   return (
-    <div className={`dashboard-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      <div className="main-content">
-        <div className="header">
+    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+        <div className="breadcrumb-container">
           <div className="breadcrumbs">
-            {breadcrumbs.map((crumb, index) => (
-              <React.Fragment key={index}>
-                <span>{crumb}</span>
-                {index < breadcrumbs.length - 1 && <span>›</span>}
-              </React.Fragment>
-            ))}
+            <span>Student Perks</span>
           </div>
         </div>
-
         <div className="perks-container">
           <div className="header-section">
             <p className="perks-subtitle">Exclusive discounts and free tools for verified students</p>
@@ -274,9 +268,6 @@ function StudentPerks() {
                     >
                       Get Offer
                     </a>
-                    <button className="custom-button details-button">
-                      View Details
-                    </button>
                   </div>
                 </div>
               ))
@@ -297,7 +288,6 @@ function StudentPerks() {
             )}
           </div>
         </div>
-      </div>
     </div>
   );
 }

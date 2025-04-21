@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Student/Dashboard.css';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const TechStackCard = () => {
   const [techStack, setTechStack] = useState([]);
@@ -226,7 +227,7 @@ const ResumeCard = () => {
   );
 };
 
-const Dashboard = () => {
+const StudentDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [breadcrumbs, setBreadcrumbs] = useState([activeTab]);
@@ -255,9 +256,10 @@ const Dashboard = () => {
     setBreadcrumbs([tab]);
   };
 
+  const { darkMode } = useContext(ThemeContext);
+
   return (
-    <div className="dashboard-container">      
-      <div className="main-content">
+    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
         <div className="breadcrumb-container">
           <div className="breadcrumbs">
             <span>Dashboard</span>
@@ -276,11 +278,9 @@ const Dashboard = () => {
           <TechStackCard />
           <ProjectsCard />
           <ResumeCard />
-          {/* Registration card has been removed */}
         </div>
-      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default StudentDashboard;

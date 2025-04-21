@@ -423,15 +423,18 @@
 }
 
 /* Button styles */
-.primary-btn {
-  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-  color: white;
-  border: none;
+.primary-btn, .secondary-btn {
   padding: 0.8rem 2rem;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.primary-btn {
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  color: white;
+  border: none;
   box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
 }
 
@@ -439,11 +442,6 @@
   background: transparent;
   color: var(--primary-color);
   border: 2px solid var(--primary-color);
-  padding: 0.8rem 2rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 /* Floating tech icons */
@@ -465,6 +463,35 @@
   font-family: monospace;
   font-weight: bold;
   opacity: 0.15;
+}
+
+/* Root CSS Variables */
+:root {
+  --primary-color: #4f46e5;
+  --primary-light: #818cf8;
+  --accent-color: #6366f1;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-secondary-dark: #f3f4f6;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --border-radius: 8px;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #6366f1;
+    --primary-light: #818cf8;
+    --accent-color: #4f46e5;
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --bg-secondary-dark: #0f172a;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #374151;
+  }
 }
 
 /* Responsive adjustments */
@@ -542,34 +569,5 @@
   .logo-item {
     padding: 0.75rem 1rem;
     font-size: 0.9rem;
-  }
-}
-
-/* CSS Variables - Add these to your root CSS */
-:root {
-  --primary-color: #4f46e5;
-  --primary-light: #818cf8;
-  --accent-color: #6366f1;
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --bg-secondary-dark: #f3f4f6;
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --border-color: #e5e7eb;
-  --border-radius: 8px;
-}
-
-/* Dark mode variables - You can add these if you support dark mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-color: #6366f1;
-    --primary-light: #818cf8;
-    --accent-color: #4f46e5;
-    --bg-primary: #1f2937;
-    --bg-secondary: #111827;
-    --bg-secondary-dark: #0f172a;
-    --text-primary: #f9fafb;
-    --text-secondary: #d1d5db;
-    --border-color: #374151;
   }
 }

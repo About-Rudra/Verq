@@ -1,12 +1,13 @@
-import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
+import StudentSidebar from "./StudentSidebar";
 
-export default function AppLayout({ children, onLogout }) {
+export default function AppLayout({ onLogout, userType }) {
   return (
-    <div className="app-container">
-      <Sidebar onLogout={onLogout} />
-      <main className="main-content">
-        {children}
-      </main>
+    <div className="app-layout">
+      <StudentSidebar />
+      <div className="main-content">
+        <Outlet context={{ onLogout, userType }} />
+      </div>
     </div>
   );
 }

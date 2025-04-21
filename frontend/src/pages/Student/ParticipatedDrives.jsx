@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/Student/ParticipatedDrives.css';
+import { ThemeContext } from '../../context/ThemeContext';
 
 function ParticipatedDrives() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortOrder, setSortOrder] = useState('A-Z');
   const [viewMode, setViewMode] = useState('grid');
   const [searchTerm, setSearchTerm] = useState('');
+  const { darkMode } = useContext(ThemeContext);
   
   // Add state for activeTab and breadcrumbs
   const [activeTab, setActiveTab] = useState("Participated Drives");
@@ -122,20 +124,12 @@ function ParticipatedDrives() {
   });
   
   return (
-    <div className="page-container">
-      <div className="main-content">
-        {/* Move the header with breadcrumbs to the top, just like in Dashboard */}
-        <div className="header">
+    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+        <div className="breadcrumb-container">
           <div className="breadcrumbs">
-            {breadcrumbs.map((crumb, index) => (
-              <React.Fragment key={index}>
-                <span>{crumb}</span>
-                {index < breadcrumbs.length - 1 && <span>›</span>}
-              </React.Fragment>
-            ))}
+            <span>Participated Drives</span>
           </div>
         </div>
-        
         <div className="tech-directory">
           <div className="header-section">
             <p className="subtitle">Explore technology organizations and open source projects</p>
@@ -259,7 +253,6 @@ function ParticipatedDrives() {
             )}
           </div>
         </div>
-      </div>
     </div>
   );
 }

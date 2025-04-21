@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FaGithub, FaCode, FaLaptopCode, FaMobileAlt, FaRobot, FaChartLine, FaFilter, FaTimes } from 'react-icons/fa';
 import '../../styles/student/Projects.css';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Projects = () => {
   const [selectedLevel, setSelectedLevel] = useState('all');
@@ -8,6 +9,7 @@ const Projects = () => {
   const [activeFilters, setActiveFilters] = useState([]);
   const [activeTab, setActiveTab] = useState("Projects");
   const [breadcrumbs, setBreadcrumbs] = useState([activeTab]);
+  const { darkMode } = useContext(ThemeContext);
 
   const projectCategories = {
     beginner: {
@@ -144,15 +146,10 @@ const Projects = () => {
   };
 
   return (
-    <div className="projects-page">
-      <div className="header">
+    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+      <div className="breadcrumb-container">
         <div className="breadcrumbs">
-          {breadcrumbs.map((crumb, index) => (
-            <React.Fragment key={index}>
-              <span>{crumb}</span>
-              {index < breadcrumbs.length - 1 && <span>›</span>}
-            </React.Fragment>
-          ))}
+          <span>Projects</span>
         </div>
       </div>
       <div className="page-content">

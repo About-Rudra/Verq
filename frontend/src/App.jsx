@@ -1,199 +1,29 @@
-// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-// import { ThemeProvider } from "./context/ThemeContext";
-// import { useState, useEffect } from "react";
-
-// import LandingPage from "./pages/LandingPage";
-
-// // Student Pages
-// import Auth from "./pages/Student/Auth";
-// import StudentDashboard from "./pages/Student/StudentDashboard";
-// import OngoingDrives from "./pages/Student/OngoingDrives";
-// import UpcomingDrives from "./pages/Student/UpcomingDrives";
-// import ParticipatedDrives from "./pages/Student/ParticipatedDrives";
-// import Roadmaps from "./pages/Student/Roadmaps";
-// import Settings from "./pages/Student/Settings";
-// import StudentProfile from "./pages/Student/StudentProfile";
-// import JobDetails from "./pages/Student/JobDetails";
-// import Application from "./pages/Student/Application";
-// import StudentPerks from "./pages/Student/StudentPerks";
-// import Projects from "./pages/Student/Projects";
-// import Notifications from "./pages/Student/Notifications";
-// import Forum from "./pages/Student/Forum";
-// import StudentSidebar from "./components/StudentSidebar";
-
-// // Recruiter Pages
-// import RecruiterDashboard from "./pages/Recruiter/RecruiterDashboard";
-// import PostJobs from "./pages/Recruiter/PostJobs";
-// import CompanyProfile from "./pages/Recruiter/CompanyProfile";
-
-// function App() {
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [userType, setUserType] = useState(null); // 'student' or 'recruiter'
-
-//   // Check auth status on initial load
-//   useEffect(() => {
-//     const token = localStorage.getItem("authToken");
-//     const storedUserType = localStorage.getItem("userType");
-//     if (token && storedUserType) {
-//       setIsLoggedIn(true);
-//       setUserType(storedUserType);
-//     }
-//   }, []);
-
-//   // Handle login (to be called from Auth component)
-//   const handleLogin = (token, type) => {
-//     localStorage.setItem("authToken", token);
-//     localStorage.setItem("userType", type);
-//     setIsLoggedIn(true);
-//     setUserType(type);
-//   };
-
-//   // Handle logout
-//   const handleLogout = () => {
-//     localStorage.removeItem("authToken");
-//     localStorage.removeItem("userType");
-//     setIsLoggedIn(false);
-//     setUserType(null);
-//   };
-
-//   return (
-//     <ThemeProvider>
-//       <Router>
-      
-//         <Routes>
-//           {/* Public Routes */}
-//           <Route path="/" element={<LandingPage />} />
-//           <Route
-//             path="/auth"
-//             element={
-//               isLoggedIn ? (
-//                 <Navigate to={userType === 'student' ? "/student-dashboard" : "/recruiter-dashboard"} />
-//               ) : (
-//                 <Auth onLogin={handleLogin} />
-//               )
-//             }
-//           />
-          
-
-//           {/* Protected Student Routes */}
-//           {userType === 'student' && (
-//             <>
-//               <Route
-//                 path="/student-dashboard"
-//                 element={
-//                   <StudentDashboard onLogout={handleLogout} />
-//                 }
-//               />
-//               <Route
-//                 path="/ongoing-drives"
-//                 element={<OngoingDrives onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/upcoming-drives"
-//                 element={<UpcomingDrives onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/participated-drives"
-//                 element={<ParticipatedDrives onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/student-profile"
-//                 element={<StudentProfile onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/job-details/:id"
-//                 element={<JobDetails onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/apply/:id"
-//                 element={<Application onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/roadmaps"
-//                 element={<Roadmaps onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/student-perks"
-//                 element={<StudentPerks onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/settings"
-//                 element={<Settings onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/projects"
-//                 element={<Projects onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/notifications"
-//                 element={<Notifications onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/forum"
-//                 element={<Forum onLogout={handleLogout} />}
-//               />
-//             </>
-//           )}
-
-//           {/* Protected Recruiter Routes */}
-//           {userType === 'recruiter' && (
-//             <>
-//               <Route
-//                 path="/recruiter-dashboard"
-//                 element={<RecruiterDashboard onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/post-jobs"
-//                 element={<PostJobs onLogout={handleLogout} />}
-//               />
-//               <Route
-//                 path="/company-profile"
-//                 element={<CompanyProfile onLogout={handleLogout} />}
-//               />
-//             </>
-//           )}
-
-//           {/* Fallback Routes */}
-//           <Route
-//             path="*"
-//             element={
-//               isLoggedIn ? (
-//                 <Navigate to={userType === 'student' ? "/student-dashboard" : "/recruiter-dashboard"} />
-//               ) : (
-//                 <Navigate to="/" />
-//               )
-//             }
-//           />
-//         </Routes>
-//       </Router>
-//     </ThemeProvider>
-//   );
-// }
-
-// export default App;
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import { useState, useEffect } from "react";
-import { verifyToken } from "./api/auth";
+import { verifyToken } from "./api/Auth";
 
 import LandingPage from "./pages/LandingPage";
-import Auth from "./pages/Student/Auth";
+import Auth from "./pages/Auth";
 
 // Student Pages
+import Default from "./pages/Student/Default";
 import StudentDashboard from "./pages/Student/StudentDashboard";
 import OngoingDrives from "./pages/Student/OngoingDrives";
 import UpcomingDrives from "./pages/Student/UpcomingDrives";
 import ParticipatedDrives from "./pages/Student/ParticipatedDrives";
 import Roadmaps from "./pages/Student/Roadmaps";
 import Settings from "./pages/Student/Settings";
-import StudentDetailsForm from "./pages/Student/StudentDetailsForm";
 import JobDetails from "./pages/Student/JobDetails";
 import Application from "./pages/Student/Application";
 import StudentPerks from "./pages/Student/StudentPerks";
+import ATS from "./pages/Student/ATS";
+import MockInterviews from "./pages/Student/MockInterviews";
 import Projects from "./pages/Student/Projects";
+import Companies from "./pages/Student/Companies";
 import Notifications from "./pages/Student/Notifications";
 import Forum from "./pages/Student/Forum";
+import StudentDetailsForm from "./pages/Student/StudentDetailsForm";
 
 // Recruiter Pages
 import RecruiterDashboard from "./pages/Recruiter/RecruiterDashboard";
@@ -207,6 +37,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   // Check auth status on initial load
   useEffect(() => {
@@ -215,11 +46,23 @@ function App() {
         const isValid = await verifyToken();
         if (isValid) {
           const storedUserType = localStorage.getItem("userType");
+          const newUserFlag = localStorage.getItem("isNewUser") === "true";
+          
           setIsLoggedIn(true);
           setUserType(storedUserType);
+          setIsNewUser(newUserFlag);
+        } else {
+          // Clear any potentially stale auth data
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("userType");
+          localStorage.removeItem("isNewUser");
         }
       } catch (error) {
         console.error("Auth check failed:", error);
+        // Clear auth data on error
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("userType");
+        localStorage.removeItem("isNewUser");
       } finally {
         setIsCheckingAuth(false);
       }
@@ -229,12 +72,23 @@ function App() {
   }, []);
 
   // Handle login
-  const handleLogin = (token, type, isFirstTime = false) => {
+  const handleLogin = (token, type, isNewSignup = false) => {
     localStorage.setItem("authToken", token);
     localStorage.setItem("userType", type);
-    localStorage.setItem("isFirstTime", isFirstTime.toString());
+    
+    if (isNewSignup && type === 'student') {
+      localStorage.setItem("isNewUser", "true");
+      setIsNewUser(true);
+    }
+    
     setIsLoggedIn(true);
     setUserType(type);
+  };
+
+  // Handle completion of student details form
+  const handleFormCompletion = () => {
+    localStorage.removeItem("isNewUser");
+    setIsNewUser(false);
   };
 
   // Handle logout
@@ -250,9 +104,10 @@ function App() {
     
     localStorage.removeItem("authToken");
     localStorage.removeItem("userType");
-    localStorage.removeItem("isFirstTime");
+    localStorage.removeItem("isNewUser");
     setIsLoggedIn(false);
     setUserType(null);
+    setIsNewUser(false);
   };
 
   if (isCheckingAuth) {
@@ -270,11 +125,11 @@ function App() {
             path="/auth"
             element={
               isLoggedIn ? (
+                userType === 'student' && isNewUser ? 
+                <Navigate to="/student-form" /> :
                 <Navigate to={
                   userType === 'student' 
-                    ? (localStorage.getItem('isFirstTime') === 'true' 
-                        ? "/student-form" 
-                        : "/student-dashboard")
+                    ? "/default"
                     : "/recruiter-dashboard"
                 } />
               ) : (
@@ -282,29 +137,48 @@ function App() {
               )
             }
           />
+          
+          {/* Student Details Form with completion handler */}
+          <Route
+            path="/student-form"
+            element={
+              isLoggedIn && userType === 'student'
+                ? <StudentDetailsForm onFormSubmit={handleFormCompletion} />
+                : <Navigate to="/auth" />
+            }
+          />
 
           {/* Protected Student Routes */}
-          {userType === 'student' && (
-            <Route element={<AppLayout onLogout={handleLogout} />}>
+          {isLoggedIn && userType === 'student' && (
+            <Route 
+              element={
+                isNewUser 
+                  ? <Navigate to="/student-form" />
+                  : <AppLayout onLogout={handleLogout} userType={userType} />
+              }
+            >
+              <Route path="/default" element={<Default />} />
               <Route path="/student-dashboard" element={<StudentDashboard />} />
               <Route path="/ongoing-drives" element={<OngoingDrives />} />
               <Route path="/upcoming-drives" element={<UpcomingDrives />} />
               <Route path="/participated-drives" element={<ParticipatedDrives />} />
-              <Route path="/student-form" element={<StudentDetailsForm />} />
               <Route path="/job-details/:id" element={<JobDetails />} />
               <Route path="/apply/:id" element={<Application />} />
               <Route path="/roadmaps" element={<Roadmaps />} />
               <Route path="/student-perks" element={<StudentPerks />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/projects" element={<Projects />} />
+              <Route path="/companies" element={<Companies />} />
+              <Route path="/ats-checker" element={<ATS />} />
+              <Route path="/mock-interviews" element={<MockInterviews />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/forum" element={<Forum />} />
             </Route>
           )}
 
           {/* Protected Recruiter Routes */}
-          {userType === 'recruiter' && (
-            <Route element={<AppLayout onLogout={handleLogout} />}>
+          {isLoggedIn && userType === 'recruiter' && (
+            <Route element={<AppLayout onLogout={handleLogout} userType={userType} />}>
               <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
               <Route path="/post-jobs" element={<PostJobs />} />
               <Route path="/company-profile" element={<CompanyProfile />} />
@@ -316,11 +190,11 @@ function App() {
             path="*"
             element={
               isLoggedIn ? (
+                userType === 'student' && isNewUser ? 
+                <Navigate to="/student-form" /> :
                 <Navigate to={
                   userType === 'student' 
-                    ? (localStorage.getItem('isFirstTime') === 'true' 
-                        ? "/student-form" 
-                        : "/student-dashboard")
+                    ? "/default"
                     : "/recruiter-dashboard"
                 } />
               ) : (

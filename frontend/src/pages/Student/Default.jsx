@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import '../../styles/student/Default.css';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Default = () => {
   const controls = useAnimation();
@@ -11,6 +12,7 @@ const Default = () => {
   const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
   const [activeTab, setActiveTab] = useState('roadmap');
   const [highlightedStep, setHighlightedStep] = useState(null);
+  const { darkMode } = useContext(ThemeContext);
   
   useEffect(() => {
     if (isInView) {
@@ -73,20 +75,20 @@ const Default = () => {
   const testimonials = [
     {
       name: "Priya Sharma",
-      company: "Microsoft",
-      text: "This roadmap was crucial for my Microsoft interview preparation. The structured approach helped me ace the DSA round!",
+      company: "Top Fortune 500 Company",
+      text: "The structured guidance was crucial for my interview preparation. The roadmap helped me organize my learning effectively!",
       avatar: "PS"
     },
     {
       name: "Rahul Patel",
-      company: "Amazon",
-      text: "Clear guidance and focused resources made all the difference. I couldn't have secured my Amazon offer without this platform.",
+      company: "Leading MNC",
+      text: "Clear guidance and focused resources made all the difference. I couldn't have secured my dream offer without this platform.",
       avatar: "RP"
     },
     {
       name: "Anjali Verma",
-      company: "Google",
-      text: "The interactive exercises and personalized feedback were exactly what I needed to build my confidence for the Google interviews.",
+      company: "Global Corporation",
+      text: "The interactive exercises and personalized feedback were exactly what I needed to build my confidence for the interviews.",
       avatar: "AV"
     }
   ];
@@ -108,7 +110,7 @@ const Default = () => {
   ];
 
   return (
-    <div className="default-container">
+    <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
       <div className="hero-section">
         <motion.div
           className="hero-content"
@@ -116,8 +118,8 @@ const Default = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="hero-title">Your CS Career Compass</h1>
-          <p className="hero-subtitle">Navigate your way to dream tech placements with our structured roadmaps</p>
+          <h1 className="hero-title">Your Career Success Roadmap</h1>
+          <p className="hero-subtitle">Navigate your way to dream placements with our structured guidance</p>
           
           <motion.div
             className="hero-cta"
@@ -131,13 +133,6 @@ const Default = () => {
               whileTap={{ scale: 0.95 }}
             >
               Start Your Journey <span className="ml-2">→</span>
-            </motion.button>
-            <motion.button 
-              className="secondary-btn"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Watch Demo
             </motion.button>
           </motion.div>
         </motion.div>
@@ -246,15 +241,15 @@ const Default = () => {
                       variants={iconVariants}
                       whileHover="hover"
                     >
-                      <CodeIcon />
+                      <LearnIcon />
                     </motion.div>
                     <div className="step-content">
-                      <h3>Foundations</h3>
-                      <p>Master core CS concepts & programming languages</p>
+                      <h3>Core Fundamentals</h3>
+                      <p>Master essential concepts and technical skills for your field</p>
                       <div className="step-details">
-                        <div className="step-tag">Python</div>
-                        <div className="step-tag">Java</div>
-                        <div className="step-tag">OOPS</div>
+                        <div className="step-tag">Theory</div>
+                        <div className="step-tag">Concepts</div>
+                        <div className="step-tag">Basics</div>
                       </div>
                     </div>
                   </motion.div>
@@ -279,12 +274,12 @@ const Default = () => {
                       <ProjectIcon />
                     </motion.div>
                     <div className="step-content">
-                      <h3>Development</h3>
-                      <p>Build impressive projects & practical skills</p>
+                      <h3>Practical Skills</h3>
+                      <p>Develop hands-on experience through projects and case studies</p>
                       <div className="step-details">
-                        <div className="step-tag">Web Dev</div>
-                        <div className="step-tag">Backend</div>
-                        <div className="step-tag">ML</div>
+                        <div className="step-tag">Projects</div>
+                        <div className="step-tag">Case Studies</div>
+                        <div className="step-tag">Applications</div>
                       </div>
                     </div>
                   </motion.div>
@@ -306,15 +301,15 @@ const Default = () => {
                       variants={iconVariants}
                       whileHover="hover"
                     >
-                      <AlgorithmIcon />
+                      <SkillIcon />
                     </motion.div>
                     <div className="step-content">
-                      <h3>DSA Mastery</h3>
-                      <p>Strengthen problem solving & algorithm skills</p>
+                      <h3>Advanced Skills</h3>
+                      <p>Enhance your expertise with specialized knowledge</p>
                       <div className="step-details">
-                        <div className="step-tag">Algorithms</div>
-                        <div className="step-tag">Data Structures</div>
-                        <div className="step-tag">Patterns</div>
+                        <div className="step-tag">Specialization</div>
+                        <div className="step-tag">Advanced Topics</div>
+                        <div className="step-tag">Industry Tools</div>
                       </div>
                     </div>
                   </motion.div>
@@ -339,11 +334,11 @@ const Default = () => {
                       <TrophyIcon />
                     </motion.div>
                     <div className="step-content">
-                      <h3>Placement</h3>
-                      <p>Ace interviews & land dream offers</p>
+                      <h3>Placement Prep</h3>
+                      <p>Ace interviews and land your dream offers</p>
                       <div className="step-details">
-                        <div className="step-tag">Mock Interviews</div>
                         <div className="step-tag">Resume</div>
+                        <div className="step-tag">Interviews</div>
                         <div className="step-tag">Offers</div>
                       </div>
                     </div>
@@ -400,7 +395,7 @@ const Default = () => {
                 <div className="company-logos">
                   <h3>Our Students Work At</h3>
                   <div className="logo-cloud">
-                    {['Google', 'Microsoft', 'Amazon', 'Meta', 'Apple', 'Uber', 'Swiggy', 'Paytm'].map((company, index) => (
+                    {['Top MNCs', 'Fortune 500', 'Startups', 'Government', 'NGOs', 'Research', 'Finance', 'Healthcare'].map((company, index) => (
                       <motion.div 
                         key={index}
                         className="logo-item"
@@ -468,9 +463,9 @@ const Default = () => {
         </div>
       </div>
       
-      {/* Floating tech icons in background */}
+      {/* Floating icons in background */}
       <div className="floating-tech-icons">
-        {['</>', '{}', '()', '[]', ';', '=>', 'AI', 'SQL', 'JS', 'Py', 'C++', 'DB'].map((icon, i) => (
+        {['📚', '💼', '🎓', '🏆', '📝', '🔍', '💡', '📊', '📈', '📉', '🔧', '⚙️'].map((icon, i) => (
           <motion.div
             key={i}
             className="tech-icon"
@@ -496,10 +491,10 @@ const Default = () => {
 };
 
 // SVG Icons as React components
-const CodeIcon = () => (
+const LearnIcon = () => (
   <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="16 18 22 12 16 6"></polyline>
-    <polyline points="8 6 2 12 8 18"></polyline>
+    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+    <path d="M2 12h20"></path>
   </svg>
 );
 
@@ -509,7 +504,7 @@ const ProjectIcon = () => (
   </svg>
 );
 
-const AlgorithmIcon = () => (
+const SkillIcon = () => (
   <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 2v6M12 18v4"></path>
     <rect x="4" y="8" width="16" height="10" rx="2"></rect>

@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSearch, FaThumbsUp, FaThumbsDown, FaComment, FaBookmark, FaShare, FaEllipsisH, FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import '../../styles/Student/Forum.css';
 
 const Forum = () => {
@@ -164,19 +163,12 @@ const Forum = () => {
   });
 
   return (
-    <div className={`dashboard-container ${darkMode ? 'dark-theme' : ''}`}>
-      <div className="main-content">
-        <div className="header">
+    <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
+        <div className="breadcrumb-container">
           <div className="breadcrumbs">
-            {breadcrumbs.map((crumb, index) => (
-              <React.Fragment key={index}>
-                <span>{crumb}</span>
-                {index < breadcrumbs.length - 1 && <span className="separator">›</span>}
-              </React.Fragment>
-            ))}
+            <span>Forum</span>
           </div>
         </div>
-
         <div className="forum-container">
           {/* Forum Header */}
           <div className="forum-header">
@@ -185,7 +177,6 @@ const Forum = () => {
             
             {/* Search Bar */}
             <div className="forum-search">
-              <FaSearch className="search-icon" />
               <input
                 type="text"
                 placeholder="Search discussions..."
@@ -311,7 +302,6 @@ const Forum = () => {
             + New Thread
           </motion.button>
         </div>
-      </div>
 
       {/* New Thread Modal */}
       <AnimatePresence>

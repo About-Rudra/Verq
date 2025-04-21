@@ -123,19 +123,12 @@ function OngoingDrives() {
   });
 
   return (
-    <div className={`dashboard-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      <div className="main-content">
-        <div className="header">
+    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+        <div className="breadcrumb-container">
           <div className="breadcrumbs">
-            {breadcrumbs.map((crumb, index) => (
-              <React.Fragment key={index}>
-                <span>{crumb}</span>
-                {index < breadcrumbs.length - 1 && <span>›</span>}
-              </React.Fragment>
-            ))}
+            <span>Ongoing Drives</span>
           </div>
         </div>
-
         <div className="drives-container">
           <div className="header-section">
             <p className="drives-subtitle">Explore opportunities from top companies hiring on campus</p>
@@ -298,7 +291,6 @@ function OngoingDrives() {
             )}
           </div>
         </div>
-      </div>
     </div>
   );
 }

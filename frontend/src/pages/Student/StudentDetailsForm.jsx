@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
-import '../../styles/Student/StudentProfile.css';
+import { useNavigate } from 'react-router-dom';
+import '../../styles/Student/StudentDetailsForm.css';
 
-const StudentDetailsForm = () => {
+const StudentDetailsForm = ({ onFormSubmit }) => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('personal');
   const [activeTab] = useState("Profile");
   const [breadcrumbs] = useState([activeTab]);
@@ -14,7 +16,8 @@ const StudentDetailsForm = () => {
       email: '',
       phone: '',
       dob: '',
-      address: '',
+      gender: '',
+      instituteRollNo: '',
     },
     internships: [{ 
       company: '', 
@@ -23,22 +26,31 @@ const StudentDetailsForm = () => {
       sector: '', 
       startDate: '', 
       endDate: '', 
-      stipend: '', 
-      description: '', 
-      supervisor: '' 
+      stipend: ''
     }],
-    volunteering: [{ organization: '', role: '', startDate: '', endDate: '', hours: '', description: '' }],
-    skills: [{ name: '', category: '', proficiency: '' }],
-    projects: [{ title: '', duration: '', technologies: '', role: '', outcome: '', link: '' }],
-    accomplishments: [{ 
+    volunteering: [{ 
+      organization: '', 
+      location: '',
+      sector: '',
+      task: '', 
+      startDate: '', 
+      endDate: '' 
+    }],
+    skills: [{ name: '', proficiency: '' }],
+    projects: [{ 
       title: '', 
       description: '', 
-      date: '', 
+      techStack: '', 
+      link: '', 
+      role: '' 
+    }],
+    accomplishments: [{ 
+      title: '', 
       institution: '',
       type: '',
-      rank: '',
-      percentile: '',
-      score: ''
+      description: '', 
+      date: '', 
+      rank: ''
     }],
     extraCurricular: [{ 
       activity: '', 
@@ -46,30 +58,22 @@ const StudentDetailsForm = () => {
       organization: '', 
       duration: '' 
     }],
-    resume: null,
-    jobSearch: {
-      industries: [],
-      roles: [],
-      locations: [],
-      workArrangement: '',
-      availability: '',
-    },
-    competitions: [{ name: '', date: '', role: '', achievement: '', skills: '' }],
-    settings: {
-      notifications: true,
-      profileVisibility: 'public',
-      marketingEmails: false,
-    }
+    competitions: [{ 
+      name: '', 
+      date: '', 
+      role: '', 
+      achievement: '', 
+      skills: '' 
+    }],
+    resume: null
   });
 
   const handleInputChange = (section, field, value, index = null) => {
     if (index !== null) {
-      // For array fields
       const newArray = [...formData[section]];
       newArray[index][field] = value;
       setFormData({ ...formData, [section]: newArray });
     } else {
-      // For object fields
       setFormData({
         ...formData,
         [section]: { ...formData[section], [field]: value }
@@ -95,20 +99,48 @@ const StudentDetailsForm = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      resume: e.target.files[0]
-    });
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      // Check file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size exceeds 5MB limit');
+        return;
+      }
+      // Check file type
+      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!validTypes.includes(file.type)) {
+        alert('Only PDF, DOC, and DOCX files are allowed');
+        return;
+      }
+      setFormData({
+        ...formData,
+        resume: file
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    // Here you would typically send the data to your backend
-    alert('Registration submitted successfully!');
+    
+    // Call the onFormSubmit function that was passed as prop (if provided)
+    if (onFormSubmit) {
+      onFormSubmit();
+    }
+    
+    alert('Profile updated successfully!');
+    navigate('/default');
   };
 
-  // Array of form sections for navigation
+  const handleSkipToDefault = () => {
+    // Call the onFormSubmit function that was passed as prop (if provided)
+    if (onFormSubmit) {
+      onFormSubmit();
+    }
+    
+    navigate('/default');
+  };
+
   const sections = [
     { id: 'personal', label: 'Personal Information' },
     { id: 'internships', label: 'Internships' },
@@ -117,43 +149,47 @@ const StudentDetailsForm = () => {
     { id: 'projects', label: 'Projects' },
     { id: 'accomplishments', label: 'Accomplishments' },
     { id: 'extraCurricular', label: 'Extra-Curricular Activities' },
-    { id: 'resume', label: 'Resume Upload' },
     { id: 'competitions', label: 'Competitions & Events' },
-    
+    { id: 'resume', label: 'Resume Upload' },
   ];
 
-  // Sector options for internships
   const sectorOptions = [
     'Technology', 'Finance', 'Healthcare', 'Education', 'Marketing', 
     'Engineering', 'Retail', 'Manufacturing', 'Media', 'Consulting', 
     'Non-profit', 'Government', 'Other'
   ];
 
-  // Duration options for extracurricular activities
   const durationOptions = [
     '< 6 months', '6 months', '1 year', '2 years', '3 years', '4+ years'
   ];
 
-  // Types of accomplishments
   const accomplishmentTypes = [
     'Award', 'Certification', 'Competition', 'Workshop', 
     'Patent', 'Publication', 'Scholarship', 'Other'
   ];
 
+  const genderOptions = [
+    'Male', 'Female', 'Other', 'Prefer not to say'
+  ];
+
   return (
-    
-    <div className={`registration-container ${darkMode ? 'dark-theme' : ''}`}>
-      
-      <div className="form-navigation">
-        {sections.map((section) => (
-          <button
-            key={section.id}
-            className={activeSection === section.id ? 'nav-button active' : 'nav-button'}
-            onClick={() => setActiveSection(section.id)}
-          >
-            {section.label}
-          </button>
-        ))}
+    <div className={`profile-container ${darkMode ? 'dark-theme' : ''}`}>
+      {/* Sidebar Navigation */}
+      <div className="sidebar">
+        <div className="sidebar-header">
+          <h3>Profile Sections</h3>
+        </div>
+        <nav className="sidebar-nav">
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              className={`sidebar-item ${activeSection === section.id ? 'active' : ''}`}
+              onClick={() => setActiveSection(section.id)}
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -205,16 +241,29 @@ const StudentDetailsForm = () => {
               />
             </div>
             <div className="input-group">
-              <label>Address:</label>
-              <textarea
-                value={formData.personal.address}
-                onChange={(e) => handleInputChange('personal', 'address', e.target.value)}
+              <label>Gender:</label>
+              <select
+                value={formData.personal.gender}
+                onChange={(e) => handleInputChange('personal', 'gender', e.target.value)}
+              >
+                <option value="">Select gender</option>
+                {genderOptions.map(gender => (
+                  <option key={gender} value={gender}>{gender}</option>
+                ))}
+              </select>
+            </div>
+            <div className="input-group">
+              <label>Institute Roll No:</label>
+              <input
+                type="text"
+                value={formData.personal.instituteRollNo}
+                onChange={(e) => handleInputChange('personal', 'instituteRollNo', e.target.value)}
               />
             </div>
           </div>
         )}
 
-        {/* Internships Section - Enhanced */}
+        {/* Internships Section */}
         {activeSection === 'internships' && (
           <div className="form-section">
             <h2>Internships</h2>
@@ -283,21 +332,6 @@ const StudentDetailsForm = () => {
                     placeholder="Amount per month"
                   />
                 </div>
-                <div className="input-group">
-                  <label>Description of Responsibilities:</label>
-                  <textarea
-                    value={internship.description}
-                    onChange={(e) => handleInputChange('internships', 'description', e.target.value, index)}
-                  />
-                </div>
-                <div className="input-group">
-                  <label>Supervisor Contact:</label>
-                  <input
-                    type="text"
-                    value={internship.supervisor}
-                    onChange={(e) => handleInputChange('internships', 'supervisor', e.target.value, index)}
-                  />
-                </div>
                 {formData.internships.length > 1 && (
                   <button type="button" className="remove-button" onClick={() => removeItem('internships', index)}>
                     Remove Internship
@@ -327,11 +361,30 @@ const StudentDetailsForm = () => {
                   />
                 </div>
                 <div className="input-group">
-                  <label>Role:</label>
+                  <label>Location:</label>
                   <input
                     type="text"
-                    value={volunteer.role}
-                    onChange={(e) => handleInputChange('volunteering', 'role', e.target.value, index)}
+                    value={volunteer.location}
+                    onChange={(e) => handleInputChange('volunteering', 'location', e.target.value, index)}
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Sector:</label>
+                  <select
+                    value={volunteer.sector}
+                    onChange={(e) => handleInputChange('volunteering', 'sector', e.target.value, index)}
+                  >
+                    <option value="">Select sector</option>
+                    {sectorOptions.map(sector => (
+                      <option key={sector} value={sector}>{sector}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="input-group">
+                  <label>Task/Description:</label>
+                  <textarea
+                    value={volunteer.task}
+                    onChange={(e) => handleInputChange('volunteering', 'task', e.target.value, index)}
                   />
                 </div>
                 <div className="input-group">
@@ -348,14 +401,6 @@ const StudentDetailsForm = () => {
                     type="date"
                     value={volunteer.endDate}
                     onChange={(e) => handleInputChange('volunteering', 'endDate', e.target.value, index)}
-                  />
-                </div>
-                
-                <div className="input-group">
-                  <label>Description of Activities:</label>
-                  <textarea
-                    value={volunteer.description}
-                    onChange={(e) => handleInputChange('volunteering', 'description', e.target.value, index)}
                   />
                 </div>
                 {formData.volunteering.length > 1 && (
@@ -385,20 +430,6 @@ const StudentDetailsForm = () => {
                     value={skill.name}
                     onChange={(e) => handleInputChange('skills', 'name', e.target.value, index)}
                   />
-                </div>
-                <div className="input-group">
-                  <label>Category:</label>
-                  <select
-                    value={skill.category}
-                    onChange={(e) => handleInputChange('skills', 'category', e.target.value, index)}
-                  >
-                    <option value="">Select a category</option>
-                    <option value="technical">Technical</option>
-                    <option value="soft">Soft Skills</option>
-                    <option value="language">Language</option>
-                    <option value="certification">Certification</option>
-                    <option value="other">Other</option>
-                  </select>
                 </div>
                 <div className="input-group">
                   <label>Proficiency:</label>
@@ -442,20 +473,28 @@ const StudentDetailsForm = () => {
                   />
                 </div>
                 <div className="input-group">
-                  <label>Duration:</label>
-                  <input
-                    type="text"
-                    value={project.duration}
-                    onChange={(e) => handleInputChange('projects', 'duration', e.target.value, index)}
-                    placeholder="e.g., 3 months, Jan 2023 - Mar 2023"
+                  <label>Description:</label>
+                  <textarea
+                    value={project.description}
+                    onChange={(e) => handleInputChange('projects', 'description', e.target.value, index)}
                   />
                 </div>
                 <div className="input-group">
-                  <label>Technologies/Methods Used:</label>
+                  <label>Tech Stack:</label>
                   <input
                     type="text"
-                    value={project.technologies}
-                    onChange={(e) => handleInputChange('projects', 'technologies', e.target.value, index)}
+                    value={project.techStack}
+                    onChange={(e) => handleInputChange('projects', 'techStack', e.target.value, index)}
+                    placeholder="Technologies used"
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Project Link:</label>
+                  <input
+                    type="url"
+                    value={project.link}
+                    onChange={(e) => handleInputChange('projects', 'link', e.target.value, index)}
+                    placeholder="GitHub, Live Demo, etc."
                   />
                 </div>
                 <div className="input-group">
@@ -464,21 +503,6 @@ const StudentDetailsForm = () => {
                     type="text"
                     value={project.role}
                     onChange={(e) => handleInputChange('projects', 'role', e.target.value, index)}
-                  />
-                </div>
-                <div className="input-group">
-                  <label>Project Outcome:</label>
-                  <textarea
-                    value={project.outcome}
-                    onChange={(e) => handleInputChange('projects', 'outcome', e.target.value, index)}
-                  />
-                </div>
-                <div className="input-group">
-                  <label>Project Link (if applicable):</label>
-                  <input
-                    type="url"
-                    value={project.link}
-                    onChange={(e) => handleInputChange('projects', 'link', e.target.value, index)}
                   />
                 </div>
                 {formData.projects.length > 1 && (
@@ -494,7 +518,7 @@ const StudentDetailsForm = () => {
           </div>
         )}
 
-        {/* Accomplishments Section - Enhanced */}
+        {/* Accomplishments Section */}
         {activeSection === 'accomplishments' && (
           <div className="form-section">
             <h2>Accomplishments</h2>
@@ -502,7 +526,7 @@ const StudentDetailsForm = () => {
               <div key={index} className="repeatable-item">
                 <h3>Accomplishment {index + 1}</h3>
                 <div className="input-group">
-                  <label>Title/Award:</label>
+                  <label>Title:</label>
                   <input
                     type="text"
                     value={accomplishment.title}
@@ -553,26 +577,6 @@ const StudentDetailsForm = () => {
                     placeholder="e.g., 1st, 2nd, Finalist"
                   />
                 </div>
-                <div className="input-group">
-                  <label>Percentile (if applicable):</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={accomplishment.percentile}
-                    onChange={(e) => handleInputChange('accomplishments', 'percentile', e.target.value, index)}
-                    placeholder="e.g., 95"
-                  />
-                </div>
-                <div className="input-group">
-                  <label>Score (if applicable):</label>
-                  <input
-                    type="text"
-                    value={accomplishment.score}
-                    onChange={(e) => handleInputChange('accomplishments', 'score', e.target.value, index)}
-                    placeholder="e.g., 98/100, A+"
-                  />
-                </div>
                 {formData.accomplishments.length > 1 && (
                   <button type="button" className="remove-button" onClick={() => removeItem('accomplishments', index)}>
                     Remove Accomplishment
@@ -586,7 +590,7 @@ const StudentDetailsForm = () => {
           </div>
         )}
 
-        {/* Extra-Curricular Activities Section - Enhanced */}
+        {/* Extra-Curricular Activities Section */}
         {activeSection === 'extraCurricular' && (
           <div className="form-section">
             <h2>Extra-Curricular Activities</h2>
@@ -641,24 +645,6 @@ const StudentDetailsForm = () => {
             </button>
           </div>
         )}
-
-        {/* Resume Upload Section */}
-        {activeSection === 'resume' && (
-          <div className="form-section">
-            <h2>Resume Upload</h2>
-            <div className="input-group">
-              <label>Upload Your Resume:</label>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileChange}
-              />
-              <p className="file-info">Accepted formats: PDF, DOC, DOCX. Maximum size: 5MB</p>
-            </div>
-          </div>
-        )}
-
-       
 
         {/* Competitions & Events Section */}
         {activeSection === 'competitions' && (
@@ -720,36 +706,77 @@ const StudentDetailsForm = () => {
           </div>
         )}
 
-    
+        {/* Resume Upload Section */}
+        {activeSection === 'resume' && (
+          <div className="form-section">
+            <h2>Resume Upload</h2>
+            <div className="input-group">
+              <label className="file-upload-label">
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  onChange={handleFileChange}
+                  className="file-upload-input"
+                />
+                <div className="file-upload-button">
+                  {formData.resume ? 'Change Resume' : 'Upload Resume'}
+                </div>
+                {formData.resume && (
+                  <div className="file-info-display">
+                    <span className="file-name">{formData.resume.name}</span>
+                    <span className="file-size">
+                      {(formData.resume.size / 1024 / 1024).toFixed(2)} MB
+                    </span>
+                  </div>
+                )}
+                <p className="file-info">Accepted formats: PDF, DOC, DOCX. Maximum size: 5MB</p>
+              </label>
+            </div>
+            
+            {/* Skip to Dashboard Button - Only visible in the resume section */}
+            <div className="skip-section">
+              <p>You can complete your profile later.</p>
+              <button 
+                type="button" 
+                className="skip-button" 
+                onClick={handleSkipToDefault}
+              >
+                Skip to Dashboard
+              </button>
+            </div>
+          </div>
+        )}
 
-{/* Navigation Buttons */}
-<div className="navigation-buttons">
-  {sections.findIndex(section => section.id === activeSection) > 0 && (
-    <button
-      onClick={() => {
-        const currentIndex = sections.findIndex(section => section.id === activeSection);
-        setActiveSection(sections[currentIndex - 1].id);
-      }}
-    >
-      Previous
-    </button>
-  )}
-  
-  {sections.findIndex(section => section.id === activeSection) < sections.length - 1 ? (
-    <button
-      onClick={() => {
-        const currentIndex = sections.findIndex(section => section.id === activeSection);
-        setActiveSection(sections[currentIndex + 1].id);
-      }}
-    >
-      Next
-    </button>
-  ) : (
-    <button type="submit">
-      Submit Registration
-    </button>
-  )}
-</div>
+        {/* Navigation Buttons */}
+        <div className="navigation-buttons">
+          {sections.findIndex(section => section.id === activeSection) > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                const currentIndex = sections.findIndex(section => section.id === activeSection);
+                setActiveSection(sections[currentIndex - 1].id);
+              }}
+            >
+              Previous
+            </button>
+          )}
+          
+          {sections.findIndex(section => section.id === activeSection) < sections.length - 1 ? (
+            <button
+              type="button"
+              onClick={() => {
+                const currentIndex = sections.findIndex(section => section.id === activeSection);
+                setActiveSection(sections[currentIndex + 1].id);
+              }}
+            >
+              Next
+            </button>
+          ) : (
+            <button type="submit">
+              Submit Profile
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

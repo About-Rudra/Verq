@@ -1,6 +1,4 @@
-/* ====== Variables ====== */
 :root {
-  /* Colors */
   --primary-color: #4361ee;
   --primary-light: rgba(67, 97, 238, 0.1);
   --text-primary: #2c3e50;
@@ -12,8 +10,6 @@
   --warning-color: #ff9800;
   --danger-color: #f44336;
   --info-color: #2196f3;
-
-  /* Project-specific colors */
   --beginner-color: #4caf50;
   --intermediate-color: #ff9800;
   --advanced-color: #f44336;
@@ -21,26 +17,19 @@
   --mobile-color: #9c27b0;
   --ai-color: #ff5722;
   --data-color: #607d8b;
-
-  /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 2rem;
   --spacing-xl: 3rem;
-
-  /* Border radius */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
-
-  /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
-
 [data-theme="dark"] {
   --bg-primary: #1a1a1a;
   --bg-secondary: #2d2d2d;
@@ -49,14 +38,11 @@
   --border-color: rgba(255, 255, 255, 0.1);
   --primary-light: rgba(67, 97, 238, 0.2);
 }
-
-/* ====== Base Styles ====== */
 .projects-page {
   background-color: var(--bg-secondary);
   min-height: 100vh;
   padding-bottom: var(--spacing-xl);
 }
-
 .page-header {
   background: linear-gradient(135deg, var(--primary-color), #3a0ca3);
   color: white;
@@ -64,30 +50,24 @@
   margin-bottom: var(--spacing-lg);
   box-shadow: var(--shadow-md);
 }
-
 .header-content {
   max-width: 1200px;
   margin: 0 auto;
 }
-
 .page-header h1 {
   font-size: 2.5rem;
   margin-bottom: var(--spacing-sm);
   font-weight: 700;
 }
-
 .subtitle {
   font-size: 1.1rem;
   opacity: 0.9;
   max-width: 700px;
 }
-
 .page-content {
   max-width: 1400px;
   padding: 0 var(--spacing-lg);
 }
-
-/* ====== Filter Controls ====== */
 .controls {
   background-color: var(--bg-primary);
   border-radius: var(--radius-md);
@@ -95,7 +75,6 @@
   margin-bottom: var(--spacing-lg);
   box-shadow: var(--shadow-sm);
 }
-
 .filter-title {
   display: flex;
   align-items: center;
@@ -103,18 +82,15 @@
   margin-bottom: var(--spacing-md);
   color: var(--text-primary);
 }
-
 .filter-icon {
   color: var(--primary-color);
 }
-
 .active-filters {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
   margin-bottom: var(--spacing-md);
 }
-
 .active-filter {
   display: flex;
   align-items: center;
@@ -125,7 +101,6 @@
   border-radius: var(--radius-lg);
   font-size: 0.9rem;
 }
-
 .remove-filter {
   background: none;
   border: none;
@@ -135,7 +110,6 @@
   align-items: center;
   padding: 0;
 }
-
 .clear-filters {
   background: none;
   border: none;
@@ -145,25 +119,21 @@
   font-size: 0.9rem;
   margin-left: var(--spacing-xs);
 }
-
 .filter-groups {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-lg);
 }
-
 .filter-group h4 {
   margin-bottom: var(--spacing-sm);
   color: var(--text-primary);
   font-weight: 500;
 }
-
 .level-filters, .domain-filters {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
 }
-
 .level-filter, .domain-filter {
   display: flex;
   align-items: center;
@@ -177,28 +147,22 @@
   transition: all 0.2s ease;
   font-size: 0.9rem;
 }
-
 .level-filter:hover, .domain-filter:hover {
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
-
 .level-filter.active, .domain-filter.active {
   color: var(--text-primary);
 }
-
-/* ====== Projects Grid ====== */
 .projects-container {
   margin-bottom: var(--spacing-xl);
   cursor: pointer;
 }
-
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: var(--spacing-lg);
 }
-
 .project-card {
   background-color: var(--bg-primary);
   border-radius: var(--radius-md);
@@ -208,31 +172,26 @@
   display: flex;
   flex-direction: column;
 }
-
 .project-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-lg);
 }
-
 .project-image {
   height: 180px;
   background-size: cover;
   background-position: center;
   position: relative;
 }
-
 .project-content {
   padding: var(--spacing-md);
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-
 .project-header {
   margin-bottom: var(--spacing-sm);
   display: block;
 }
-
 .difficulty-badge {
   display: inline-flex;
   align-items: center;
@@ -244,19 +203,16 @@
   margin-bottom: var(--spacing-sm);
   color: white;
 }
-
 .project-card h3 {
   font-size: 1.25rem;
   margin: var(--spacing-xs) 0;
   color: var(--text-primary);
 }
-
 .project-domains {
   display: flex;
   gap: var(--spacing-xs);
   margin-bottom: var(--spacing-sm);
 }
-
 .domain-tag {
   display: inline-flex;
   align-items: center;
@@ -267,26 +223,22 @@
   background-color: var(--bg-secondary);
   border: 1px solid transparent;
 }
-
 .project-description {
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
   flex: 1;
   line-height: 1.6;
 }
-
 .project-footer {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
-
 .project-tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
 }
-
 .tech-tag {
   background-color: var(--bg-secondary);
   color: var(--text-secondary);
@@ -294,7 +246,6 @@
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
 }
-
 .github-link {
   display: flex;
   align-items: center;
@@ -304,13 +255,10 @@
   font-size: 0.9rem;
   transition: color 0.2s ease;
 }
-
 .github-link:hover {
   color: #3a0ca3;
   text-decoration: underline;
 }
-
-/* ====== Empty State ====== */
 .no-projects {
   background-color: var(--bg-primary);
   border-radius: var(--radius-md);
@@ -318,22 +266,18 @@
   text-align: center;
   box-shadow: var(--shadow-sm);
 }
-
 .no-projects-content {
   max-width: 500px;
   margin: 0 auto;
 }
-
 .no-projects h3 {
   color: var(--text-primary);
   margin-bottom: var(--spacing-sm);
 }
-
 .no-projects p {
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
 }
-
 .reset-filters {
   background-color: var(--primary-color);
   color: white;
@@ -344,34 +288,27 @@
   font-weight: 500;
   transition: background-color 0.2s ease;
 }
-
 .reset-filters:hover {
   background-color: #3a0ca3;
 }
-
-/* ====== GitHub Inspiration ====== */
 .github-inspiration {
   margin-top: var(--spacing-xl);
 }
-
 .github-inspiration h2 {
   color: var(--text-primary);
   margin-bottom: var(--spacing-sm);
   font-size: 1.75rem;
 }
-
 .inspiration-subtitle {
   color: var(--text-secondary);
   margin-bottom: var(--spacing-lg);
   max-width: 600px;
 }
-
 .github-repos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--spacing-lg);
 }
-
 .repo-card {
   background-color: var(--bg-primary);
   border-radius: var(--radius-md);
@@ -379,29 +316,24 @@
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s ease;
 }
-
 .repo-card:hover {
   transform: translateY(-3px);
 }
-
 .repo-icon {
   font-size: 1.5rem;
   color: var(--primary-color);
   margin-bottom: var(--spacing-sm);
 }
-
 .repo-card h3 {
   color: var(--text-primary);
   margin-bottom: var(--spacing-xs);
   font-size: 1.1rem;
 }
-
 .repo-card p {
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
   line-height: 1.6;
 }
-
 .repo-link {
   display: inline-block;
   color: var(--primary-color);
@@ -409,39 +341,44 @@
   font-size: 0.9rem;
   transition: color 0.2s ease;
 }
-
 .repo-link:hover {
   color: #3a0ca3;
   text-decoration: underline;
 }
-
-/* ====== Responsive Design ====== */
 @media (max-width: 768px) {
   .filter-groups {
-    grid-template-columns: 1fr;
-  }
-  
+      grid-template-columns: 1fr;
+ }
   .projects-grid {
-    grid-template-columns: 1fr;
-  }
-  
+      grid-template-columns: 1fr;
+ }
   .page-header h1 {
-    font-size: 2rem;
-  }
+      font-size: 2rem;
+ }
 }
-
 @media (max-width: 480px) {
   .page-content {
-    padding: 0 var(--spacing-md);
-  }
-  
+      padding: 0 var(--spacing-md);
+ }
   .level-filters, .domain-filters {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
+      flex-direction: column;
+      align-items: flex-start;
+ }
   .level-filter, .domain-filter {
-    width: 100%;
-    justify-content: center;
-  }
+      width: 100%;
+      justify-content: center;
+ }
+}
+@keyframes fadeInSlideUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+ }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+ }
+}
+.projects-page > * {
+  animation: fadeInSlideUp 0.6s ease-out forwards;
 }

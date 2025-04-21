@@ -1,10 +1,10 @@
-/* UpcomingDrives.css - Premium Edition */
-/* ===== Base Layout ===== */
 .drives-container {
   padding: 2.5rem;
   max-width: 1600px;
   margin: 0 auto;
   animation: dashboard-fadeIn 0.6s ease-out;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
 }
 @keyframes dashboard-fadeIn {
   from {
@@ -16,7 +16,13 @@
       transform: translateY(0);
  }
 }
-/* Enhanced header section */
+.drives-container::-webkit-scrollbar {
+  width: 8px;
+}
+.drives-container::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 4px;
+}
 .header {
   display: flex;
   justify-content: space-between;
@@ -33,7 +39,6 @@
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, var(--border-color) 20%, var(--border-color) 80%, transparent 100%);
 }
-/* Enhanced Breadcrumbs styles */
 .breadcrumbs {
   display: flex;
   gap: 0.75rem;
@@ -69,7 +74,6 @@
   font-size: 1.1rem;
   line-height: 1;
 }
-/* Enhanced title/heading */
 .drives-container h1 {
   font-size: 2.25rem;
   font-weight: 700;
@@ -92,7 +96,6 @@
 .drives-container h1:hover::after {
   width: 100px;
 }
-/* ===== Grid Layout ===== */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -108,6 +111,17 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  animation: cardAppear 0.6s ease-out forwards;
+}
+@keyframes cardAppear {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+ }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+ }
 }
 .grid-card::before {
   content: '';
@@ -128,7 +142,6 @@
 .grid-card:hover::before {
   opacity: 1;
 }
-/* ===== Card Content ===== */
 .grid-card h3 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -172,9 +185,8 @@
 .grid-card p::before {
   font-size: 1.1rem;
 }
-/* ===== Apply Button ===== */
 .apply-button {
-  display: inline-block;
+  display: flex;
   padding: 0.85rem 1.5rem;
   background: var(--primary-color);
   color: white;
@@ -188,17 +200,11 @@
   cursor: pointer;
   width: 100%;
   text-align: center;
-  display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   margin-top: auto;
- /* This pushes the button to the bottom */
   align-self: flex-end;
- /* Ensures full width */
-}
-.apply-button{
-  margin-top: 0;
 }
 .apply-button::after {
   content: '';
@@ -218,23 +224,13 @@
 .apply-button:hover::after {
   opacity: 1;
 }
-/* Add icon to apply button */
 .apply-button::before {
   font-size: 1.1rem;
 }
-/* ===== Scrollbar styles ===== */
-.drives-container {
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) transparent;
+.sidebar.collapsed ~ .drives-container {
+  width: calc(100% - 80px);
+  margin-left: 80px;
 }
-.drives-container::-webkit-scrollbar {
-  width: 8px;
-}
-.drives-container::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color);
-  border-radius: 4px;
-}
-/* ===== Responsive Design ===== */
 @media (max-width: 1024px) {
   .grid-container {
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -275,29 +271,9 @@
   .grid-card {
       padding: 1.5rem;
       flex: 1;
-     /* This makes the content take up remaining space */
       margin-bottom: 1.5rem;
  }
   .apply-button {
       padding: 0.75rem;
  }
-}
-/* Collapsible sidebar support */
-.sidebar.collapsed ~ .drives-container {
-  width: calc(100% - 80px);
-  margin-left: 80px;
-}
-/* Animation for card loading */
-@keyframes cardAppear {
-  from {
-      opacity: 0;
-      transform: translateY(20px);
- }
-  to {
-      opacity: 1;
-      transform: translateY(0);
- }
-}
-.grid-card {
-  animation: cardAppear 0.6s ease-out forwards;
 }
