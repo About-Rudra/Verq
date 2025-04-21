@@ -1,0 +1,300 @@
+.job-posting-container {
+  max-width: 1224px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-posting-container * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease;
+}
+
+.header-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo-container {
+  background-color: #3b82f6;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.logo {
+  color: var(--primary-color);
+  font-size: 40px;
+  font-weight: bold;
+  position: relative;
+}
+
+.logo-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-accent {
+  background-color: white;
+  width: 32px;
+  height: 24px;
+  border-bottom-right-radius: 8px;
+}
+
+.job-title-info {
+  flex: 1;
+}
+
+.job-title-info h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 4px 0;
+}
+
+.job-title-info p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 14px;
+}
+
+.eligibility-badge span {
+  padding: 4px 12px;
+  background-color: #fee2e2;
+  color: #ef4444;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.icon-circle-x {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  fill: currentColor;
+}
+
+.notice-banner {
+  background-color: #e5e7eb;
+  padding: 12px;
+  margin-bottom: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+.icon-info {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  color: #6b7280;
+  fill: currentColor;
+}
+.notice-banner span {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.tabs-section {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.tabs-section ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.tabs-section li {
+  cursor: pointer;
+  padding: 8px 16px;
+  color: #6b7280;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+.tabs-section li.active {
+  border-bottom: 2px solid #4338ca;
+  color: #4338ca;
+  font-weight: 500;
+}
+.tabs-section .icon-circle-x {
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  color: #ef4444;
+}
+
+.content-section {
+  color: #374151;
+}
+.content-section h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 16px;
+}
+.opening-overview, .job-details, .skills-section, .additional-info, .attached-documents {
+  margin-bottom: 32px;
+}
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.field-row {
+  display: flex;
+}
+.field-label {
+  color: #6b7280;
+}
+.field-value {
+  margin-left: 8px;
+}
+.job-details p {
+  color: #4b5563;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.show-desktop {
+  display: flex;
+  justify-content: flex-end;
+}
+.show-desktop button {
+  color: #4b5563;
+  padding: 4px 12px;
+  background-color: #f3f4f6;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.show-desktop button:hover {
+  background-color: #e5e7eb;
+}
+
+.workflow-steps .step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.step-number {
+  background-color: #3b82f6;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+.step-info h3 {
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+.step-info p {
+  color: #6b7280;
+  margin: 0;
+}
+
+.criteria-list .criterion {
+  background-color: #fef2f2;
+  border-left: 4px solid #ef4444;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.criterion h3 {
+  color: #b91c1c;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+.criterion p {
+  color: #4b5563;
+  margin: 0;
+}
+
+.job-posting-container.dark-theme {
+  background-color: #1a1a1a;
+  color: #e5e7eb;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+.job-posting-container.dark-theme .header-section {
+  border-bottom-color: #333;
+}
+.job-posting-container.dark-theme .job-title-info h1 {
+  color: #f3f4f6;
+}
+.job-posting-container.dark-theme .job-title-info p, .job-posting-container.dark-theme .field-label, .job-posting-container.dark-theme .step-info p, .job-posting-container.dark-theme .tabs-section li {
+  color: #9ca3af;
+}
+.job-posting-container.dark-theme .eligibility-badge span {
+  background-color: #7f1d1d;
+  color: #fca5a5;
+}
+.job-posting-container.dark-theme .notice-banner {
+  background-color: #1e293b;
+  color: #e5e7eb;
+}
+.job-posting-container.dark-theme .notice-banner span {
+  color: #cbd5e1;
+}
+.job-posting-container.dark-theme .icon-info {
+  color: #93c5fd;
+}
+.job-posting-container.dark-theme .tabs-section {
+  border-bottom-color: #333;
+}
+.job-posting-container.dark-theme .tabs-section li.active {
+  color: #818cf8;
+  border-bottom-color: #818cf8;
+}
+.job-posting-container.dark-theme .tabs-section .icon-circle-x {
+  color: #fca5a5;
+}
+.job-posting-container.dark-theme .content-section h2, .job-posting-container.dark-theme .field-value {
+  color: #e5e7eb;
+}
+.job-posting-container.dark-theme .job-details p, .job-posting-container.dark-theme .criterion p {
+  color: #d1d5db;
+}
+.job-posting-container.dark-theme .criterion {
+  background-color: #1e293b;
+  border-left-color: #7f1d1d;
+}
+.job-posting-container.dark-theme .criterion h3 {
+  color: #fca5a5;
+}
+.job-posting-container.dark-theme .show-desktop button {
+  background-color: #1e293b;
+  color: #e5e7eb;
+  border: 1px solid #334155;
+}
+.job-posting-container.dark-theme .show-desktop button:hover {
+  background-color: #334155;
+}
+
+@media (max-width: 768px) {
+  .header-section {
+      flex-direction: column;
+      align-items: flex-start;
+ }
+  .logo-container {
+      margin-bottom: 12px;
+ }
+  .eligibility-badge {
+      margin-top: 12px;
+ }
+  .overview-grid {
+      grid-template-columns: 1fr;
+ }
+}
