@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Auth.css';
 
+
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 const Auth = ({ onLogin }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -92,7 +95,7 @@ const Auth = ({ onLogin }) => {
     }
 
     try {
-      const response = await fetch('https://verq-1fwo.onrender.com/api/auth/login', {
+      const response = await fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -155,7 +158,7 @@ const Auth = ({ onLogin }) => {
     }
 
     try {
-      const response = await fetch('https://verq-1fwo.onrender.com/api/auth/signup', {
+      const response = await fetch(`${BASE_URL}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
