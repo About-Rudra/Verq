@@ -1,0 +1,698 @@
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
+import { ThemeContext } from '../../context/ThemeContext';
+import '../../styles/Student/Default.css';
+
+const Default = () => {
+  const controls = useAnimation();
+  const statsControls = useAnimation();
+  const ref = useRef(null);
+  const statsRef = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
+  const [activeTab, setActiveTab] = useState('roadmap');
+  const [highlightedStep, setHighlightedStep] = useState(null);
+  const { darkMode } = useContext(ThemeContext);
+  
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [controls, isInView]);
+  
+  useEffect(() => {
+    if (statsInView) {
+      statsControls.start("visible");
+    }
+  }, [statsControls, statsInView]);
+
+  const pathVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const stepVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, type: "spring", stiffness: 100 }
+    }
+  };
+
+  const counterVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { 
+      opacity: 1,
+      scale: 1,
+      transition: { 
+        duration: 0.8,
+        type: "spring",
+        stiffness: 100
+      }
+    }
+  };
+
+  const iconVariants = {
+    hover: { 
+      scale: 1.15,
+      rotate: 8,
+      boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+      transition: { 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 10 
+      } 
+    }
+  };
+
+  const statBadgeVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6 }
+    }
+  };
+
+  const testimonials = [
+    {
+      name: "Priya Sharma",
+      company: "Top Fortune 500 Company",
+      text: "The structured guidance was crucial for my interview preparation. The roadmap helped me organize my learning effectively!",
+      avatar: "PS"
+    },
+    {
+      name: "Rahul Patel",
+      company: "Leading MNC",
+      text: "Clear guidance and focused resources made all the difference. I couldn't have secured my dream offer without this platform.",
+      avatar: "RP"
+    },
+    {
+      name: "Anjali Verma",
+      company: "Global Corporation",
+      text: "The interactive exercises and personalized feedback were exactly what I needed to build my confidence for the interviews.",
+      avatar: "AV"
+    }
+  ];
+
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const placementStats = [
+    { label: "Placements", value: "500+", color: "#4f46e5" },
+    { label: "Avg. Package", value: "₹12L", color: "#0ea5e9" },
+    { label: "Top Companies", value: "50+", color: "#10b981" },
+    { label: "Success Rate", value: "92%", color: "#f43f5e" }
+  ];
+
+  // Additional stat badges for hero section
+  const heroBadges = [
+    { icon: <TrophyIcon />, highlight: "92%", text: "placement success", position: "top-badge-df" },
+    { icon: <BriefcaseIcon />, highlight: "500+", text: "offers", position: "right-badge-df" },
+    { icon: <BuildingIcon />, highlight: "50+", text: "top companies", position: "bottom-badge-df" },
+    { icon: <CertificateIcon />, highlight: "100%", text: "interview calls", position: "left-badge-df" },
+    { icon: <StarIcon />, highlight: "4.9", text: "average rating", position: "top-right-badge-df" },
+    { icon: <GraduateIcon />, highlight: "15K+", text: "students", position: "bottom-left-badge-df" }
+  ];
+
+  return (
+    <div className={`main-content-df ${darkMode ? 'dark-theme-df' : ''}`}>
+      <div className="hero-section-df">
+        <motion.div
+          className="hero-content-df"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="hero-title-df">Your Career Success Roadmap</h1>
+          <p className="hero-subtitle-df">Navigate your way to dream placements with our structured guidance</p>
+          
+          <motion.div
+            className="hero-cta-df"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <motion.button 
+              className="primary-btn-df"
+              whileHover={{ scale: 1.05, boxShadow: "0px 10px 25px rgba(79, 70, 229, 0.4)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Start Your Journey <span className="ml-2">→</span>
+            </motion.button>
+
+            <motion.button 
+              className="secondary-btn-df"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Learn More
+            </motion.button>
+          </motion.div>
+
+          <div className="quick-stats-df">
+            <motion.div 
+              className="quick-stat-item-df"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+            >
+              <span className="stat-number-df">15k+</span>
+              <span className="stat-label-df">Students</span>
+            </motion.div>
+            <motion.div 
+              className="quick-stat-item-df"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+            >
+              <span className="stat-number-df">97%</span>
+              <span className="stat-label-df">Completion</span>
+            </motion.div>
+            <motion.div 
+              className="quick-stat-item-df"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.5 }}
+            >
+              <span className="stat-number-df">4.9/5</span>
+              <span className="stat-label-df">Rating</span>
+            </motion.div>
+          </div>
+        </motion.div>
+        
+        <div className="hero-graphic-df">
+          {heroBadges.map((badge, index) => (
+            <motion.div 
+              key={index}
+              className={`floating-badge-df ${badge.position}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 + (index * 0.2), duration: 0.8 }}
+              whileHover={{ y: -5, boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.15)" }}
+            >
+              <div className="badge-icon-df">
+                {badge.icon}
+              </div>
+              <div className="badge-text-df">
+                <span className="badge-highlight-df">{badge.highlight}</span> {badge.text}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <div className="announcement-bar-df">
+        <div className="announcement-content-df">
+          <motion.div 
+            className="announcement-icon-df"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          >
+            <AnnouncementIcon />
+          </motion.div>
+          <p>New batch starting on May 15, 2025! <span className="highlight-text-df">Register now</span> to get early bird discount.</p>
+          <motion.button 
+            className="announcement-btn-df"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Register
+          </motion.button>
+        </div>
+      </div>
+
+      <div className="tab-section-df">
+        <div className="tab-buttons-df">
+          <motion.button 
+            className={`tab-btn-df ${activeTab === 'roadmap' ? 'active' : ''}`}
+            onClick={() => setActiveTab('roadmap')}
+            whileHover={{ y: -2 }}
+            whileTap={{ y: 1 }}
+          >
+            Your Roadmap
+          </motion.button>
+          <motion.button 
+            className={`tab-btn-df ${activeTab === 'stats' ? 'active' : ''}`}
+            onClick={() => setActiveTab('stats')}
+            whileHover={{ y: -2 }}
+            whileTap={{ y: 1 }}
+          >
+            Placement Stats
+          </motion.button>
+          <motion.button 
+            className={`tab-btn-df ${activeTab === 'testimonials' ? 'active' : ''}`}
+            onClick={() => setActiveTab('testimonials')}
+            whileHover={{ y: -2 }}
+            whileTap={{ y: 1 }}
+          >
+            Success Stories
+          </motion.button>
+        </div>
+        
+        <div className="tab-content-df">
+          <AnimatePresence mode="wait">
+            {activeTab === 'roadmap' && (
+              <motion.div 
+                key="roadmap"
+                className="roadmap-content-df"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <motion.div 
+                  className="roadmap-wrapper-df"
+                  ref={ref}
+                  initial="hidden"
+                  animate={controls}
+                  variants={pathVariants}
+                >
+                  {/* Step 1 */}
+                  <motion.div 
+                    className={`roadmap-step-df ${highlightedStep === 0 ? 'highlighted' : ''}`}
+                    variants={stepVariants}
+                    onMouseEnter={() => setHighlightedStep(0)}
+                    onMouseLeave={() => setHighlightedStep(null)}
+                  >
+                    <div className="step-number-df">1</div>
+                    <motion.div 
+                      className="step-icon-df"
+                      variants={iconVariants}
+                      whileHover="hover"
+                    >
+                      <LearnIcon />
+                    </motion.div>
+                    <div className="step-content-df">
+                      <h3>Core Fundamentals</h3>
+                      <p>Master essential concepts and technical skills for your field</p>
+                      <div className="step-details-df">
+                        <div className="step-tag-df">Theory</div>
+                        <div className="step-tag-df">Concepts</div>
+                        <div className="step-tag-df">Basics</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div className="roadmap-connector-df" variants={stepVariants}>
+                    <ArrowIcon />
+                  </motion.div>
+                  
+                  {/* Step 2 */}
+                  <motion.div 
+                    className={`roadmap-step-df ${highlightedStep === 1 ? 'highlighted' : ''}`}
+                    variants={stepVariants}
+                    onMouseEnter={() => setHighlightedStep(1)}
+                    onMouseLeave={() => setHighlightedStep(null)}
+                  >
+                    <div className="step-number-df">2</div>
+                    <motion.div 
+                      className="step-icon-df"
+                      variants={iconVariants}
+                      whileHover="hover"
+                    >
+                      <ProjectIcon />
+                    </motion.div>
+                    <div className="step-content-df">
+                      <h3>Practical Skills</h3>
+                      <p>Develop hands-on experience through projects and case studies</p>
+                      <div className="step-details-df">
+                        <div className="step-tag-df">Projects</div>
+                        <div className="step-tag-df">Case Studies</div>
+                        <div className="step-tag-df">Applications</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div className="roadmap-connector-df" variants={stepVariants}>
+                    <ArrowIcon />
+                  </motion.div>
+                  
+                  {/* Step 3 */}
+                  <motion.div 
+                    className={`roadmap-step-df ${highlightedStep === 2 ? 'highlighted' : ''}`}
+                    variants={stepVariants}
+                    onMouseEnter={() => setHighlightedStep(2)}
+                    onMouseLeave={() => setHighlightedStep(null)}
+                  >
+                    <div className="step-number-df">3</div>
+                    <motion.div 
+                      className="step-icon-df"
+                      variants={iconVariants}
+                      whileHover="hover"
+                    >
+                      <SkillIcon />
+                    </motion.div>
+                    <div className="step-content-df">
+                      <h3>Advanced Skills</h3>
+                      <p>Enhance your expertise with specialized knowledge</p>
+                      <div className="step-details-df">
+                        <div className="step-tag-df">Specialization</div>
+                        <div className="step-tag-df">Advanced Topics</div>
+                        <div className="step-tag-df">Industry Tools</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div className="roadmap-connector-df" variants={stepVariants}>
+                    <ArrowIcon />
+                  </motion.div>
+                  
+                  {/* Step 4 */}
+                  <motion.div 
+                    className={`roadmap-step-df ${highlightedStep === 3 ? 'highlighted' : ''}`} 
+                    variants={stepVariants}
+                    onMouseEnter={() => setHighlightedStep(3)}
+                    onMouseLeave={() => setHighlightedStep(null)}
+                  >
+                    <div className="step-number-df">4</div>
+                    <motion.div 
+                      className="step-icon-df"
+                      variants={iconVariants}
+                      whileHover="hover"
+                    >
+                      <TrophyIcon />
+                    </motion.div>
+                    <div className="step-content-df">
+                      <h3>Placement Prep</h3>
+                      <p>Ace interviews and land your dream offers</p>
+                      <div className="step-details-df">
+                        <div className="step-tag-df">Resume</div>
+                        <div className="step-tag-df">Interviews</div>
+                        <div className="step-tag-df">Offers</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+                
+                <motion.div
+                  className="roadmap-action-df"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.2 }}
+                >
+                  <motion.button 
+                    className="primary-btn-df"
+                    whileHover={{ scale: 1.05, boxShadow: "0px 10px 25px rgba(79, 70, 229, 0.4)" }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    View Detailed Roadmap
+                  </motion.button>
+                </motion.div>
+              </motion.div>
+            )}
+            
+            {activeTab === 'stats' && (
+              <motion.div 
+                key="stats"
+                className="stats-content-df"
+                ref={statsRef}
+                initial="hidden"
+                animate={statsControls}
+                variants={pathVariants}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="stats-wrapper-df">
+                  {placementStats.map((stat, index) => (
+                    <motion.div 
+                      key={index} 
+                      className="stat-card-df"
+                      variants={counterVariants}
+                      style={{ 
+                        backgroundColor: `${stat.color}10`,
+                        borderColor: stat.color
+                      }}
+                    >
+                      <div className="stat-value-df" style={{ color: stat.color }}>
+                        {stat.value}
+                      </div>
+                      <div className="stat-label-df">{stat.label}</div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="stats-highlights-df">
+                  <motion.div 
+                    className="highlight-card-df"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                  >
+                    <div className="highlight-icon-df">
+                      <StarIcon />
+                    </div>
+                    <div className="highlight-content-df">
+                      <h3>Top Performers</h3>
+                      <p>Our top 10% students receive offers above ₹20L per annum</p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div 
+                    className="highlight-card-df"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                  >
+                    <div className="highlight-icon-df">
+                      <GrowthIcon />
+                    </div>
+                    <div className="highlight-content-df">
+                      <h3>Career Growth</h3>
+                      <p>83% of our alumni report a promotion within first 2 years</p>
+                    </div>
+                  </motion.div>
+                </div>
+                
+                <div className="company-logos-df">
+                  <h3>Our Students Work At</h3>
+                  <div className="logo-cloud-df">
+                    {['Top MNCs', 'Fortune 500', 'Startups', 'Government', 'NGOs', 'Research', 'Finance', 'Healthcare'].map((company, index) => (
+                      <motion.div 
+                        key={index}
+                        className="logo-item-df"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.1 * index }}
+                      >
+                        {company}
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+            
+            {activeTab === 'testimonials' && (
+              <motion.div 
+                key="testimonials"
+                className="testimonials-content-df"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div 
+                    key={currentTestimonial}
+                    className="testimonial-card-df"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="testimonial-header-df">
+                      <div className="testimonial-avatar-df">
+                        {testimonials[currentTestimonial].avatar}
+                      </div>
+                      <div className="testimonial-author-df">
+                        <div className="testimonial-name-df">
+                          {testimonials[currentTestimonial].name}
+                        </div>
+                        <div className="testimonial-company-df">
+                          @ {testimonials[currentTestimonial].company}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="testimonial-text-df">
+                      "{testimonials[currentTestimonial].text}"
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+                
+                <div className="testimonial-dots-df">
+                  {testimonials.map((_, index) => (
+                    <span 
+                      key={index} 
+                      className={`testimonial-dot-df ${index === currentTestimonial ? 'active' : ''}`}
+                      onClick={() => setCurrentTestimonial(index)}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+          </AnimatePresence>
+        </div>
+      </div>
+      
+      <div className="feature-cards-df">
+        <h2 className="section-title-df">Why Choose Our Platform</h2>
+        <div className="feature-grid-df">
+          <motion.div 
+            className="feature-card-df"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="feature-icon-df">
+              <MentorIcon />
+            </div>
+            <h3>Expert Mentors</h3>
+            <p>Learn from industry professionals with years of experience</p>
+          </motion.div>
+          
+          <motion.div 
+            className="feature-card-df"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="feature-icon-df">
+              <ResourceIcon />
+            </div>
+            <h3>Rich Resources</h3>
+            <p>Access comprehensive study materials and practice sets</p>
+          </motion.div>
+          
+          <motion.div 
+            className="feature-card-df"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="feature-icon-df">
+              <SupportIcon />
+            </div>
+            <h3>24/7 Support</h3>
+            <p>Get help whenever you need through our dedicated support team</p>
+          </motion.div>
+          
+          <motion.div 
+            className="feature-card-df"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="feature-icon-df">
+              <CommunityIcon />
+            </div>
+            <h3>Learning Community</h3>
+            <p>Connect with peers and expand your professional network</p>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="cta-section-df">
+        <motion.div 
+          className="cta-content-df"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <h2>Ready to Start Your Journey?</h2>
+          <p>Join thousands of students who transformed their careers with our platform</p>
+          <motion.button 
+            className="primary-btn-df large-btn-df"
+            whileHover={{ scale: 1.05, boxShadow: "0px 15px 30px rgba(79, 70, 229, 0.4)" }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Get Started Today
+          </motion.button>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+// SVG Icons as React components
+const LearnIcon = () => (
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+    <path d="M2 12h20"></path>
+  </svg>
+);
+
+const ProjectIcon = () => (
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 3h18v18H3zM9 3v18M3 9h18"></path>
+  </svg>
+);
+
+const SkillIcon = () => (
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2v6M12 18v4"></path>
+    <rect x="4" y="8" width="16" height="10" rx="2"></rect>
+    <path d="M8 12h8"></path>
+  </svg>
+);
+
+const TrophyIcon = () => (
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+    <path d="M4 22h16"></path>
+    <path d="M10 22v-4"></path>
+    <path d="M14 22v-4"></path>
+    <path d="M8 6h8v4a4 4 0 0 1-8 0V6Z"></path>
+  </svg>
+);
+
+const ArrowIcon = () => (
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14M12 5l7 7-7 7"></path>
+  </svg>
+);
+
+const BriefcaseIcon = () => (
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+  </svg>
+);
+
+const BuildingIcon = () => (
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+    <path d="M9 22v-4h6v4"></path>
+    <path d="M8 6h.01"></path>
+    <path d="M16 6h.01"></path>
+    <path d="M12 6h.01"></path>
+    <path d="M12 10h.01"></path>
+    <path d="M12 14h.01"></path>
+    <path d="M16 10h.01"></path>
+    <path d="M16 14h.01"></path>
+    <path d="M8 10h.01"></path>
+    <path d="M8 14h.01"></path>
+  </svg>
+);
+
+export default Default;

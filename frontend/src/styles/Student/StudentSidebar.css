@@ -311,4 +311,8 @@ body {
     margin-left: 0;
     transition: margin-left var(--transition-speed) ease;
   }
+
+  .theme-toggle-container {
+    padding-bottom: 80px; /* Add more space at bottom on mobile */
+  }
 }
