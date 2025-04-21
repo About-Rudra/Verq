@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import '../styles/Student/Default.css';
+// import '../styles/Student/Default.css';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
 import { ThemeContext } from '../../context/ThemeContext';
 
