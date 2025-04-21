@@ -1,11 +1,15 @@
 const { Pool } = require('pg');
 require("dotenv").config();
+const { parse } = require('pg-connection-string');
+
+const config = parse(process.env.SUPABASE_DB_URL);
 
 const pool = new Pool({
-  connectionString: process.env.SUPABASE_DB_URL,
+  ...config,
   ssl: {
     rejectUnauthorized: false
-  }
+  },
+  host: config.host, // manually set host (IPv4 fallback)
 });
 
 module.exports = pool;
