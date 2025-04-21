@@ -12,19 +12,31 @@ const { Pool } = require("pg");
 const app = express();
 
 const allowedOrigins = [
-  'http://localhost:5173', // For local dev (if you're working locally)
-  'https://verq-pcae1zlxv-rudras-projects-cd8653fc.vercel.app', // Your frontend on Vercel
+  'http://localhost:5173',
+  'https://verq-pi.vercel.app',
+  'https://verq-pcae1zlxv-rudras-projects-cd8653fc.vercel.app',
 ];
 
-
-// Middleware
 app.use(cors({
-  
-    origin: 'https://verq-pi.vercel.app',
-    credentials: true, // if you're sending cookies or auth headers
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 }));
-app.use(express.json()); // Use only express.json() 
-app.use(cookieParser()); // Use cookie-parser to parse cookies
+
+app.options('*', cors());
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.get("/", (req, res) => {
+  res.send("🟢 Backend is live!");
+});
 
 // Routes
 
