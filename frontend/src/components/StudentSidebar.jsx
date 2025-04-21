@@ -20,7 +20,7 @@ import {
 } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
-import "../styles/student/StudentSidebar.css";
+import "../styles/Student/StudentSidebar.css";
 
 const StudentSidebar = () => {
   const [searchValue, setSearchValue] = useState("");

@@ -17,7 +17,7 @@ import {
 import 'fa-icons';
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
-import "../styles/student/Sidebar.css";
+import "../styles/Student/Sidebar.css";
 
 const Sidebar = () => {
   const [searchValue, setSearchValue] = useState("");
