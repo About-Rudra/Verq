@@ -96,4 +96,10 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// GET /api/auth/verify
+router.get("/verify", authenticateToken, (req, res) => {
+  res.status(200).json({ message: "Token valid", user: req.user });
+});
+
+
 module.exports = router;

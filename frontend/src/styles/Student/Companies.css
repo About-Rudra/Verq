@@ -1,4 +1,4 @@
-/* Companies.css */
+/* Companies.css - Improved Mobile Responsiveness */
 
 /* Breadcrumbs */
 .breadcrumb-container {
@@ -157,7 +157,7 @@
 .stat-card {
   background-color: var(--bg-primary);
   border-radius: var(--border-radius);
-  padding-right: 18.5rem;
+  padding: 1.25rem; /* Fixed padding issue */
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -177,7 +177,8 @@
 
 .stat-icon {
   color: var(--primary-color);
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
 }
 
 .stat-info h3 {
@@ -237,6 +238,7 @@
   border-radius: var(--border-radius);
   overflow: hidden;
   border: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
 .company-logo {
@@ -287,6 +289,7 @@
 
 .expand-icon {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
 }
 
 .expand-icon.rotated {
@@ -300,7 +303,6 @@
   animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: top center;
 }
-
 
 .company-description {
   margin-bottom: 1.5rem;
@@ -326,6 +328,7 @@
 
 .meta-icon {
   color: var(--primary-color);
+  flex-shrink: 0;
 }
 
 .meta-item.website a {
@@ -397,7 +400,7 @@
   }
 }
 
-/* Responsive Styles */
+/* Responsive Styles - Enhanced for better mobile experience */
 @media (max-width: 992px) {
   .company-header {
     flex-wrap: wrap;
@@ -407,6 +410,12 @@
     margin: 1rem 0 0;
     width: 100%;
     text-align: left;
+  }
+  
+  .expand-icon {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
   }
   
   .company-meta {
@@ -436,6 +445,23 @@
   .companies-stats {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  .filters-panel {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .filter-group {
+    min-width: 100%;
+  }
+  
+  .company-header {
+    padding: 1rem;
+  }
+  
+  .company-details {
+    padding: 0 1rem 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -447,18 +473,93 @@
     grid-template-columns: 1fr;
   }
   
+  .stat-card {
+    padding: 1rem;
+  }
+  
   .company-logo-container {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     margin-right: 0.75rem;
   }
   
   .company-name {
     font-size: 1.125rem;
+    margin-bottom: 0.25rem;
   }
   
   .company-tags {
     flex-direction: column;
     gap: 0.25rem;
+  }
+  
+  .package-value {
+    font-size: 1rem;
+  }
+  
+  .roles-list {
+    gap: 0.5rem;
+  }
+  
+  .role-tag {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+  }
+  
+  /* Improved touch targets for mobile */
+  .filter-toggle-button, 
+  .filter-group select, 
+  .meta-item.website a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Better spacing in company details for mobile */
+  .company-details {
+    padding-bottom: 1.5rem;
+  }
+  
+  /* Make companies easier to tap on mobile */
+  .company-card {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Company header layout for very small screens */
+  .company-header {
+    gap: 0.75rem;
+  }
+}
+
+/* Special styling for very small screens */
+@media (max-width: 360px) {
+  .company-logo-container {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.5rem;
+  }
+  
+  .company-name {
+    font-size: 1rem;
+    width: 100%;
+  }
+  
+  .company-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .company-logo-container {
+    margin-bottom: 0.75rem;
+  }
+  
+  .expand-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  .company-package {
+    margin-top: 0.75rem;
   }
 }

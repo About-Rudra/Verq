@@ -442,68 +442,198 @@
 .reset-button:hover::after {
   opacity: 1;
 }
+/* Enhanced mobile responsiveness for tech directory */
+
+/* Make filter categories horizontally scrollable on mobile */
+.filter-categories {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding-bottom: 0.5rem; /* Add some padding for scrollbar */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: thin; /* Thin scrollbar for Firefox */
+}
+
+/* Style the scrollbar for webkit browsers */
+.filter-categories::-webkit-scrollbar {
+  height: 4px;
+}
+
+.filter-categories::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.filter-categories::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+/* Make category buttons not shrink */
+.category-button {
+  flex-shrink: 0; /* Prevent button from shrinking */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Improved responsive layouts */
 @media (max-width: 1024px) {
   .tech-directory {
-      padding: 2rem;
- }
+    padding: 1.5rem;
+  }
+  
   .companies-container.grid {
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
- }
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
 }
+
 @media (max-width: 768px) {
-  .search-container {
-      flex-direction: column;
-      align-items: flex-start;
- }
-  .search-box {
-      width: 100%;
-      max-width: 100%;
- }
-  .sort-view-options {
-      width: 100%;
-      justify-content: space-between;
- }
-  .companies-container.list .company-card {
-      flex-direction: column;
-      padding: 0;
- }
-  .companies-container.list .company-logo {
-      width: 100%;
-      margin-right: 0;
-      height: auto;
-      padding: 1.5rem;
- }
-  .companies-container.list .company-info {
-      padding: 1.5rem;
-      flex-direction: column;
- }
-  .companies-container.list .company-actions {
-      padding: 0 1.5rem 1.5rem;
-      margin-left: 0;
-      justify-content: flex-end;
- }
-}
-@media (max-width: 480px) {
   .tech-directory {
-      padding: 1.5rem 1rem;
- }
-  .header {
-      font-size: 1.75rem;
- }
-  .filter-categories {
-      gap: 0.5rem;
- }
-  .category-button {
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
- }
+    padding: 1rem;
+  }
+  
+  .search-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .search-box {
+    width: 100%;
+    max-width: 100%;
+  }
+  
   .sort-view-options {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
- }
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  /* Improve list view in mobile */
+  .companies-container.list .company-card {
+    flex-direction: row; /* Keep as row to maintain better layout */
+    padding: 1rem;
+    align-items: center;
+  }
+  
+  .companies-container.list .company-logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .companies-container.list .company-info {
+    padding: 0;
+    flex: 1;
+  }
+  
+  .companies-container.list .company-name {
+    font-size: 1.1rem;
+  }
+  
+  .companies-container.list .company-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .companies-container.list .company-actions {
+    padding: 0;
+    margin-left: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 0.95rem;
+  }
+  
+  /* Refine category buttons */
+  .category-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Improve sort options layout */
+  .sort-view-options {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
   .sort-options {
-      width: 100%;
-      justify-content: space-between;
- }
+    order: 2;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  .sort-button {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  .view-options {
+    order: 1;
+    margin-left: auto;
+  }
+  
+  /* Further refine company cards */
+  .companies-container.grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .company-logo img {
+    max-width: 60px;
+    max-height: 60px;
+  }
+  
+  .company-name {
+    font-size: 1.15rem;
+  }
+  
+  /* Adjust list view specifically for very small screens */
+  .companies-container.list .company-card {
+    flex-wrap: wrap;
+  }
+  
+  .companies-container.list .company-logo {
+    margin-bottom: 0.75rem;
+  }
+  
+  .companies-container.list .company-actions {
+    margin-top: 0.75rem;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  /* Make sure the search input is more usable */
+  .search-input {
+    padding: 0.75rem 1rem;
+    padding-right: 3rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  .tech-directory {
+    padding: 0.75rem;
+  }
+  
+  .header-section {
+    margin-bottom: 1rem;
+  }
+  
+  .results-summary {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
 }

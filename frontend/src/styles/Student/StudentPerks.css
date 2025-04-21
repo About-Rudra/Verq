@@ -413,3 +413,136 @@
       margin-right: 10px;
  }
 }
+
+/* Keep existing CSS and add these responsive improvements */
+
+.perks-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Make filter categories horizontally scrollable */
+.filter-categories {
+  display: flex;
+  flex-wrap: nowrap;  /* Changed from wrap to nowrap */
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  overflow-x: auto;  /* Enable horizontal scrolling */
+  -webkit-overflow-scrolling: touch;  /* Smooth scrolling on iOS */
+  scrollbar-width: thin;  /* For Firefox */
+  padding-bottom: 1.5rem;  /* Extra padding for scrollbar */
+}
+
+/* Hide scrollbar for Chrome/Safari/Opera but keep functionality */
+.filter-categories::-webkit-scrollbar {
+  height: 4px;
+}
+
+.filter-categories::-webkit-scrollbar-thumb {
+  background-color: rgba(67, 97, 238, 0.3);
+  border-radius: 4px;
+}
+
+.filter-categories::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Make sure category buttons don't shrink */
+.category-button {
+  flex: 0 0 auto; /* Don't shrink or grow */
+  white-space: nowrap;
+}
+
+/* Improved mobile responsiveness */
+@media (max-width: 1024px) {
+  .perks-display.grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .perks-container {
+    padding: 0 1rem;
+  }
+  
+  .sort-view-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .view-options {
+    align-self: flex-start;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .sort-options {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .search-input {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .perks-header {
+    font-size: 1.75rem;
+  }
+  
+  .perks-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .perks-container {
+    padding: 0 0.75rem;
+  }
+  
+  .perk-actions {
+    flex-direction: column;
+  }
+  
+  .perks-header {
+    font-size: 1.5rem;
+  }
+  
+  .provider-logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .perk-card {
+    padding: 1.25rem;
+  }
+  
+  .perks-display.grid {
+    grid-template-columns: 1fr;  /* Single column for very small screens */
+  }
+  
+  .custom-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Make the perk header more compact on mobile */
+  .perk-header {
+    align-items: center;
+  }
+  
+  /* Adjust spacing in cards */
+  .perk-content {
+    margin-bottom: 1rem;
+  }
+  
+  /* Keep search interface clean on small screens */
+  .search-container {
+    gap: 1rem;
+  }
+}

@@ -50,7 +50,7 @@ function App() {
           
           setIsLoggedIn(true);
           setUserType(storedUserType);
-          setIsNewUser(newUserFlag);
+          setIsNewUser(newUserFlag);  
         } else {
           // Clear any potentially stale auth data
           localStorage.removeItem("authToken");

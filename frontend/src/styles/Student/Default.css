@@ -1,4 +1,6 @@
-/* Main container styles */
+/* Existing CSS with improved mobile responsiveness */
+
+/* Main container styles - improved padding for mobile */
 .default-container {
   background: var(--bg-secondary);
   min-height: 100vh;
@@ -8,14 +10,14 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Hero section styles */
+/* Hero section styles - improved for mobile */
 .hero-section {
   display: flex;
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto 4rem;
-  padding: 2rem;
+  padding: 2rem 1rem;
   position: relative;
   z-index: 5;
 }
@@ -58,6 +60,7 @@
   justify-content: center;
 }
 
+/* Floating badge adjustments for mobile */
 .floating-badge {
   position: absolute;
   background: white;
@@ -109,14 +112,14 @@
   font-size: 1.1rem;
 }
 
-/* Tab section styles */
+/* Tab section styles - improved for mobile */
 .tab-section {
   max-width: 1200px;
   margin: 0 auto;
   background: var(--bg-primary);
   border-radius: 16px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  padding: 2rem 1rem;
   position: relative;
   z-index: 5;
   border: 1px solid var(--border-color);
@@ -165,7 +168,7 @@
   min-height: 500px;
 }
 
-/* Roadmap content styles */
+/* Roadmap content styles - improved for mobile */
 .roadmap-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -263,7 +266,7 @@
   margin-top: 3rem;
 }
 
-/* Stats content styles */
+/* Stats content styles - improved for mobile */
 .stats-wrapper {
   display: flex;
   justify-content: space-between;
@@ -346,7 +349,7 @@
   color: var(--primary-color);
 }
 
-/* Testimonials content styles */
+/* Testimonials content styles - improved for mobile */
 .testimonials-content {
   position: relative;
   padding: 2rem 0;
@@ -422,7 +425,7 @@
   transform: scale(1.5);
 }
 
-/* Button styles */
+/* Button styles - improved for mobile */
 .primary-btn, .secondary-btn {
   padding: 0.8rem 2rem;
   border-radius: 8px;
@@ -444,28 +447,7 @@
   border: 2px solid var(--primary-color);
 }
 
-/* Floating tech icons */
-.floating-tech-icons {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.tech-icon {
-  position: absolute;
-  color: var(--primary-light);
-  font-size: 1.2rem;
-  font-family: monospace;
-  font-weight: bold;
-  opacity: 0.15;
-}
-
-/* Root CSS Variables */
+/* Root CSS Variables - unchanged */
 :root {
   --primary-color: #4f46e5;
   --primary-light: #818cf8;
@@ -479,7 +461,7 @@
   --border-radius: 8px;
 }
 
-/* Dark mode variables */
+/* Dark mode variables - unchanged */
 @media (prefers-color-scheme: dark) {
   :root {
     --primary-color: #6366f1;
@@ -494,11 +476,13 @@
   }
 }
 
-/* Responsive adjustments */
+/* Enhanced responsive adjustments */
 @media (max-width: 1024px) {
   .hero-section {
     flex-direction: column;
     text-align: center;
+    padding: 1.5rem 1rem;
+    margin-bottom: 2rem;
   }
   
   .hero-content {
@@ -513,6 +497,7 @@
   .roadmap-step {
     width: 48%;
     margin-bottom: 2rem;
+    min-height: 200px;
   }
   
   .roadmap-connector {
@@ -526,7 +511,7 @@
 
 @media (max-width: 768px) {
   .default-container {
-    padding: 1rem;
+    padding: 1rem 0.5rem;
   }
   
   .hero-title {
@@ -535,18 +520,38 @@
   
   .hero-subtitle {
     font-size: 1.1rem;
+    margin-bottom: 1.5rem;
   }
   
   .tab-buttons {
     flex-wrap: wrap;
     gap: 0.5rem;
+    justify-content: center;
+    padding-bottom: 0.5rem;
   }
   
   .tab-btn {
-    flex: 1;
+    flex: 0 0 auto;
+    width: auto;
     min-width: 120px;
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .tab-btn.active::after {
+    bottom: -0.5rem;
+    width: 20px;
+  }
+  
+  .tab-section {
+    padding: 1.5rem 0.75rem;
+    border-radius: 12px;
+  }
+  
+  .tab-content {
+    min-height: 400px;
   }
   
   .roadmap-step {
@@ -556,18 +561,129 @@
   
   .stat-card {
     width: 100%;
+    margin-bottom: 1rem;
   }
   
   .hero-cta {
     flex-direction: column;
+    width: 100%;
+  }
+  
+  .primary-btn, .secondary-btn {
+    width: 100%;
+    padding: 0.8rem 1rem;
   }
   
   .logo-cloud {
-    gap: 1rem;
+    gap: 0.75rem;
   }
   
   .logo-item {
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    flex: 0 0 calc(50% - 0.75rem);
+  }
+  
+  .hero-graphic {
+    max-width: 100%;
+    height: 300px;
+  }
+  
+  .floating-badge {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .badge-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .testimonial-card {
+    padding: 1.25rem;
+  }
+  
+  .testimonial-text {
+    font-size: 1rem;
+  }
+  
+  .testimonial-avatar {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .step-icon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .step-content h3 {
+    font-size: 1.1rem;
+  }
+  
+  .step-content p {
     font-size: 0.9rem;
+  }
+}
+
+/* Additional mobile-specific adjustments for small screens */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .hero-graphic {
+    height: 250px;
+  }
+  
+  .right-badge {
+    right: -10px;
+  }
+  
+  .bottom-badge {
+    left: 20%;
+  }
+  
+  .tab-btn {
+    min-width: 100px;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .company-logos h3 {
+    font-size: 1.2rem;
+  }
+  
+  .logo-item {
+    flex: 0 0 calc(50% - 0.5rem);
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .testimonial-content {
+    height: 350px;
+  }
+  
+  .roadmap-action {
+    margin-top: 1.5rem;
+  }
+  
+  .roadmap-step {
+    padding: 1.25rem 1rem 1rem;
+  }
+  
+  .step-number {
+    top: -10px;
+    left: -10px;
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
   }
 }
