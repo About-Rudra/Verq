@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { FaGithub, FaCode, FaLaptopCode, FaMobileAlt, FaRobot, FaChartLine, FaFilter, FaTimes } from 'react-icons/fa';
 import '../../styles/Student/Projects.css';
 import { ThemeContext } from '../../context/ThemeContext';
@@ -10,6 +10,8 @@ const Projects = () => {
   const [activeTab, setActiveTab] = useState("Projects");
   const [breadcrumbs, setBreadcrumbs] = useState([activeTab]);
   const { darkMode } = useContext(ThemeContext);
+  const levelFiltersRef = useRef(null);
+  const domainFiltersRef = useRef(null);
 
   const projectCategories = {
     beginner: {
@@ -31,6 +33,49 @@ const Projects = () => {
       color: "var(--advanced-color)"
     }
   };
+
+  useEffect(() => {
+    const addScrollIndicators = () => {
+      const levelFilters = levelFiltersRef.current;
+      const domainFilters = domainFiltersRef.current;
+      
+      if (levelFilters) {
+        levelFilters.classList.toggle('has-overflow', 
+          levelFilters.scrollWidth > levelFilters.clientWidth);
+      }
+      
+      if (domainFilters) {
+        domainFilters.classList.toggle('has-overflow', 
+          domainFilters.scrollWidth > domainFilters.clientWidth);
+      }
+    };
+
+    // Run on mount and resize
+    addScrollIndicators();
+    window.addEventListener('resize', addScrollIndicators);
+    
+    return () => {
+      window.removeEventListener('resize', addScrollIndicators);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (selectedLevel !== 'all' && levelFiltersRef.current) {
+      const activeButton = levelFiltersRef.current.querySelector('.level-filter.active');
+      if (activeButton) {
+        levelFiltersRef.current.scrollLeft = activeButton.offsetLeft - 20;
+      }
+    }
+  }, [selectedLevel]);
+
+  useEffect(() => {
+    if (selectedDomain !== 'all' && domainFiltersRef.current) {
+      const activeButton = domainFiltersRef.current.querySelector('.domain-filter.active');
+      if (activeButton) {
+        domainFiltersRef.current.scrollLeft = activeButton.offsetLeft - 20;
+      }
+    }
+  }, [selectedDomain]);
 
   const techDomains = [
     { id: 'web', name: 'Web Dev', icon: <FaLaptopCode />, color: "var(--web-color)" },
@@ -154,99 +199,100 @@ const Projects = () => {
       </div>
       <div className="page-content">
         <div className="controls">
-          <div className="filter-section">
-            <h3 className="filter-title">
-              <FaFilter className="filter-icon" /> Filter by:
-            </h3>
-            
-            {activeFilters.length > 0 && (
-              <div className="active-filters">
-                {activeFilters.map((filter, index) => (
-                  <span key={index} className="active-filter">
-                    {filter.type === 'level' ? (
-                      <>
-                        {projectCategories[filter.value].icon}
-                        {projectCategories[filter.value].title}
-                      </>
-                    ) : (
-                      <>
-                        {techDomains.find(d => d.id === filter.value)?.icon}
-                        {techDomains.find(d => d.id === filter.value)?.name}
-                      </>
-                    )}
-                    <button 
-                      onClick={() => removeFilter(filter)}
-                      className="remove-filter"
-                    >
-                      <FaTimes />
-                    </button>
-                  </span>
-                ))}
-                <button 
-                  onClick={resetFilters}
-                  className="clear-filters"
-                >
-                  Clear all
-                </button>
-              </div>
-            )}
+        <div className="filter-section">
+  <h3 className="filter-title">
+    <FaFilter className="filter-icon" /> Filter by:
+  </h3>
+  
+  {activeFilters.length > 0 && (
+    <div className="active-filters">
+      {activeFilters.map((filter, index) => (
+        <span key={index} className="active-filter">
+          {filter.type === 'level' ? (
+            <>
+              {projectCategories[filter.value].icon}
+              {projectCategories[filter.value].title}
+            </>
+          ) : (
+            <>
+              {techDomains.find(d => d.id === filter.value)?.icon}
+              {techDomains.find(d => d.id === filter.value)?.name}
+            </>
+          )}
+          <button 
+            onClick={() => removeFilter(filter)}
+            className="remove-filter"
+            aria-label="Remove filter"
+          >
+            <FaTimes />
+          </button>
+        </span>
+      ))}
+      <button 
+        onClick={resetFilters}
+        className="clear-filters"
+      >
+        Clear all
+      </button>
+    </div>
+  )}
 
-            <div className="filter-groups">
-              <div className="filter-group">
-                <h4>Difficulty Level</h4>
-                <div className="level-filters">
-                  <button 
-                    className={`level-filter ${selectedLevel === 'all' ? 'active' : ''}`}
-                    onClick={() => handleLevelFilter('all')}
-                  >
-                    All Levels
-                  </button>
-                  {Object.entries(projectCategories).map(([key, category]) => (
-                    <button
-                      key={key}
-                      className={`level-filter ${selectedLevel === key ? 'active' : ''}`}
-                      onClick={() => handleLevelFilter(key)}
-                      style={selectedLevel === key ? { 
-                        backgroundColor: category.color,
-                        borderColor: category.color,
-                        color: 'white'
-                      } : {}}
-                    >
-                      {category.icon}
-                      {category.title}
-                    </button>
-                  ))}
-                </div>
-              </div>
+  <div className="filter-groups">
+    <div className="filter-group">
+      <h4>Difficulty Level</h4>
+      <div className="level-filters" ref={levelFiltersRef}>
+        <button 
+          className={`level-filter ${selectedLevel === 'all' ? 'active' : ''}`}
+          onClick={() => handleLevelFilter('all')}
+        >
+          All Levels
+        </button>
+        {Object.entries(projectCategories).map(([key, category]) => (
+          <button
+            key={key}
+            className={`level-filter ${selectedLevel === key ? 'active' : ''}`}
+            onClick={() => handleLevelFilter(key)}
+            style={selectedLevel === key ? { 
+              backgroundColor: category.color,
+              borderColor: category.color,
+              color: 'white'
+            } : {}}
+          >
+            {category.icon}
+            {category.title}
+          </button>
+        ))}
+      </div>
+    </div>
 
-              <div className="filter-group">
-                <h4>Tech Domain</h4>
-                <div className="domain-filters">
-                  <button
-                    className={`domain-filter ${selectedDomain === 'all' ? 'active' : ''}`}
-                    onClick={() => handleDomainFilter('all')}
-                  >
-                    All Domains
-                  </button>
-                  {techDomains.map(domain => (
-                    <button
-                      key={domain.id}
-                      className={`domain-filter ${selectedDomain === domain.id ? 'active' : ''}`}
-                      onClick={() => handleDomainFilter(domain.id)}
-                      style={selectedDomain === domain.id ? { 
-                        backgroundColor: domain.color,
-                        borderColor: domain.color,
-                        color: 'white'
-                      } : {}}
-                    >
-                      {domain.icon}
-                      {domain.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="filter-group">
+      <h4>Tech Domain</h4>
+      <div className="domain-filters" ref={domainFiltersRef}>
+        <button
+          className={`domain-filter ${selectedDomain === 'all' ? 'active' : ''}`}
+          onClick={() => handleDomainFilter('all')}
+        >
+          All Domains
+        </button>
+        {techDomains.map(domain => (
+          <button
+            key={domain.id}
+            className={`domain-filter ${selectedDomain === domain.id ? 'active' : ''}`}
+            onClick={() => handleDomainFilter(domain.id)}
+            style={selectedDomain === domain.id ? { 
+              backgroundColor: domain.color,
+              borderColor: domain.color,
+              color: 'white'
+            } : {}}
+          >
+            {domain.icon}
+            {domain.name}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
         </div>
 
         <div className="projects-container">

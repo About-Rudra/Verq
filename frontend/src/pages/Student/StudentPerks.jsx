@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/Student/StudentPerks.css';
 import { ThemeContext } from '../../context/ThemeContext';
@@ -11,6 +11,9 @@ function StudentPerks() {
   const [sortOrder, setSortOrder] = useState('A-Z');
   const [viewMode, setViewMode] = useState('grid');
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Add a ref for the filter categories container to implement scroll logic
+  const filterCategoriesRef = useRef(null);
   
   // Categories for filtering
   const categories = [
@@ -99,6 +102,30 @@ function StudentPerks() {
     }
   ];
 
+  // Effect to scroll the active filter into view when it changes
+  useEffect(() => {
+    if (filterCategoriesRef.current && activeFilter) {
+      const activeButton = filterCategoriesRef.current.querySelector(`.category-button.active`);
+      if (activeButton) {
+        // Calculate the button's position relative to the container
+        const container = filterCategoriesRef.current;
+        const scrollLeft = container.scrollLeft;
+        const containerWidth = container.clientWidth;
+        const buttonLeft = activeButton.offsetLeft;
+        const buttonWidth = activeButton.clientWidth;
+        
+        // Determine if the button is not fully visible
+        if (buttonLeft < scrollLeft || buttonLeft + buttonWidth > scrollLeft + containerWidth) {
+          // Scroll the button into view (centered if possible)
+          container.scrollTo({
+            left: buttonLeft - containerWidth / 2 + buttonWidth / 2,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  }, [activeFilter]);
+
   // Handle filter click
   const handleFilterClick = (category) => {
     setActiveFilter(category);
@@ -157,8 +184,8 @@ function StudentPerks() {
             <p className="perks-subtitle">Exclusive discounts and free tools for verified students</p>
           </div>
           
-          {/* Filter categories */}
-          <div className="filter-categories">
+          {/* Filter categories with horizontal scrolling */}
+          <div className="filter-categories" ref={filterCategoriesRef}>
             {categories.map(category => (
               <button 
                 key={category}
