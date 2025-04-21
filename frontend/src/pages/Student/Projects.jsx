@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { FaGithub, FaCode, FaLaptopCode, FaMobileAlt, FaRobot, FaChartLine, FaFilter, FaTimes } from 'react-icons/fa';
-import '../../styles/student/Projects.css';
+import '../../styles/Student/Projects.css';
 import { ThemeContext } from '../../context/ThemeContext';
 
 const Projects = () => {

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeContext } from '../../context/ThemeContext';
 import { FiBriefcase, FiFileText, FiClock, FiCalendar, FiBell, FiCheck, FiTrash2, FiFilter, FiChevronRight } from 'react-icons/fi';
-import '../../styles/student/Notifications.css';
+import '../../styles/Student/Notifications.css';
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([

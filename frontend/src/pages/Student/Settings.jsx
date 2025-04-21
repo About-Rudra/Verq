@@ -25,7 +25,7 @@ import {
   FaSignOutAlt
 } from 'react-icons/fa';
 import { ThemeContext } from '../../context/ThemeContext';
-import '../../styles/student/Settings.css';
+import '../../styles/Student/Settings.css';
 
 const Settings = () => {
   const navigate = useNavigate();
