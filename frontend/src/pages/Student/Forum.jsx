@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSearch, FaThumbsUp, FaThumbsDown, FaComment, FaBookmark, FaShare, FaEllipsisH, FaTimes } from 'react-icons/fa';
@@ -18,9 +18,11 @@ const Forum = () => {
     tags: []
   });
   const [tagInput, setTagInput] = useState('');
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   // Sample forum threads
   const [forumThreads, setForumThreads] = useState([
+    // Same thread data...
     {
       id: 1,
       title: "How to prepare for Google SWE interviews?",
@@ -82,6 +84,30 @@ const Forum = () => {
       isAnnouncement: false,
     },
   ]);
+
+  // Detect when keyboard opens/closes (for mobile devices)
+  useEffect(() => {
+    // This works for iOS Safari and some Android browsers
+    const detectKeyboard = () => {
+      const isKeyboard = window.innerHeight < window.outerHeight * 0.75;
+      setIsKeyboardVisible(isKeyboard);
+    };
+
+    window.addEventListener('resize', detectKeyboard);
+    return () => window.removeEventListener('resize', detectKeyboard);
+  }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (showNewThreadModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showNewThreadModal]);
 
   // Handle new thread input changes
   const handleNewThreadChange = (e) => {
@@ -162,6 +188,14 @@ const Forum = () => {
     return matchesTab && matchesSearch;
   });
 
+  // Blur active element when modal opens to hide keyboard
+  const openNewThreadModal = () => {
+    if (document.activeElement) {
+      document.activeElement.blur();
+    }
+    setShowNewThreadModal(true);
+  };
+
   return (
     <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
         <div className="breadcrumb-container">
@@ -228,6 +262,7 @@ const Forum = () => {
                     transition={{ duration: 0.3 }}
                     whileHover={{ scale: 1.01 }}
                   >
+                    {/* Thread content remains the same... */}
                     <div className="thread-header">
                       <div className="author-avatar">{thread.avatar}</div>
                       <div className="thread-meta">
@@ -297,17 +332,17 @@ const Forum = () => {
             className="create-thread-btn"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setShowNewThreadModal(true)}
+            onClick={openNewThreadModal}
           >
             + New Thread
           </motion.button>
         </div>
 
-      {/* New Thread Modal */}
+      {/* New Thread Modal - Improved for mobile */}
       <AnimatePresence>
         {showNewThreadModal && (
           <motion.div 
-            className="modal-overlay"
+            className={`modal-overlay ${isKeyboardVisible ? 'keyboard-open' : ''}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -325,6 +360,7 @@ const Forum = () => {
                 <button 
                   className="close-modal"
                   onClick={() => setShowNewThreadModal(false)}
+                  aria-label="Close modal"
                 >
                   <FaTimes />
                 </button>
@@ -332,20 +368,23 @@ const Forum = () => {
               
               <form onSubmit={handleSubmitThread}>
                 <div className="form-group">
-                  <label>Title</label>
+                  <label htmlFor="thread-title">Title</label>
                   <input
+                    id="thread-title"
                     type="text"
                     name="title"
                     value={newThread.title}
                     onChange={handleNewThreadChange}
                     required
                     placeholder="What's your question or topic?"
+                    autoComplete="off"
                   />
                 </div>
                 
                 <div className="form-group">
-                  <label>Category</label>
+                  <label htmlFor="thread-category">Category</label>
                   <select
+                    id="thread-category"
                     name="category"
                     value={newThread.category}
                     onChange={handleNewThreadChange}
@@ -359,26 +398,29 @@ const Forum = () => {
                 </div>
                 
                 <div className="form-group">
-                  <label>Content</label>
+                  <label htmlFor="thread-content">Content</label>
                   <textarea
+                    id="thread-content"
                     name="content"
                     value={newThread.content}
                     onChange={handleNewThreadChange}
                     required
                     placeholder="Provide details about your question or topic..."
-                    rows={6}
+                    rows={4}
                   />
                 </div>
                 
                 <div className="form-group">
-                  <label>Tags</label>
+                  <label htmlFor="thread-tags">Tags</label>
                   <div className="tags-input">
                     <input
+                      id="thread-tags"
                       type="text"
                       value={tagInput}
                       onChange={(e) => setTagInput(e.target.value)}
                       placeholder="Add tags (press Enter)"
                       onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+                      autoComplete="off"
                     />
                     <button 
                       type="button" 
@@ -395,6 +437,7 @@ const Forum = () => {
                         <button 
                           type="button"
                           onClick={() => handleRemoveTag(tag)}
+                          aria-label={`Remove tag ${tag}`}
                         >
                           ×
                         </button>

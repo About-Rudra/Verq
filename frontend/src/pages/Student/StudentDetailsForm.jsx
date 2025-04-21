@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Student/StudentDetailsForm.css';
@@ -6,8 +6,6 @@ import '../../styles/Student/StudentDetailsForm.css';
 const StudentDetailsForm = ({ onFormSubmit }) => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('personal');
-  const [activeTab] = useState("Profile");
-  const [breadcrumbs] = useState([activeTab]);
   const { darkMode } = useContext(ThemeContext);
   const [formData, setFormData] = useState({
     personal: {
@@ -68,6 +66,9 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
     resume: null
   });
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const handleInputChange = (section, field, value, index = null) => {
     if (index !== null) {
       const newArray = [...formData[section]];
@@ -80,6 +81,37 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
       });
     }
   };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const sections = [
+    { id: 'personal', label: 'Personal Information' },
+    { id: 'internships', label: 'Internships' },
+    { id: 'volunteering', label: 'Volunteering' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'accomplishments', label: 'Accomplishments' },
+    { id: 'extraCurricular', label: 'Extra-Curricular Activities' },
+    { id: 'competitions', label: 'Competitions & Events' },
+    { id: 'resume', label: 'Resume Upload' },
+  ];
+
+  const activeSectionIndex = sections.findIndex(section => section.id === activeSection);
+  const progressPercentage = ((activeSectionIndex + 1) / sections.length) * 100;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      if (window.innerWidth > 992) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const addItem = (section) => {
     const sectionData = [...formData[section]];
@@ -141,18 +173,6 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
     navigate('/default');
   };
 
-  const sections = [
-    { id: 'personal', label: 'Personal Information' },
-    { id: 'internships', label: 'Internships' },
-    { id: 'volunteering', label: 'Volunteering' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'accomplishments', label: 'Accomplishments' },
-    { id: 'extraCurricular', label: 'Extra-Curricular Activities' },
-    { id: 'competitions', label: 'Competitions & Events' },
-    { id: 'resume', label: 'Resume Upload' },
-  ];
-
   const sectorOptions = [
     'Technology', 'Finance', 'Healthcare', 'Education', 'Marketing', 
     'Engineering', 'Retail', 'Manufacturing', 'Media', 'Consulting', 
@@ -174,8 +194,33 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
 
   return (
     <div className={`profile-container ${darkMode ? 'dark-theme' : ''}`}>
-      {/* Sidebar Navigation */}
-      <div className="sidebar">
+      {/* Mobile header with menu toggle */}
+      {windowWidth <= 992 && (
+        <div className="mobile-header">
+          <h2>Student Profile</h2>
+          <button 
+            className="menu-toggle-btn" 
+            onClick={toggleMobileMenu}
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? 'Close' : 'Menu'}
+          </button>
+        </div>
+      )}
+      
+      {/* Progress bar for mobile */}
+      {windowWidth <= 992 && (
+        <div className="mobile-progress-container">
+          <div 
+            className="mobile-progress-bar" 
+            style={{width: `${progressPercentage}%`}}
+          />
+          <div className="progress-text">Step {activeSectionIndex + 1} of {sections.length}</div>
+        </div>
+      )}
+
+      {/* Sidebar Navigation - show based on screen size or menu state */}
+      <div className={`sidebar ${windowWidth <= 992 && !mobileMenuOpen ? 'hidden' : ''}`}>
         <div className="sidebar-header">
           <h3>Profile Sections</h3>
         </div>
@@ -184,7 +229,12 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
             <button
               key={section.id}
               className={`sidebar-item ${activeSection === section.id ? 'active' : ''}`}
-              onClick={() => setActiveSection(section.id)}
+              onClick={() => {
+                setActiveSection(section.id);
+                if (windowWidth <= 992) {
+                  setMobileMenuOpen(false);
+                }
+              }}
             >
               {section.label}
             </button>
@@ -192,7 +242,10 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
         </nav>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form 
+        onSubmit={handleSubmit} 
+        className={windowWidth <= 992 && mobileMenuOpen ? 'hidden' : ''}
+      >
         {/* Personal Information Section */}
         {activeSection === 'personal' && (
           <div className="form-section">
@@ -749,24 +802,22 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
 
         {/* Navigation Buttons */}
         <div className="navigation-buttons">
-          {sections.findIndex(section => section.id === activeSection) > 0 && (
+          {activeSectionIndex > 0 && (
             <button
               type="button"
               onClick={() => {
-                const currentIndex = sections.findIndex(section => section.id === activeSection);
-                setActiveSection(sections[currentIndex - 1].id);
+                setActiveSection(sections[activeSectionIndex - 1].id);
               }}
             >
               Previous
             </button>
           )}
           
-          {sections.findIndex(section => section.id === activeSection) < sections.length - 1 ? (
+          {activeSectionIndex < sections.length - 1 ? (
             <button
               type="button"
               onClick={() => {
-                const currentIndex = sections.findIndex(section => section.id === activeSection);
-                setActiveSection(sections[currentIndex + 1].id);
+                setActiveSection(sections[activeSectionIndex + 1].id);
               }}
             >
               Next
