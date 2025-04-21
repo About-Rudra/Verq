@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Auth.css';
 
-
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5001";
 
 const Auth = ({ onLogin }) => {
   const navigate = useNavigate();
