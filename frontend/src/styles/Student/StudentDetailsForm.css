@@ -3,15 +3,19 @@
 /* Base Container Styles */
 .profile-container {
   display: flex;
+  flex-direction: row;
   min-height: 100vh;
   background-color: var(--bg-secondary);
   color: var(--text-primary);
   transition: all 0.3s ease;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Sidebar Styles */
 .sidebar {
-  width: var(--sidebar-width);
+  width: var(--sidebar-width, 250px);
+  min-width: 220px;
   background-color: var(--bg-primary);
   border-right: 1px solid var(--border-color);
   padding: 1.5rem;
@@ -21,6 +25,7 @@
   overflow-y: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .dark-theme .sidebar {
@@ -75,8 +80,12 @@
 form {
   flex: 1;
   padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-section {
@@ -87,6 +96,11 @@ form {
   margin-bottom: 2rem;
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .dark-theme .form-section {
@@ -105,6 +119,7 @@ form {
 /* Input Group Styles */
 .input-group {
   margin-bottom: 1.25rem;
+  width: 100%;
 }
 
 .input-group label {
@@ -126,6 +141,7 @@ form {
   color: var(--text-primary);
   font-size: 0.95rem;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .input-group input:focus,
@@ -148,6 +164,8 @@ form {
   border-radius: var(--border-radius);
   margin-bottom: 1.5rem;
   border: 1px solid var(--border-color);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .repeatable-item h3 {
@@ -196,6 +214,10 @@ form {
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navigation-buttons button {
@@ -270,7 +292,9 @@ form {
   font-size: 0.85rem;
 }
 
-/* Responsive Adjustments */
+/* Enhanced Mobile Responsiveness for StudentDetailsForm */
+
+/* Base responsive adjustments */
 @media (max-width: 992px) {
   .profile-container {
     flex-direction: column;
@@ -282,29 +306,107 @@ form {
     position: static;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+  }
+  
+  .sidebar-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
   }
   
   .sidebar-nav {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: 0.5rem;
   }
   
   .sidebar-item {
     padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    flex: 1 0 auto;
+    min-width: calc(33.333% - 0.5rem);
+    text-align: center;
   }
   
   form {
+    padding: 1rem;
+  }
+  
+  .form-section {
     padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
 }
 
+/* Tablet adjustments */
+@media (max-width: 768px) {
+  .sidebar-item {
+    min-width: calc(50% - 0.5rem);
+  }
+  
+  .input-group {
+    margin-bottom: 1rem;
+  }
+  
+  .repeatable-item {
+    padding: 1.25rem;
+  }
+  
+  .repeatable-item h3 {
+    font-size: 1rem;
+  }
+  
+  .add-button, .remove-button {
+    width: 100%;
+    margin-top: 0.75rem;
+  }
+  
+  .navigation-buttons {
+    margin-top: 1.5rem;
+  }
+  
+  .navigation-buttons button {
+    padding: 0.65rem 1.25rem;
+  }
+}
+
+/* Phone adjustments */
 @media (max-width: 576px) {
+  .sidebar-item {
+    min-width: calc(50% - 0.5rem);
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
   .form-section {
-    padding: 1.5rem;
+    padding: 1rem;
+  }
+  
+  .form-section h2 {
+    font-size: 1.2rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .input-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .input-group input,
+  .input-group select,
+  .input-group textarea {
+    padding: 0.6rem;
+    font-size: 0.9rem;
   }
   
   .repeatable-item {
     padding: 1rem;
+    margin-bottom: 1rem;
   }
   
   .navigation-buttons {
@@ -315,172 +417,231 @@ form {
   .navigation-buttons button {
     width: 100%;
   }
+  
+  /* Better form layout for small screens */
+  .file-upload-button {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .file-info-display {
+    width: 100%;
+  }
 }
 
-/* Add this to your StudentDetailsForm.css file */
-
-.student-form-page {
-  min-height: 100vh;
-  padding: 2rem;
-  background-color: #f7f9fc;
+/* Small phone adjustments */
+@media (max-width: 375px) {
+  .sidebar-item {
+    min-width: 100%;
+  }
+  
+  .form-section, .repeatable-item {
+    padding: 0.75rem;
+  }
+  
+  .input-group {
+    margin-bottom: 0.75rem;
+  }
 }
 
-.student-form-page.dark-theme {
-  background-color: #1a1a2e;
-  color: #f7f9fc;
+/* Touch-friendly input adjustments */
+@media (max-width: 992px) {
+  .input-group input,
+  .input-group select,
+  .input-group textarea {
+    font-size: 1rem; /* Larger font for better touch targets */
+  }
+  
+  select {
+    height: 2.8rem; /* Taller select boxes for easier tapping */
+  }
+  
+  /* Fixed bottom navigation on mobile */
+  .navigation-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--bg-primary);
+    padding: 0.75rem 1rem;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin-bottom: -1rem;
+    width: calc(100% + 2rem);
+  }
+  
+  .dark-theme .navigation-buttons {
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Sticky sidebar tabs for easier navigation */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--bg-primary);
+  }
+  
+  /* Better file upload for mobile */
+  .file-upload-label {
+    width: 100%;
+  }
+  
+  /* More touch-friendly buttons */
+  .add-button, 
+  .remove-button, 
+  .navigation-buttons button,
+  .file-upload-button,
+  .skip-button {
+    min-height: 44px; /* Minimum touch target height */
+  }
+  
+  /* Improved skip section */
+  .skip-section {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .skip-button {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+  }
 }
 
-.form-header {
-  text-align: center;
-  margin-bottom: 2rem;
+/* Add these to your existing CSS */
+
+/* Mobile header */
+.mobile-header {
+  display: none;
 }
 
-.form-header h1 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 0.5rem;
+@media (max-width: 992px) {
+  .mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    width: 100%;
+  }
+  
+  .mobile-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .menu-toggle-btn {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* Progress bar styles */
+  .mobile-progress-container {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    position: relative;
+  }
+  
+  .dark-theme .mobile-progress-container {
+    background-color: #444;
+  }
+  
+  .mobile-progress-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+  }
+  
+  .progress-text {
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  
+  /* Better form layout for mobile forms */
+  @media (max-width: 576px) {
+    /* Date inputs side by side */
+    .date-range-inputs {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .date-range-inputs .input-group {
+      flex: 1;
+    }
+    
+    /* File upload mobile optimization */
+    .file-upload-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+    }
+    
+    /* Improved validation styling */
+    .input-group input:invalid,
+    .input-group select:invalid,
+    .input-group textarea:invalid {
+      border-color: #ff6b6b;
+    }
+    
+    /* Stack the navigation buttons */
+    .navigation-buttons {
+      padding: 0.75rem;
+      gap: 0.5rem;
+    }
+  }
 }
 
-.student-form-page.dark-theme .form-header h1 {
-  color: #fff;
+/* Animation for the mobile menu */
+@media (max-width: 992px) {
+  .sidebar {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .sidebar.hidden {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 }
 
-.form-header p {
-  font-size: 1rem;
-  color: #666;
-}
-
-.student-form-page.dark-theme .form-header p {
-  color: #ccc;
-}
-
-/* Container styling */
-.profile-container {
-  display: flex;
-  max-width: 1000px;
-  margin: 0 auto;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.student-form-page.dark-theme .profile-container {
-  background-color: #2d2d42;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Form styling */
-.form-section {
-  padding: 20px;
-  width: 100%;
-}
-
-.form-section h2 {
-  margin-bottom: 20px;
-  color: #333;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-.student-form-page.dark-theme .form-section h2 {
-  color: #fff;
-  border-bottom: 1px solid #444;
-}
-
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-}
-
-.input-group input,
-.input-group select,
-.input-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.student-form-page.dark-theme .input-group input,
-.student-form-page.dark-theme .input-group select,
-.student-form-page.dark-theme .input-group textarea {
-  background-color: #3a3a5a;
-  border: 1px solid #555;
-  color: #fff;
-}
-
-.input-group textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-/* Add and remove buttons */
-.add-button,
-.remove-button {
-  margin-top: 10px;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.add-button {
-  background-color: #4caf50;
-  color: white;
-}
-
-.remove-button {
-  background-color: #f44336;
-  color: white;
-}
-
-.student-form-page.dark-theme .add-button {
-  background-color: #2e7d32;
-}
-
-.student-form-page.dark-theme .remove-button {
-  background-color: #c62828;
-}
-
-/* Navigation buttons */
-.navigation-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  padding: 20px;
-  border-top: 1px solid #eee;
-}
-
-.student-form-page.dark-theme .navigation-buttons {
-  border-top: 1px solid #444;
-}
-
-.navigation-buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #2196f3;
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.student-form-page.dark-theme .navigation-buttons button {
-  background-color: #1976d2;
-}
-
-.navigation-buttons button[type="submit"] {
-  background-color: #4caf50;
-}
-
-.student-form-page.dark-theme .navigation-buttons button[type="submit"] {
-  background-color: #2e7d32;
+/* Touchable elements spacing */
+@media (max-width: 576px) {
+  .input-group input, 
+  .input-group select {
+    margin-bottom: 0.25rem;
+  }
+  
+  /* Increase spacing between repeatable items */
+  .repeatable-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Make remove buttons more obvious */
+  .remove-button {
+    background-color: #ffebee;
+    color: #f44336;
+    border: 1px solid #f44336;
+    font-weight: 500;
+  }
+  
+  .dark-theme .remove-button {
+    background-color: rgba(244, 67, 54, 0.1);
+  }
 }

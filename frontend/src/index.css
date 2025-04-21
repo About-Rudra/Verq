@@ -87,9 +87,10 @@ body {
 /* ===== Responsive Breakpoints ===== */
 @media (max-width: 768px) {
   .main-content {
-    margin-left: var(--sidebar-collapsed-width);
-    width: calc(100% - var(--sidebar-collapsed-width));
+    /* margin-left: var(--sidebar-collapsed-width); */
+    width: 100%;
     padding: var(--section-padding);
+    margin-top: 40px;
   }
   
   /* For when sidebar is expanded on mobile */

@@ -11,8 +11,7 @@ const MockInterviews = () => {
         <div className="breadcrumbs">
           <span>ATS</span>
         </div>
-      </div>
-      
+      </div>      
       <div className="coming-soon-container">
         <div className={`coming-soon-card ${darkMode ? 'dark' : 'light'}`}>
           <h1>Coming Soon</h1>
