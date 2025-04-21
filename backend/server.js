@@ -11,8 +11,18 @@ const { Pool } = require("pg");
 
 const app = express();
 
+const allowedOrigins = [
+  'http://localhost:5173', // For local dev (if you're working locally)
+  'https://verq-pcae1zlxv-rudras-projects-cd8653fc.vercel.app', // Your frontend on Vercel
+];
+
+
 // Middleware
-app.use(cors());
+app.use(cors({
+  
+    origin: allowedOrigins,
+    credentials: true, // if you're sending cookies or auth headers
+}));
 app.use(express.json()); // Use only express.json() 
 app.use(cookieParser()); // Use cookie-parser to parse cookies
 
