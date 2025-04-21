@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import { useState, useEffect } from "react";
-import { verifyToken } from "../api/Auth";
+import { verifyToken } from "./api/auth";
 
 import LandingPage from "./pages/LandingPage";
 import Auth from "./pages/Auth";
