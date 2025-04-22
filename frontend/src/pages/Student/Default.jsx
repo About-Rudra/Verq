@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/Student/Default.css';
 
 const Default = () => {
+  const navigate = useNavigate();
   const heroRef = useRef(null);
   const featuresRef = useRef(null);
   const featureCardsRef = useRef([]);
@@ -55,6 +57,11 @@ const Default = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Function to handle button click
+  const handleGetStarted = () => {
+    navigate('/student-dashboard');
+  };
+
   // Feature icons - using simpler, more reliable SVG paths
   const featureIcons = [
     "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42z",
@@ -78,8 +85,7 @@ const Default = () => {
             Streamlining the placement process for students, recruiters, and administrators with our automated platform.
           </p>
           <div className="hero-buttons">
-            <button className="btn btn-primary">Get Started</button>
-            <button className="btn btn-outline">Learn More</button>
+            <button className="btn btn-primary" onClick={handleGetStarted}>Get Started</button>
           </div>
         </div>
         <div className="hero-illustration">

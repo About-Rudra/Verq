@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/Student/Dashboard.css';
+import '../../styles/Student/StudentDashboard.css';
 import { ThemeContext } from '../../context/ThemeContext';
 
 const TechStackCard = () => {
