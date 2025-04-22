@@ -35,7 +35,7 @@ const Application = () => {
   const [passwordStrength, setPasswordStrength] = useState({
     score: 0,
     text: '',
-    class: 'strength-none'
+    class: 'strength-none-app'
   });
 
   const [passwordMatch, setPasswordMatch] = useState(true);
@@ -43,6 +43,11 @@ const Application = () => {
   useEffect(() => {
     document.title = "Apply Now - Student Registration";
   }, []);
+
+  const handleBackButton = () => {
+    // Navigate back in browser history
+    window.history.back();
+  };
 
   const validateCurrentStep = () => {
     const newErrors = {};
@@ -122,7 +127,7 @@ const Application = () => {
       setPasswordStrength({
         score: 0,
         text: '',
-        class: 'strength-none'
+        class: 'strength-none-app'
       });
       return;
     }
@@ -140,16 +145,16 @@ const Application = () => {
     let strengthText = '';
 
     if (score < 2) {
-      strengthClass = 'strength-weak';
+      strengthClass = 'strength-weak-app';
       strengthText = 'Weak';
     } else if (score < 4) {
-      strengthClass = 'strength-medium';
+      strengthClass = 'strength-medium-app';
       strengthText = 'Medium';
     } else if (score < 5) {
-      strengthClass = 'strength-good';
+      strengthClass = 'strength-good-app';
       strengthText = 'Good';
     } else {
-      strengthClass = 'strength-strong';
+      strengthClass = 'strength-strong-app';
       strengthText = 'Strong';
     }
 
@@ -235,139 +240,139 @@ const Application = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="form-section">
-            <h2 className="section-title">Personal Information</h2>
-            <div className="form-row">
-              <div className="form-group">
+          <div className="form-section-app">
+            <h2 className="section-title-app">Personal Information</h2>
+            <div className="form-row-app">
+              <div className="form-group-app">
                 <label>First Name*</label>
                 <input 
                   type="text" 
                   name="firstName" 
                   value={formData.firstName} 
                   onChange={handleInputChange} 
-                  className={errors.firstName ? 'error' : ''}
+                  className={errors.firstName ? 'error-app' : ''}
                 />
-                {errors.firstName && <span className="error-message">{errors.firstName}</span>}
+                {errors.firstName && <span className="error-message-app">{errors.firstName}</span>}
               </div>
-              <div className="form-group">
+              <div className="form-group-app">
                 <label>Last Name*</label>
                 <input 
                   type="text" 
                   name="lastName" 
                   value={formData.lastName} 
                   onChange={handleInputChange} 
-                  className={errors.lastName ? 'error' : ''}
+                  className={errors.lastName ? 'error-app' : ''}
                 />
-                {errors.lastName && <span className="error-message">{errors.lastName}</span>}
+                {errors.lastName && <span className="error-message-app">{errors.lastName}</span>}
               </div>
             </div>
-            <div className="form-row">
-              <div className="form-group">
+            <div className="form-row-app">
+              <div className="form-group-app">
                 <label>Date of Birth*</label>
                 <input 
                   type="date" 
                   name="dateOfBirth" 
                   value={formData.dateOfBirth} 
                   onChange={handleInputChange} 
-                  className={errors.dateOfBirth ? 'error' : ''}
+                  className={errors.dateOfBirth ? 'error-app' : ''}
                 />
-                {errors.dateOfBirth && <span className="error-message">{errors.dateOfBirth}</span>}
+                {errors.dateOfBirth && <span className="error-message-app">{errors.dateOfBirth}</span>}
               </div>
-              <div className="form-group">
+              <div className="form-group-app">
                 <label>Gender*</label>
                 <select 
                   name="gender" 
                   value={formData.gender} 
                   onChange={handleInputChange} 
-                  className={errors.gender ? 'error' : ''}
+                  className={errors.gender ? 'error-app' : ''}
                 >
                   <option value="">Select</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
                 </select>
-                {errors.gender && <span className="error-message">{errors.gender}</span>}
+                {errors.gender && <span className="error-message-app">{errors.gender}</span>}
               </div>
             </div>
-            <div className="form-group">
+            <div className="form-group-app">
               <label>Profile Picture</label>
               <input 
                 type="file" 
                 name="profilePicture" 
                 onChange={handleInputChange}
-                className="file-input"
+                className="file-input-app"
                 accept="image/*"
               />
             </div>
-            <div className="button-group">
-              <button type="button" onClick={handleNextStep} className="btn btn-next">Next</button>
+            <div className="button-group-app">
+              <button type="button" onClick={handleNextStep} className="btn-app btn-next-app">Next</button>
             </div>
           </div>
         );
       case 2:
         return (
-          <div className="form-section">
-            <h2 className="section-title">Academic Information</h2>
-            <div className="form-group">
+          <div className="form-section-app">
+            <h2 className="section-title-app">Academic Information</h2>
+            <div className="form-group-app">
               <label>College Name*</label>
               <input 
                 type="text" 
                 name="collegeName" 
                 value={formData.collegeName} 
                 onChange={handleInputChange} 
-                className={errors.collegeName ? 'error' : ''}
+                className={errors.collegeName ? 'error-app' : ''}
               />
-              {errors.collegeName && <span className="error-message">{errors.collegeName}</span>}
+              {errors.collegeName && <span className="error-message-app">{errors.collegeName}</span>}
             </div>
-            <div className="form-row">
-              <div className="form-group">
+            <div className="form-row-app">
+              <div className="form-group-app">
                 <label>Roll Number*</label>
                 <input 
                   type="text" 
                   name="rollNumber" 
                   value={formData.rollNumber} 
                   onChange={handleInputChange} 
-                  className={errors.rollNumber ? 'error' : ''}
+                  className={errors.rollNumber ? 'error-app' : ''}
                 />
-                {errors.rollNumber && <span className="error-message">{errors.rollNumber}</span>}
+                {errors.rollNumber && <span className="error-message-app">{errors.rollNumber}</span>}
               </div>
-              <div className="form-group">
+              <div className="form-group-app">
                 <label>Branch*</label>
                 <input 
                   type="text" 
                   name="branch" 
                   value={formData.branch} 
                   onChange={handleInputChange} 
-                  className={errors.branch ? 'error' : ''}
+                  className={errors.branch ? 'error-app' : ''}
                 />
-                {errors.branch && <span className="error-message">{errors.branch}</span>}
+                {errors.branch && <span className="error-message-app">{errors.branch}</span>}
               </div>
             </div>
-            <div className="form-row">
-              <div className="form-group">
+            <div className="form-row-app">
+              <div className="form-group-app">
                 <label>Batch*</label>
                 <input 
                   type="text" 
                   name="batch" 
                   value={formData.batch} 
                   onChange={handleInputChange} 
-                  className={errors.batch ? 'error' : ''}
+                  className={errors.batch ? 'error-app' : ''}
                 />
-                {errors.batch && <span className="error-message">{errors.batch}</span>}
+                {errors.batch && <span className="error-message-app">{errors.batch}</span>}
               </div>
-              <div className="form-group">
+              <div className="form-group-app">
                 <label>Current Semester*</label>
                 <input 
                   type="text" 
                   name="currentSemester" 
                   value={formData.currentSemester} 
                   onChange={handleInputChange} 
-                  className={errors.currentSemester ? 'error' : ''}
+                  className={errors.currentSemester ? 'error-app' : ''}
                 />
-                {errors.currentSemester && <span className="error-message">{errors.currentSemester}</span>}
+                {errors.currentSemester && <span className="error-message-app">{errors.currentSemester}</span>}
               </div>
             </div>
-            <div className="form-group">
+            <div className="form-group-app">
               <label>CGPA*</label>
               <input 
                 type="number" 
@@ -377,33 +382,33 @@ const Application = () => {
                 step="0.01"
                 min="0"
                 max="10"
-                className={errors.cgpa ? 'error' : ''}
+                className={errors.cgpa ? 'error-app' : ''}
               />
-              {errors.cgpa && <span className="error-message">{errors.cgpa}</span>}
+              {errors.cgpa && <span className="error-message-app">{errors.cgpa}</span>}
             </div>
-            <div className="button-group">
-              <button type="button" onClick={handlePrevStep} className="btn btn-prev">Previous</button>
-              <button type="button" onClick={handleNextStep} className="btn btn-next">Next</button>
+            <div className="button-group-app">
+              <button type="button" onClick={handlePrevStep} className="btn-app btn-prev-app">Previous</button>
+              <button type="button" onClick={handleNextStep} className="btn-app btn-next-app">Next</button>
             </div>
           </div>
         );
       case 3:
         return (
-          <div className="form-section">
-            <h2 className="section-title">Contact Information</h2>
-            <div className="form-row">
-              <div className="form-group">
+          <div className="form-section-app">
+            <h2 className="section-title-app">Contact Information</h2>
+            <div className="form-row-app">
+              <div className="form-group-app">
                 <label>Primary Email*</label>
                 <input 
                   type="email" 
                   name="primaryEmail" 
                   value={formData.primaryEmail} 
                   onChange={handleInputChange} 
-                  className={errors.primaryEmail ? 'error' : ''}
+                  className={errors.primaryEmail ? 'error-app' : ''}
                 />
-                {errors.primaryEmail && <span className="error-message">{errors.primaryEmail}</span>}
+                {errors.primaryEmail && <span className="error-message-app">{errors.primaryEmail}</span>}
               </div>
-              <div className="form-group">
+              <div className="form-group-app">
                 <label>Personal Email</label>
                 <input 
                   type="email" 
@@ -413,19 +418,19 @@ const Application = () => {
                 />
               </div>
             </div>
-            <div className="form-group">
+            <div className="form-group-app">
               <label>Phone Number*</label>
               <input 
                 type="tel" 
                 name="phoneNumber" 
                 value={formData.phoneNumber} 
                 onChange={handleInputChange} 
-                className={errors.phoneNumber ? 'error' : ''}
+                className={errors.phoneNumber ? 'error-app' : ''}
               />
-              {errors.phoneNumber && <span className="error-message">{errors.phoneNumber}</span>}
+              {errors.phoneNumber && <span className="error-message-app">{errors.phoneNumber}</span>}
             </div>
-            <div className="form-row">
-              <div className="form-group">
+            <div className="form-row-app">
+              <div className="form-group-app">
                 <label>LinkedIn Profile</label>
                 <input 
                   type="url" 
@@ -434,7 +439,7 @@ const Application = () => {
                   onChange={handleInputChange} 
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group-app">
                 <label>GitHub Profile</label>
                 <input 
                   type="url" 
@@ -444,7 +449,7 @@ const Application = () => {
                 />
               </div>
             </div>
-            <div className="form-group">
+            <div className="form-group-app">
               <label>Personal Website</label>
               <input 
                 type="url" 
@@ -453,59 +458,59 @@ const Application = () => {
                 onChange={handleInputChange} 
               />
             </div>
-            <div className="button-group">
-              <button type="button" onClick={handlePrevStep} className="btn btn-prev">Previous</button>
-              <button type="button" onClick={handleNextStep} className="btn btn-next">Next</button>
+            <div className="button-group-app">
+              <button type="button" onClick={handlePrevStep} className="btn-app btn-prev-app">Previous</button>
+              <button type="button" onClick={handleNextStep} className="btn-app btn-next-app">Next</button>
             </div>
           </div>
         );
       case 4:
         return (
-          <div className="form-section">
-            <h2 className="section-title">Login Credentials</h2>
-            <div className="form-group">
+          <div className="form-section-app">
+            <h2 className="section-title-app">Login Credentials</h2>
+            <div className="form-group-app">
               <label>Password*</label>
               <input 
                 type="password" 
                 name="password" 
                 value={formData.password} 
                 onChange={handleInputChange} 
-                className={errors.password ? 'error' : ''}
+                className={errors.password ? 'error-app' : ''}
               />
-              <div className="password-strength">
-                <div className="strength-bar">
+              <div className="password-strength-app">
+                <div className="strength-bar-app">
                   <div 
-                    className={`strength-indicator ${passwordStrength.class}`}
+                    className={`strength-indicator-app ${passwordStrength.class}`}
                     style={{ width: `${(passwordStrength.score / 5) * 100}%` }}
                   ></div>
                 </div>
                 {passwordStrength.text && (
-                  <div className="strength-text">
+                  <div className="strength-text-app">
                     Password Strength: {passwordStrength.text}
                   </div>
                 )}
               </div>
-              {errors.password && <span className="error-message">{errors.password}</span>}
+              {errors.password && <span className="error-message-app">{errors.password}</span>}
             </div>
-            <div className="form-group">
+            <div className="form-group-app">
               <label>Confirm Password*</label>
               <input 
                 type="password" 
                 name="confirmPassword" 
                 value={formData.confirmPassword} 
                 onChange={handleInputChange} 
-                className={errors.confirmPassword ? 'error' : ''}
+                className={errors.confirmPassword ? 'error-app' : ''}
               />
-              {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
+              {errors.confirmPassword && <span className="error-message-app">{errors.confirmPassword}</span>}
               {!passwordMatch && (
-                <div className="password-mismatch">Passwords do not match!</div>
+                <div className="password-mismatch-app">Passwords do not match!</div>
               )}
             </div>
-            <div className="button-group">
-              <button type="button" onClick={handlePrevStep} className="btn btn-prev">Previous</button>
+            <div className="button-group-app">
+              <button type="button" onClick={handlePrevStep} className="btn-app btn-prev-app">Previous</button>
               <button 
                 type="submit" 
-                className="btn btn-submit" 
+                className="btn-app btn-submit-app" 
                 disabled={isSubmitting || !passwordMatch || !formData.password || !formData.confirmPassword}
               >
                 {isSubmitting ? 'Submitting...' : 'Apply Now'}
@@ -523,12 +528,13 @@ const Application = () => {
 
   if (submitSuccess) {
     return (
-      <div className="registration-container">
-        <h1 className="registration-title">Application Submitted!</h1>
-        <div className="success-message">
+      <div className="registration-container-app">
+        <button className="back-button-app" onClick={handleBackButton}>← Back</button>
+        <h1 className="registration-title-app">Application Submitted!</h1>
+        <div className="success-message-app">
           <p>Thank you for your application. We'll review your information and get back to you soon.</p>
           <button 
-            className="btn btn-submit"
+            className="btn-app btn-submit-app"
             onClick={() => setSubmitSuccess(false)}
           >
             Submit Another Application
@@ -539,37 +545,38 @@ const Application = () => {
   }
 
   return (
-    <div className={`registration-container ${darkMode ? 'dark-theme' : ''}`}>
-      <h1 className="registration-title">Apply Now</h1>
+    <div className={`registration-container-app ${darkMode ? 'dark-theme-app' : ''}`}>
+      <button className="back-button-app" onClick={handleBackButton}>← Back</button>
+      <h1 className="registration-title-app">Apply Now</h1>
       
       {/* Progress bar */}
-      <div className="progress-container">
-        <div className="step-indicators">
+      <div className="progress-container-app">
+        <div className="step-indicators-app">
           {[...Array(totalSteps)].map((_, i) => (
             <div 
               key={i} 
-              className={`step-circle ${currentStep > i + 1 ? 'completed' : ''} ${currentStep === i + 1 ? 'active' : ''}`}
+              className={`step-circle-app ${currentStep > i + 1 ? 'completed-app' : ''} ${currentStep === i + 1 ? 'active-app' : ''}`}
             >
               {i + 1}
             </div>
           ))}
         </div>
-        <div className="progress-bar-container">
-          <div className="progress-bar-background"></div>
+        <div className="progress-bar-container-app">
+          <div className="progress-bar-background-app"></div>
           <div 
-            className="progress-bar-fill" 
+            className="progress-bar-fill-app" 
             style={{ width: `${progressWidth}%` }}
           ></div>
         </div>
-        <div className="step-labels">
-          <span className={currentStep === 1 ? 'active' : ''}>Personal Info</span>
-          <span className={currentStep === 2 ? 'active' : ''}>Academic Info</span>
-          <span className={currentStep === 3 ? 'active' : ''}>Contact Info</span>
-          <span className={currentStep === 4 ? 'active' : ''}>Credentials</span>
+        <div className="step-labels-app">
+          <span className={currentStep === 1 ? 'active-app' : ''}>Personal Info</span>
+          <span className={currentStep === 2 ? 'active-app' : ''}>Academic Info</span>
+          <span className={currentStep === 3 ? 'active-app' : ''}>Contact Info</span>
+          <span className={currentStep === 4 ? 'active-app' : ''}>Credentials</span>
         </div>
       </div>
       
-      <form className="registration-form" onSubmit={handleSubmit}>
+      <form className="registration-form-app" onSubmit={handleSubmit}>
         {renderStep()}
       </form>
     </div>

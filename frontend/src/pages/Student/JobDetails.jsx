@@ -5,8 +5,33 @@ import "../../styles/Student/JobDetails.css";
 const JobPostingPage = () => {
   const [activeTab, setActiveTab] = useState('description');
   const { darkMode } = useContext(ThemeContext);
+  
+  // Function to handle back button click - would use actual navigation in your app
+  const handleBackClick = () => {
+    // This would typically use your routing mechanism, like:
+    // navigate('/ongoing-drives') or history.push('/ongoing-drives') or window.location.href = '/ongoing-drives'
+    console.log("Navigating back to ongoing drives");
+    // For demo purposes - replace with your actual navigation code
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // Fallback if there's no history
+      window.location.href = '/ongoing-drives';
+    }
+  };
+  
   return (
     <div className={`job-posting-container ${darkMode ? 'dark-theme' : ''}`}>
+      {/* Back Button */}
+      <div className="back-button-container">
+        <button className="back-button" onClick={handleBackClick}>
+          <svg className="back-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd"></path>
+          </svg>
+          Back
+        </button>
+      </div>
+      
       {/* Header Section */}
       <div className="header-section">
         <div className="logo-container">
@@ -130,33 +155,33 @@ const JobPostingPage = () => {
         )}
         
         {activeTab === 'workflow' && (
-          <div className="hiring-workflow">
+          <div className="hiring-workflow-hwf">
             <h2>Hiring Workflow</h2>
-            <div className="workflow-steps">
-              <div className="step">
-                <div className="step-number">1</div>
-                <div className="step-info">
+            <div className="workflow-steps-hwf">
+              <div className="step-hwf">
+                <div className="step-number-hwf">1</div>
+                <div className="step-info-hwf">
                   <h3>Group Discussion</h3>
                   <p>Initial screening through interactive group discussion</p>
                 </div>
               </div>
-              <div className="step">
-                <div className="step-number">2</div>
-                <div className="step-info">
+              <div className="step-hwf">
+                <div className="step-number-hwf">2</div>
+                <div className="step-info-hwf">
                   <h3>Video Assignment</h3>
                   <p>Complete a video assignment to showcase your skills</p>
                 </div>
               </div>
-              <div className="step">
-                <div className="step-number">3</div>
-                <div className="step-info">
+              <div className="step-hwf">
+                <div className="step-number-hwf">3</div>
+                <div className="step-info-hwf">
                   <h3>First Round Interview</h3>
                   <p>Technical and communication skills assessment</p>
                 </div>
               </div>
-              <div className="step">
-                <div className="step-number">4</div>
-                <div className="step-info">
+              <div className="step-hwf">
+                <div className="step-number-hwf">4</div>
+                <div className="step-info-hwf">
                   <h3>Second Round Interview</h3>
                   <p>Final interview with team leads</p>
                 </div>
