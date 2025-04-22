@@ -63,7 +63,7 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
       achievement: '', 
       skills: '' 
     }],
-    resume: null
+    profilePicture: null
   });
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -94,7 +94,7 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
     { id: 'accomplishments', label: 'Accomplishments' },
     { id: 'extraCurricular', label: 'Extra-Curricular Activities' },
     { id: 'competitions', label: 'Competitions & Events' },
-    { id: 'resume', label: 'Resume Upload' },
+    { id: 'profilePicture', label: 'Profile Picture' },
   ];
 
   const activeSectionIndex = sections.findIndex(section => section.id === activeSection);
@@ -126,14 +126,14 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
         return;
       }
       // Check file type
-      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
       if (!validTypes.includes(file.type)) {
-        alert('Only PDF, DOC, and DOCX files are allowed');
+        alert('Only PNG, JPG, and JPEG files are allowed');
         return;
       }
       setFormData({
         ...formData,
-        resume: file
+        profilePicture: file // Changed from resume to profilePicture
       });
     }
   };
@@ -740,34 +740,34 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
           </div>
         )}
 
-        {/* Resume Upload Section */}
-        {activeSection === 'resume' && (
+        {/* Profile Picture Upload Section */}
+        {activeSection === 'profilePicture' && (
           <div className="form-section">
-            <h2>Resume Upload</h2>
+            <h2>Upload Your Profile Picture</h2>
             <div className="input-group">
               <label className="file-upload-label">
                 <input
                   type="file"
-                  accept=".pdf,.doc,.docx"
+                  accept=".png,.jpg,.jpeg"
                   onChange={handleFileChange}
                   className="file-upload-input"
                 />
                 <div className="file-upload-button">
-                  {formData.resume ? 'Change Resume' : 'Upload Resume'}
+                  {formData.profilePicture ? 'Change Picture' : 'Upload Picture'}
                 </div>
-                {formData.resume && (
+                {formData.profilePicture && ( 
                   <div className="file-info-display">
-                    <span className="file-name">{formData.resume.name}</span>
+                    <span className="file-name">{formData.profilePicture.name}</span>
                     <span className="file-size">
-                      {(formData.resume.size / 1024 / 1024).toFixed(2)} MB
+                      {(formData.profilePicture.size / 1024 / 1024).toFixed(2)} MB
                     </span>
                   </div>
                 )}
-                <p className="file-info">Accepted formats: PDF, DOC, DOCX. Maximum size: 5MB</p>
+                <p className="file-info">Accepted formats: PNG, JPG, JPEG. Maximum size: 5MB</p>
               </label>
             </div>
             
-            {/* Skip to Dashboard Button - Only visible in the resume section */}
+            {/* Skip to Dashboard Button */}
             <div className="skip-section">
               <p>You can complete your profile later.</p>
               <button 

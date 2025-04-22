@@ -1,555 +1,239 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef } from 'react';
 import '../../styles/Student/Default.css';
-import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
-import { ThemeContext } from '../../context/ThemeContext';
 
 const Default = () => {
-  const controls = useAnimation();
-  const statsControls = useAnimation();
-  const ref = useRef(null);
+  const heroRef = useRef(null);
+  const featuresRef = useRef(null);
+  const featureCardsRef = useRef([]);
   const statsRef = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
-  const [activeTab, setActiveTab] = useState('roadmap');
-  const [highlightedStep, setHighlightedStep] = useState(null);
-  const { darkMode } = useContext(ThemeContext);
-  
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [controls, isInView]);
-  
-  useEffect(() => {
-    if (statsInView) {
-      statsControls.start("visible");
-    }
-  }, [statsControls, statsInView]);
-
-  const pathVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const stepVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6, type: "spring", stiffness: 100 }
-    }
-  };
-
-  const counterVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { 
-      opacity: 1,
-      scale: 1,
-      transition: { 
-        duration: 0.8,
-        type: "spring",
-        stiffness: 100
-      }
-    }
-  };
-
-  const iconVariants = {
-    hover: { 
-      scale: 1.15,
-      rotate: 8,
-      boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-      transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 10 
-      } 
-    }
-  };
-
-  const testimonials = [
-    {
-      name: "Priya Sharma",
-      company: "Top Fortune 500 Company",
-      text: "The structured guidance was crucial for my interview preparation. The roadmap helped me organize my learning effectively!",
-      avatar: "PS"
-    },
-    {
-      name: "Rahul Patel",
-      company: "Leading MNC",
-      text: "Clear guidance and focused resources made all the difference. I couldn't have secured my dream offer without this platform.",
-      avatar: "RP"
-    },
-    {
-      name: "Anjali Verma",
-      company: "Global Corporation",
-      text: "The interactive exercises and personalized feedback were exactly what I needed to build my confidence for the interviews.",
-      avatar: "AV"
-    }
-  ];
-
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const processRef = useRef(null);
+  const testimonialsRef = useRef(null);
+  const companiesRef = useRef(null);
+  const ctaRef = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            
+            // Animate stats counting
+            if (entry.target.classList.contains('stats-section')) {
+              const statNumbers = document.querySelectorAll('.stat-number');
+              statNumbers.forEach((stat) => {
+                const target = +stat.getAttribute('data-count');
+                const duration = 2000;
+                const start = 0;
+                const increment = target / (duration / 16);
+                let current = start;
+                
+                const timer = setInterval(() => {
+                  current += increment;
+                  if (current >= target) {
+                    clearInterval(timer);
+                    current = target;
+                  }
+                  stat.textContent = Math.floor(current);
+                }, 16);
+              });
+            }
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (heroRef.current) observer.observe(heroRef.current);
+    if (featuresRef.current) observer.observe(featuresRef.current);
+    if (statsRef.current) observer.observe(statsRef.current);
+    if (processRef.current) observer.observe(processRef.current);
+    if (testimonialsRef.current) observer.observe(testimonialsRef.current);
+    if (companiesRef.current) observer.observe(companiesRef.current);
+    if (ctaRef.current) observer.observe(ctaRef.current);
+
+    return () => observer.disconnect();
   }, []);
 
-  const placementStats = [
-    { label: "Placements", value: "500+", color: "#4f46e5" },
-    { label: "Avg. Package", value: "₹12L", color: "#0ea5e9" },
-    { label: "Top Companies", value: "50+", color: "#10b981" },
-    { label: "Success Rate", value: "92%", color: "#f43f5e" }
+  // Feature icons - using simpler, more reliable SVG paths
+  const featureIcons = [
+    "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42z",
+    "M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm8-3h2v10h-2zm-4 6h2v4h-2z",
+    "M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z",
+    "M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z",
+    "M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM5 10h9v2H5zm0-3h9v2H5z",
+    "M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 4h2v5l-1.5-1L8 9V4zm9 16H6V4h1v9l3-3 3 3V4h5v16z"
   ];
 
   return (
-    <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
-      <div className="hero-section">
-        <motion.div
-          className="hero-content"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="hero-title">Your Career Success Roadmap</h1>
-          <p className="hero-subtitle">Navigate your way to dream placements with our structured guidance</p>
-          
-          <motion.div
-            className="hero-cta"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <motion.button 
-              className="primary-btn"
-              whileHover={{ scale: 1.05, boxShadow: "0px 10px 25px rgba(79, 70, 229, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Start Your Journey <span className="ml-2">→</span>
-            </motion.button>
-          </motion.div>
-        </motion.div>
-        
-        <div className="hero-graphic">
-          <motion.div 
-            className="floating-badge top-badge"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-          >
-            <div className="badge-icon">
-              <TrophyIcon />
-            </div>
-            <div className="badge-text">
-              <span className="badge-highlight">92%</span> placement success
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            className="floating-badge right-badge"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.1, duration: 0.8 }}
-          >
-            <div className="badge-icon">
-              <BriefcaseIcon />
-            </div>
-            <div className="badge-text">
-              <span className="badge-highlight">500+</span> offers
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            className="floating-badge bottom-badge"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.8 }}
-          >
-            <div className="badge-icon">
-              <BuildingIcon />
-            </div>
-            <div className="badge-text">
-              <span className="badge-highlight">50+</span> top companies
-            </div>
-          </motion.div>
+    <div className="landing-page">
+      {/* Hero Section */}
+      <section ref={heroRef} className="hero-section">
+        <div className="hero-content">
+          <h1 className="hero-title">
+            <span className="title-line">Transform Your</span>
+            <span className="title-line highlight">Placement Journey</span>
+          </h1>
+          <p className="hero-subtitle">
+            Streamlining the placement process for students, recruiters, and administrators with our automated platform.
+          </p>
+          <div className="hero-buttons">
+            <button className="btn btn-primary">Get Started</button>
+            <button className="btn btn-outline">Learn More</button>
+          </div>
         </div>
-      </div>
+        <div className="hero-illustration">
+          <div className="floating-elements">
+            <div className="floating-circle circle-1"></div>
+            <div className="floating-circle circle-2"></div>
+            <div className="floating-circle circle-3"></div>
+            <div className="floating-square"></div>
+            <div className="dashboard-mockup"></div>
+          </div>
+        </div>
+      </section>
 
-      <div className="tab-section">
-        <div className="tab-buttons">
-          <motion.button 
-            className={`tab-btn ${activeTab === 'roadmap' ? 'active' : ''}`}
-            onClick={() => setActiveTab('roadmap')}
-            whileHover={{ y: -2 }}
-            whileTap={{ y: 1 }}
-          >
-            Your Roadmap
-          </motion.button>
-          <motion.button 
-            className={`tab-btn ${activeTab === 'stats' ? 'active' : ''}`}
-            onClick={() => setActiveTab('stats')}
-            whileHover={{ y: -2 }}
-            whileTap={{ y: 1 }}
-          >
-            Placement Stats
-          </motion.button>
-          <motion.button 
-            className={`tab-btn ${activeTab === 'testimonials' ? 'active' : ''}`}
-            onClick={() => setActiveTab('testimonials')}
-            whileHover={{ y: -2 }}
-            whileTap={{ y: 1 }}
-          >
-            Success Stories
-          </motion.button>
+      {/* Stats Section */}
+      <section ref={statsRef} className="stats-section">
+        <div className="stats-container">
+          <div className="stat-card">
+            <h3 className="stat-number" data-count="150">0</h3>
+            <p className="stat-label">Top Companies</p>
+          </div>
+          <div className="stat-card">
+            <h3 className="stat-number" data-count="1200">0</h3>
+            <p className="stat-label">Students Placed</p>
+          </div>
+          <div className="stat-card">
+            <h3 className="stat-number" data-count="96">0</h3>
+            <p className="stat-label">% Placement Rate</p>
+          </div>
+          <div className="stat-card">
+            <h3 className="stat-number" data-count="500">0</h3>
+            <p className="stat-label">Job Offers</p>
+          </div>
         </div>
+      </section>
+
+      {/* Features Section */}
+      <section ref={featuresRef} className="features-section">
+        <h2 className="section-title-df">Key Features</h2>
+        <p className="section-subtitle">Everything you need for a seamless placement experience</p>
         
-        <div className="tab-content">
-          <AnimatePresence mode="wait">
-            {activeTab === 'roadmap' && (
-              <motion.div 
-                key="roadmap"
-                className="roadmap-content"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                <motion.div 
-                  className="roadmap-wrapper"
-                  ref={ref}
-                  initial="hidden"
-                  animate={controls}
-                  variants={pathVariants}
-                >
-                  {/* Step 1 */}
-                  <motion.div 
-                    className={`roadmap-step ${highlightedStep === 0 ? 'highlighted' : ''}`}
-                    variants={stepVariants}
-                    onMouseEnter={() => setHighlightedStep(0)}
-                    onMouseLeave={() => setHighlightedStep(null)}
-                  >
-                    <div className="step-number">1</div>
-                    <motion.div 
-                      className="step-icon"
-                      variants={iconVariants}
-                      whileHover="hover"
-                    >
-                      <LearnIcon />
-                    </motion.div>
-                    <div className="step-content">
-                      <h3>Core Fundamentals</h3>
-                      <p>Master essential concepts and technical skills for your field</p>
-                      <div className="step-details">
-                        <div className="step-tag">Theory</div>
-                        <div className="step-tag">Concepts</div>
-                        <div className="step-tag">Basics</div>
-                      </div>
-                    </div>
-                  </motion.div>
-                  
-                  <motion.div className="roadmap-connector" variants={stepVariants}>
-                    <ArrowIcon />
-                  </motion.div>
-                  
-                  {/* Step 2 */}
-                  <motion.div 
-                    className={`roadmap-step ${highlightedStep === 1 ? 'highlighted' : ''}`}
-                    variants={stepVariants}
-                    onMouseEnter={() => setHighlightedStep(1)}
-                    onMouseLeave={() => setHighlightedStep(null)}
-                  >
-                    <div className="step-number">2</div>
-                    <motion.div 
-                      className="step-icon"
-                      variants={iconVariants}
-                      whileHover="hover"
-                    >
-                      <ProjectIcon />
-                    </motion.div>
-                    <div className="step-content">
-                      <h3>Practical Skills</h3>
-                      <p>Develop hands-on experience through projects and case studies</p>
-                      <div className="step-details">
-                        <div className="step-tag">Projects</div>
-                        <div className="step-tag">Case Studies</div>
-                        <div className="step-tag">Applications</div>
-                      </div>
-                    </div>
-                  </motion.div>
-                  
-                  <motion.div className="roadmap-connector" variants={stepVariants}>
-                    <ArrowIcon />
-                  </motion.div>
-                  
-                  {/* Step 3 */}
-                  <motion.div 
-                    className={`roadmap-step ${highlightedStep === 2 ? 'highlighted' : ''}`}
-                    variants={stepVariants}
-                    onMouseEnter={() => setHighlightedStep(2)}
-                    onMouseLeave={() => setHighlightedStep(null)}
-                  >
-                    <div className="step-number">3</div>
-                    <motion.div 
-                      className="step-icon"
-                      variants={iconVariants}
-                      whileHover="hover"
-                    >
-                      <SkillIcon />
-                    </motion.div>
-                    <div className="step-content">
-                      <h3>Advanced Skills</h3>
-                      <p>Enhance your expertise with specialized knowledge</p>
-                      <div className="step-details">
-                        <div className="step-tag">Specialization</div>
-                        <div className="step-tag">Advanced Topics</div>
-                        <div className="step-tag">Industry Tools</div>
-                      </div>
-                    </div>
-                  </motion.div>
-                  
-                  <motion.div className="roadmap-connector" variants={stepVariants}>
-                    <ArrowIcon />
-                  </motion.div>
-                  
-                  {/* Step 4 */}
-                  <motion.div 
-                    className={`roadmap-step ${highlightedStep === 3 ? 'highlighted' : ''}`} 
-                    variants={stepVariants}
-                    onMouseEnter={() => setHighlightedStep(3)}
-                    onMouseLeave={() => setHighlightedStep(null)}
-                  >
-                    <div className="step-number">4</div>
-                    <motion.div 
-                      className="step-icon"
-                      variants={iconVariants}
-                      whileHover="hover"
-                    >
-                      <TrophyIcon />
-                    </motion.div>
-                    <div className="step-content">
-                      <h3>Placement Prep</h3>
-                      <p>Ace interviews and land your dream offers</p>
-                      <div className="step-details">
-                        <div className="step-tag">Resume</div>
-                        <div className="step-tag">Interviews</div>
-                        <div className="step-tag">Offers</div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-                
-                <motion.div
-                  className="roadmap-action"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.2 }}
-                >
-                  <motion.button 
-                    className="primary-btn"
-                    whileHover={{ scale: 1.05, boxShadow: "0px 10px 25px rgba(79, 70, 229, 0.4)" }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    View Detailed Roadmap
-                  </motion.button>
-                </motion.div>
-              </motion.div>
-            )}
-            
-            {activeTab === 'stats' && (
-              <motion.div 
-                key="stats"
-                className="stats-content"
-                ref={statsRef}
-                initial="hidden"
-                animate={statsControls}
-                variants={pathVariants}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="stats-wrapper">
-                  {placementStats.map((stat, index) => (
-                    <motion.div 
-                      key={index} 
-                      className="stat-card"
-                      variants={counterVariants}
-                      style={{ 
-                        backgroundColor: `${stat.color}10`,
-                        borderColor: stat.color
-                      }}
-                    >
-                      <div className="stat-value" style={{ color: stat.color }}>
-                        {stat.value}
-                      </div>
-                      <div className="stat-label">{stat.label}</div>
-                    </motion.div>
-                  ))}
-                </div>
-                
-                <div className="company-logos">
-                  <h3>Our Students Work At</h3>
-                  <div className="logo-cloud">
-                    {['Top MNCs', 'Fortune 500', 'Startups', 'Government', 'NGOs', 'Research', 'Finance', 'Healthcare'].map((company, index) => (
-                      <motion.div 
-                        key={index}
-                        className="logo-item"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.1 * index }}
-                      >
-                        {company}
-                      </motion.div>
-                    ))}
+        <div className="features-grid-df">
+          {[
+            {
+              title: 'Automated Notifications',
+              description: 'Get instant alerts about new job postings, interview schedules, and important announcements.'
+            },
+            {
+              title: 'Analytics Dashboard',
+              description: 'Track placement statistics, student performance, and company engagement metrics in real-time.'
+            },
+            {
+              title: 'Resume Builder',
+              description: 'Create professional resumes with our easy-to-use templates tailored for different job profiles.'
+            },
+            {
+              title: 'Interview Scheduler',
+              description: 'Coordinate interviews between companies and students with our integrated scheduling system.'
+            },
+            {
+              title: 'Skill Assessment',
+              description: 'Evaluate your skills with our comprehensive tests and get personalized improvement suggestions.'
+            },
+            {
+              title: 'Company Portal',
+              description: 'Dedicated space for recruiters to post jobs, review applications, and manage campus drives.'
+            }
+          ].map((feature, index) => (
+            <div 
+              key={index}
+              ref={(el) => (featureCardsRef.current[index] = el)} 
+              className="feature-card-df"
+            >
+              <div className="feature-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d={featureIcons[index]} />
+                </svg>
+              </div>
+              <h3 className="feature-title">{feature.title}</h3>
+              <p className="feature-description">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Placement Process Section */}
+      <section ref={processRef} className="process-section">
+        <h2 className="section-title-df">Our Placement Process</h2>
+        <p className="section-subtitle">Simple steps to your dream job</p>
+        
+        <div className="process-steps">
+          {[
+            { number: '1', title: 'Profile Creation', description: 'Complete your profile with academic and skill details' },
+            { number: '2', title: 'Resume Building', description: 'Create a professional resume using our templates' },
+            { number: '3', title: 'Skill Assessment', description: 'Take our tests to evaluate your competencies' },
+            { number: '4', title: 'Job Matching', description: 'Get matched with suitable companies based on your profile' },
+            { number: '5', title: 'Interview Preparation', description: 'Access resources to prepare for interviews' },
+            { number: '6', title: 'Placement', description: 'Attend interviews and secure your dream job' }
+          ].map((step, index) => (
+            <div key={index} className="process-step">
+              <div className="step-number">{step.number}</div>
+              <div className="step-content">
+                <h3 className="step-title">{step.title}</h3>
+                <p className="step-description">{step.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section ref={testimonialsRef} className="testimonials-section">
+        <h2 className="section-title-df">Success Stories</h2>
+        <p className="section-subtitle">Hear from our students and recruiters</p>
+        
+        <div className="testimonials-grid">
+          {[
+            {
+              text: "The placement portal made it so easy to apply to multiple companies and track my applications. I landed my dream job within weeks!",
+              name: "Rahul Sharma",
+              role: "Placed at Microsoft"
+            },
+            {
+              text: "As a recruiter, this platform has streamlined our campus hiring process significantly. The student profiles are comprehensive and easy to evaluate.",
+              name: "Priya Patel",
+              role: "HR Manager, Amazon"
+            },
+            {
+              text: "The resume builder helped me create a professional CV that got me noticed by top companies. I received 5 interview calls within a week!",
+              name: "Anjali Mehta",
+              role: "Placed at Google"
+            }
+          ].map((testimonial, index) => (
+            <div 
+              key={index}
+              className="testimonial-card"
+            >
+              <div className="testimonial-content">
+                <p className="testimonial-text">"{testimonial.text}"</p>
+                <div className="testimonial-author">
+                  <div className="author-avatar"></div>
+                  <div className="author-info">
+                    <h4 className="author-name">{testimonial.name}</h4>
+                    <p className="author-role">{testimonial.role}</p>
                   </div>
                 </div>
-              </motion.div>
-            )}
-            
-            {activeTab === 'testimonials' && (
-              <motion.div 
-                key="testimonials"
-                className="testimonials-content"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.div 
-                    key={currentTestimonial}
-                    className="testimonial-card"
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <div className="testimonial-header">
-                      <div className="testimonial-avatar">
-                        {testimonials[currentTestimonial].avatar}
-                      </div>
-                      <div className="testimonial-author">
-                        <div className="testimonial-name">
-                          {testimonials[currentTestimonial].name}
-                        </div>
-                        <div className="testimonial-company">
-                          @ {testimonials[currentTestimonial].company}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="testimonial-text">
-                      "{testimonials[currentTestimonial].text}"
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-                
-                <div className="testimonial-dots">
-                  {testimonials.map((_, index) => (
-                    <span 
-                      key={index} 
-                      className={`testimonial-dot ${index === currentTestimonial ? 'active' : ''}`}
-                      onClick={() => setCurrentTestimonial(index)}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-      
-      {/* Floating icons in background */}
-      <div className="floating-tech-icons">
-        {['📚', '💼', '🎓', '🏆', '📝', '🔍', '💡', '📊', '📈', '📉', '🔧', '⚙️'].map((icon, i) => (
-          <motion.div
-            key={i}
-            className="tech-icon"
-            initial={{ y: 0, x: Math.random() * 100 }}
-            animate={{
-              y: [0, -1000],
-              x: [0, Math.random() * 300 - 150],
-              opacity: [0.2, 0],
-              rotate: [0, Math.random() * 360]
-            }}
-            transition={{
-              duration: 15 + Math.random() * 25,
-              repeat: Infinity,
-              delay: Math.random() * 15
-            }}
-          >
-            {icon}
-          </motion.div>
-        ))}
-      </div>
+      </section>
     </div>
   );
 };
-
-// SVG Icons as React components
-const LearnIcon = () => (
-  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-    <path d="M2 12h20"></path>
-  </svg>
-);
-
-const ProjectIcon = () => (
-  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 3h18v18H3zM9 3v18M3 9h18"></path>
-  </svg>
-);
-
-const SkillIcon = () => (
-  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2v6M12 18v4"></path>
-    <rect x="4" y="8" width="16" height="10" rx="2"></rect>
-    <path d="M8 12h8"></path>
-  </svg>
-);
-
-const TrophyIcon = () => (
-  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-    <path d="M4 22h16"></path>
-    <path d="M10 22v-4"></path>
-    <path d="M14 22v-4"></path>
-    <path d="M8 6h8v4a4 4 0 0 1-8 0V6Z"></path>
-  </svg>
-);
-
-const ArrowIcon = () => (
-  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M5 12h14M12 5l7 7-7 7"></path>
-  </svg>
-);
-
-const BriefcaseIcon = () => (
-  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-  </svg>
-);
-
-const BuildingIcon = () => (
-  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-    <path d="M9 22v-4h6v4"></path>
-    <path d="M8 6h.01"></path>
-    <path d="M16 6h.01"></path>
-    <path d="M12 6h.01"></path>
-    <path d="M12 10h.01"></path>
-    <path d="M12 14h.01"></path>
-    <path d="M16 10h.01"></path>
-    <path d="M16 14h.01"></path>
-    <path d="M8 10h.01"></path>
-    <path d="M8 14h.01"></path>
-  </svg>
-);
 
 export default Default;

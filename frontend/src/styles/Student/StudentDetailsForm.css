@@ -225,6 +225,27 @@ form.hidden {
   background-color: var(--error-dark, #d32f2f);
 }
 
+/* Profile Picture Preview Styles */
+.profile-picture-preview {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.profile-picture-preview img {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color, #3f51b5);
+  object-fit: cover;
+}
+
+.profile-picture-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
 /* Navigation Buttons */
 .navigation-buttons {
   display: flex;
@@ -244,6 +265,7 @@ form.hidden {
   background-color: var(--primary-dark, #303f9f);
 }
 
+/* File Upload Styles */
 /* File Upload Styles */
 .file-upload-label {
   display: block;
