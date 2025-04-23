@@ -1,286 +1,424 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../../styles/Student/StudentDashboard.css';
-import { ThemeContext } from '../../context/ThemeContext';
+import { useState } from 'react';
+import "../../styles/Student/StudentDashboard.css";
 
-const TechStackCard = () => {
-  const [techStack, setTechStack] = useState([]);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newTech, setNewTech] = useState('');
-  const [error, setError] = useState('');
-  
-  const techOptions = [
-    'HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 
-    'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Python', 
-    'Django', 'Java', 'Spring', 'Docker', 'AWS', 'Firebase'
-  ];
-  
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleAddTech();
+export default function StudentDashboard() {
+  // Sample data that would come from props or context in a real app
+  const [studentData, setStudentData] = useState({
+    personal: {
+      firstName: 'Uttkarsh',
+      lastName: 'Ruparel',
+      email: 'rupareluttkarsh2309@gmail.com',
+      phone: '+91-9885000237',
+      dob: '2005-09-23',
+      gender: 'Male',
+      instituteRollNo: '23070122227',
+    },
+    internships: [{ 
+      company: 'Tech Innovations Inc.', 
+      position: 'Software Development Intern', 
+      location: 'San Francisco, CA', 
+      sector: 'Technology',
+      startDate: '2023-05-01', 
+      endDate: '2023-08-15', 
+      stipend: '$3000/month'
+    }],
+    volunteering: [{ 
+      organization: 'Community Outreach Center', 
+      location: 'Boston, MA',
+      sector: 'Education',
+      task: 'Teaching programming basics to underprivileged students', 
+      startDate: '2022-09-01', 
+      endDate: '2023-03-30' 
+    }],
+    skills: [
+      { name: 'JavaScript', proficiency: 'Advanced' },
+      { name: 'React', proficiency: 'Intermediate' },
+      { name: 'Python', proficiency: 'Advanced' },
+      { name: 'UI/UX Design', proficiency: 'Beginner' }
+    ],
+    projects: [{ 
+      title: 'Smart Campus Navigation', 
+      description: 'Developed a mobile application that helps students navigate university campus efficiently', 
+      techStack: 'React Native, Firebase, Node.js', 
+      link: 'https://github.com/johnsmith/campus-nav', 
+      role: 'Lead Developer' 
+    }],
+    accomplishments: [{ 
+      title: 'Dean\'s List Award', 
+      institution: 'University of Technology',
+      type: 'Academic',
+      description: 'Awarded for academic excellence and maintaining a GPA above 3.8', 
+      date: '2023-05-30', 
+      rank: '1st Place'
+    }],
+    extraCurricular: [{ 
+      activity: 'Chess Club', 
+      role: 'President', 
+      organization: 'University Chess Association', 
+      duration: '2022 - Present' 
+    }],
+    competitions: [{ 
+      name: 'National Coding Challenge', 
+      date: '2023-04-10', 
+      role: 'Team Lead', 
+      achievement: 'Finalist', 
+      skills: 'Algorithm Design, Time Management, Teamwork' 
+    }],
+    profilePicture: 'https://media.licdn.com/dms/image/v2/D4D03AQGDuUgKSpwtvw/profile-displayphoto-shrink_800_800/B4DZSno.ppG4Ag-/0/1737979327143?e=1750896000&v=beta&t=zGrSIcCHy9tzvRtPOFRbfrfGXs8F7KYEDKUboMvt488'
+  });
+
+  const [activeSection, setActiveSection] = useState('overview');
+
+  const getProficiencyColor = (proficiency) => {
+    switch(proficiency) {
+      case 'Beginner': return 'bg-blue-100 text-blue-800';
+      case 'Intermediate': return 'bg-green-100 text-green-800';
+      case 'Advanced': return 'bg-purple-100 text-purple-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
-  
-  const handleAddTech = () => {
-    const techName = newTech.trim();
-    
-    if (!techName) {
-      setError('Please enter a technology name');
-      return;
-    }
-    
-    if (techStack.some(tech => 
-      tech.name.toLowerCase() === techName.toLowerCase()
-    )) {
-      setError('This technology is already in your stack');
-      return;
-    }
-    
-    const newId = techStack.length > 0 ? Math.max(...techStack.map(tech => tech.id)) + 1 : 1;
-    setTechStack([...techStack, { id: newId, name: techName }]);
-    setNewTech('');
-    setError('');
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
-  
-  const handleQuickAdd = (tech) => {
-    if (!techStack.some(item => 
-      item.name.toLowerCase() === tech.toLowerCase()
-    )) {
-      const newId = techStack.length > 0 ? Math.max(...techStack.map(tech => tech.id)) + 1 : 1;
-      setTechStack([...techStack, { id: newId, name: tech }]);
-    } else {
-      setError('This technology is already in your stack');
-    }
-  };
-  
-  const handleRemoveTech = (id) => {
-    setTechStack(techStack.filter(tech => tech.id !== id));
-  };
-  
+
   return (
-    <div className="card tech-stack-card">
-      <h2>Tech Stack</h2>
-      
-      <div className="tech-list">
-        {techStack.length > 0 ? (
-          techStack.map(tech => (
-            <div key={tech.id} className="tech-item">
-              <span>{tech.name}</span>
-              <button 
-                className="remove-tech-btn" 
-                onClick={() => handleRemoveTech(tech.id)}
-                aria-label={`Remove ${tech.name}`}
-              >
-                ×
-              </button>
+    <div className="dashboard-container">
+      {/* Header Section */}
+      <header className="dashboard-header">
+        <div className="profile-section">
+          <div className="profile-image-container">
+            <img src={studentData.profilePicture || '/api/placeholder/150/150'} alt="Profile" className="profile-image" />
+          </div>
+          <div className="profile-info">
+            <h1>{studentData.personal.firstName} {studentData.personal.lastName}</h1>
+            <p className="text-lg text-blue-600">{studentData.personal.instituteRollNo}</p>
+            <div className="contact-info">
+              <span>{studentData.personal.email}</span>
+              <span>{studentData.personal.phone}</span>
             </div>
-          ))
-        ) : (
-          <p className="empty-state">No technologies added yet</p>
+          </div>
+        </div>
+      </header>
+
+      {/* Navigation Tabs */}
+      <nav className="dashboard-nav">
+        <ul className="section-tabs">
+          <li className={activeSection === 'overview' ? 'active' : ''} onClick={() => setActiveSection('overview')}>Overview</li>
+          <li className={activeSection === 'academic' ? 'active' : ''} onClick={() => setActiveSection('academic')}>Academic</li>
+          <li className={activeSection === 'experience' ? 'active' : ''} onClick={() => setActiveSection('experience')}>Experience</li>
+          <li className={activeSection === 'skills' ? 'active' : ''} onClick={() => setActiveSection('skills')}>Skills</li>
+          <li className={activeSection === 'activities' ? 'active' : ''} onClick={() => setActiveSection('activities')}>Activities</li>
+        </ul>
+      </nav>
+
+      {/* Main Content */}
+      <main className="dashboard-content">
+        {activeSection === 'overview' && (
+          <section className="overview-section">
+            <h2>Personal Information</h2>
+            <div className="personal-details">
+              <div className="detail-row">
+                <div className="detail-item">
+                  <span className="detail-label">Full Name</span>
+                  <span className="detail-value">{studentData.personal.firstName} {studentData.personal.lastName}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Roll Number</span>
+                  <span className="detail-value">{studentData.personal.instituteRollNo}</span>
+                </div>
+              </div>
+              <div className="detail-row">
+                <div className="detail-item">
+                  <span className="detail-label">Email</span>
+                  <span className="detail-value">{studentData.personal.email}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Phone</span>
+                  <span className="detail-value">{studentData.personal.phone}</span>
+                </div>
+              </div>
+              <div className="detail-row">
+                <div className="detail-item">
+                  <span className="detail-label">Date of Birth</span>
+                  <span className="detail-value">{formatDate(studentData.personal.dob)}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Gender</span>
+                  <span className="detail-value">{studentData.personal.gender}</span>
+                </div>
+              </div>
+            </div>
+
+            <h2>Highlights</h2>
+            <div className="highlights-grid">
+              <div className="highlight-box">
+                <h3>Skills</h3>
+                <div className="highlight-content">
+                  {studentData.skills.slice(0, 3).map((skill, index) => (
+                    <span key={index} className={`skill-badge ${getProficiencyColor(skill.proficiency)}`}>{skill.name}</span>
+                  ))}
+                  {studentData.skills.length > 3 && <span className="more-badge">+{studentData.skills.length - 3} more</span>}
+                </div>
+              </div>
+              <div className="highlight-box">
+                <h3>Projects</h3>
+                <div className="highlight-content">
+                  {studentData.projects.slice(0, 1).map((project, index) => (
+                    <div key={index} className="highlight-item">
+                      <span className="highlight-title">{project.title}</span>
+                      <span className="highlight-subtitle">{project.role}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="highlight-box">
+                <h3>Accomplishments</h3>
+                <div className="highlight-content">
+                  {studentData.accomplishments.slice(0, 1).map((accom, index) => (
+                    <div key={index} className="highlight-item">
+                      <span className="highlight-title">{accom.title}</span>
+                      <span className="highlight-subtitle">{accom.institution}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="highlight-box">
+                <h3>Experience</h3>
+                <div className="highlight-content">
+                  {studentData.internships.slice(0, 1).map((intern, index) => (
+                    <div key={index} className="highlight-item">
+                      <span className="highlight-title">{intern.position}</span>
+                      <span className="highlight-subtitle">{intern.company}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
         )}
-      </div>
-      
-      {showAddForm ? (
-        <div className="add-tech-form">
-          <input
-            type="text"
-            value={newTech}
-            onChange={(e) => {
-              setNewTech(e.target.value);
-              setError('');
-            }}
-            onKeyDown={handleKeyDown}
-            placeholder="Enter technology name"
-            className="tech-input"
-            autoFocus
-          />
-          {error && <p className="error-message">{error}</p>}
-          
-          <div className="tech-form-actions">
-            <button className="btn-add-tech" onClick={handleAddTech}>Add</button>
-            <button className="btn-cancel" onClick={() => {
-              setShowAddForm(false);
-              setNewTech('');
-              setError('');
-            }}>Cancel</button>
-          </div>
-          
-          <div className="quick-add-options">
-            <p>Quick add:</p>
-            <div className="tech-options">
-              {techOptions
-                .filter(tech => !techStack.some(item => 
-                  item.name.toLowerCase() === tech.toLowerCase()
+
+        {activeSection === 'academic' && (
+          <section className="academic-section">
+            <h2>Academic Achievements</h2>
+            <div className="achievements-list">
+              {studentData.accomplishments.filter(a => a.type === 'Academic').length > 0 ? (
+                studentData.accomplishments.filter(a => a.type === 'Academic').map((accom, index) => (
+                  <div key={index} className="achievement-item">
+                    <div className="achievement-header">
+                      <h3>{accom.title}</h3>
+                      <span className="achievement-date">{formatDate(accom.date)}</span>
+                    </div>
+                    <div className="achievement-institution">{accom.institution}</div>
+                    <p className="achievement-description">{accom.description}</p>
+                    {accom.rank && <div className="achievement-rank">Rank: {accom.rank}</div>}
+                  </div>
                 ))
-                .map((tech, index) => (
-                  <button 
-                    key={index} 
-                    className="quick-add-btn"
-                    onClick={() => handleQuickAdd(tech)}
-                  >
-                    {tech}
-                  </button>
-                ))}
+              ) : (
+                <p className="no-data-message">No academic achievements added yet.</p>
+              )}
             </div>
-          </div>
-        </div>
-      ) : (
-        <button 
-          className="btn-action add-tech-btn" 
-          onClick={() => {
-            setShowAddForm(true);
-            setError('');
-          }}
-        >
-          + Add Technology
-        </button>
-      )}
-    </div>
-  );
-};
-
-// Profile Card Component
-const ProfileCard = ({ onEditProfile }) => {
-  return (
-    <div className="card profile-card">
-      <h2>Profile</h2>
-      <div className="profile-content">
-        <div className="profile-avatar">
-          <div className="avatar-placeholder">
-            <span>UR</span>
-          </div>
-        </div>
-        <div className="profile-info">
-          <h3>Uttkarsh</h3>
-          <p className="profile-title">Full Stack Developer</p>
-          <p className="profile-stats">
-            <span>1 year experience 7 projects</span>
-          </p>
-        </div>
-      </div>
-      <button className="btn-action">Edit Profile</button>
-    </div>
-  );
-};
-
-// Projects Card Component
-const ProjectsCard = () => {
-  const [projects, setProjects] = useState([
-    { id: 1, name: "E-commerce App", tech: ["React", "Node.js"], progress: 75 },
-    { id: 2, name: "Portfolio Website", tech: ["HTML", "CSS", "JavaScript"], progress: 100 },
-    { id: 3, name: "Task Manager", tech: ["React", "Firebase"], progress: 40 }
-  ]);
-  
-  return (
-    <div className="card projects-card">
-      <h2>Projects</h2>
-      <div className="projects-list">
-        {projects.map(project => (
-          <div key={project.id} className="project-item">
-            <div className="project-header">
-              <h3>{project.name}</h3>
-              <span className="project-status">{project.progress}%</span>
+            
+            <h2>Projects</h2>
+            <div className="projects-list">
+              {studentData.projects.length > 0 ? (
+                studentData.projects.map((project, index) => (
+                  <div key={index} className="project-item">
+                    <div className="project-header">
+                      <h3>{project.title}</h3>
+                      <span className="project-role">{project.role}</span>
+                    </div>
+                    <p className="project-description">{project.description}</p>
+                    <div className="project-details">
+                      <div className="tech-stack">
+                        <span className="detail-label">Tech Stack:</span>
+                        <span className="detail-value">{project.techStack}</span>
+                      </div>
+                      {project.link && (
+                        <div className="project-link">
+                          <a href={project.link} target="_blank" rel="noopener noreferrer">View Project</a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="no-data-message">No projects added yet.</p>
+              )}
             </div>
-            <div className="progress-bar">
-              <div 
-                className="progress-fill" 
-                style={{ width: `${project.progress}%` }}
-              ></div>
+          </section>
+        )}
+
+        {activeSection === 'experience' && (
+          <section className="experience-section">
+            <h2>Internships</h2>
+            <div className="experience-timeline">
+              {studentData.internships.length > 0 ? (
+                studentData.internships.map((intern, index) => (
+                  <div key={index} className="timeline-item">
+                    <div className="timeline-marker"></div>
+                    <div className="timeline-content">
+                      <div className="experience-header">
+                        <h3>{intern.position}</h3>
+                        <div className="experience-duration">
+                          {formatDate(intern.startDate)} - {intern.endDate ? formatDate(intern.endDate) : 'Present'}
+                        </div>
+                      </div>
+                      <div className="experience-company">
+                        <span>{intern.company}</span>
+                        <span className="experience-location">{intern.location}</span>
+                      </div>
+                      <div className="experience-details">
+                        <div className="experience-sector">
+                          <span className="detail-label">Sector:</span>
+                          <span className="detail-value">{intern.sector}</span>
+                        </div>
+                        {intern.stipend && (
+                          <div className="experience-stipend">
+                            <span className="detail-label">Stipend:</span>
+                            <span className="detail-value">{intern.stipend}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="no-data-message">No internships added yet.</p>
+              )}
             </div>
-            <div className="project-technologies">
-              {project.tech.map((tech, index) => (
-                <span key={index} className="project-tech-tag">{tech}</span>
-              ))}
+
+            <h2>Volunteering</h2>
+            <div className="experience-timeline">
+              {studentData.volunteering.length > 0 ? (
+                studentData.volunteering.map((vol, index) => (
+                  <div key={index} className="timeline-item">
+                    <div className="timeline-marker volunteer-marker"></div>
+                    <div className="timeline-content">
+                      <div className="experience-header">
+                        <h3>{vol.organization}</h3>
+                        <div className="experience-duration">
+                          {formatDate(vol.startDate)} - {vol.endDate ? formatDate(vol.endDate) : 'Present'}
+                        </div>
+                      </div>
+                      <div className="experience-company">
+                        <span>{vol.location}</span>
+                        <span className="experience-sector">{vol.sector}</span>
+                      </div>
+                      <p className="volunteer-task">{vol.task}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="no-data-message">No volunteering experience added yet.</p>
+              )}
             </div>
-          </div>
-        ))}
-      </div>
-      <button className="btn-action">View All Projects</button>
+          </section>
+        )}
+
+        {activeSection === 'skills' && (
+          <section className="skills-section">
+            <h2>Technical & Soft Skills</h2>
+            <div className="skills-container">
+              {studentData.skills.length > 0 ? (
+                <div className="skills-grid">
+                  {studentData.skills.map((skill, index) => (
+                    <div key={index} className="skill-item">
+                      <div className="skill-name">{skill.name}</div>
+                      <div className="skill-proficiency-bar">
+                        <div 
+                          className={`proficiency-level ${skill.proficiency.toLowerCase()}`} 
+                          style={{ 
+                            width: skill.proficiency === 'Beginner' ? '33%' : 
+                                  skill.proficiency === 'Intermediate' ? '66%' : '100%' 
+                          }}
+                        ></div>
+                      </div>
+                      <div className="proficiency-label">{skill.proficiency}</div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="no-data-message">No skills added yet.</p>
+              )}
+            </div>
+
+            <h2>Competitions</h2>
+            <div className="competitions-list">
+              {studentData.competitions.length > 0 ? (
+                studentData.competitions.map((comp, index) => (
+                  <div key={index} className="competition-item">
+                    <div className="competition-header">
+                      <h3>{comp.name}</h3>
+                      <span className="competition-date">{formatDate(comp.date)}</span>
+                    </div>
+                    <div className="competition-role-achievement">
+                      <span className="competition-role">{comp.role}</span>
+                      {comp.achievement && <span className="competition-achievement">{comp.achievement}</span>}
+                    </div>
+                    <div className="competition-skills">
+                      <span className="detail-label">Skills Demonstrated:</span>
+                      <div className="skills-tags">
+                        {comp.skills.split(',').map((skill, i) => (
+                          <span key={i} className="skill-tag">{skill.trim()}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="no-data-message">No competitions added yet.</p>
+              )}
+            </div>
+          </section>
+        )}
+
+        {activeSection === 'activities' && (
+          <section className="activities-section">
+            <h2>Extracurricular Activities</h2>
+            <div className="activities-list">
+              {studentData.extraCurricular.length > 0 ? (
+                studentData.extraCurricular.map((activity, index) => (
+                  <div key={index} className="activity-item">
+                    <div className="activity-header">
+                      <h3>{activity.activity}</h3>
+                      <span className="activity-duration">{activity.duration}</span>
+                    </div>
+                    <div className="activity-details">
+                      <span className="activity-role">{activity.role}</span>
+                      <span className="activity-organization">{activity.organization}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="no-data-message">No extracurricular activities added yet.</p>
+              )}
+            </div>
+
+            <h2>Other Accomplishments</h2>
+            <div className="other-accomplishments">
+              {studentData.accomplishments.filter(a => a.type !== 'Academic').length > 0 ? (
+                studentData.accomplishments.filter(a => a.type !== 'Academic').map((accom, index) => (
+                  <div key={index} className="accomplishment-item">
+                    <div className="accomplishment-header">
+                      <h3>{accom.title}</h3>
+                      <span className="accomplishment-date">{formatDate(accom.date)}</span>
+                    </div>
+                    <div className="accomplishment-institution">{accom.institution}</div>
+                    <div className="accomplishment-type">{accom.type}</div>
+                    <p className="accomplishment-description">{accom.description}</p>
+                    {accom.rank && <div className="accomplishment-rank">Rank: {accom.rank}</div>}
+                  </div>
+                ))
+              ) : (
+                <p className="no-data-message">No other accomplishments added yet.</p>
+              )}
+            </div>
+          </section>
+        )}
+      </main>
     </div>
   );
-};
-
-// Resume Card Component
-const ResumeCard = () => {
-  return (
-    <div className="card resume-card">
-      <h2>Resume</h2>
-      <div className="resume-preview">
-        <div className="resume-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="50">
-            <path d="M7 18H17V16H7V18Z" fill="currentColor" />
-            <path d="M17 14H7V12H17V14Z" fill="currentColor" />
-            <path d="M7 10H11V8H7V10Z" fill="currentColor" />
-            <path fillRule="evenodd" clipRule="evenodd" d="M6 2C4.34315 2 3 3.34315 3 5V19C3 20.6569 4.34315 22 6 22H18C19.6569 22 21 20.6569 21 19V9C21 5.13401 17.866 2 14 2H6ZM5 5C5 4.44772 5.44772 4 6 4H14C16.7614 4 19 6.23858 19 9V19C19 19.5523 18.5523 20 18 20H6C5.44772 20 5 19.5523 5 19V5Z" fill="currentColor" />
-          </svg>
-        </div>
-        <div className="resume-stats">
-          <p>Last updated: March 5, 2025</p>
-          <p>2 page document</p>
-        </div>
-      </div>
-      <div className="resume-actions">
-        <button className="btn-action">Download PDF</button>
-        <button className="btn-secondary">Update Resume</button>
-      </div>
-    </div>
-  );
-};
-
-const StudentDashboard = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("Dashboard");
-  const [breadcrumbs, setBreadcrumbs] = useState([activeTab]);
-
-  // Function to get the greeting based on the current time
-  const getGreeting = () => {
-    const currentTime = new Date();
-    const currentHour = currentTime.getHours();
-
-    if (currentHour < 12) {
-      return "Good Morning";
-    } else if (currentHour < 18) {
-      return "Good Afternoon";
-    } else {
-      return "Good Evening";
-    }
-  };
-
-  // Function to navigate to forms page
-  const goToFormsPage = () => {
-    navigate('/student-registration');
-  };
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    setBreadcrumbs([tab]);
-  };
-
-  const { darkMode } = useContext(ThemeContext);
-
-  return (
-    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-        <div className="breadcrumb-container">
-          <div className="breadcrumbs">
-            <span>Dashboard</span>
-          </div>
-        </div>
-        <div className="header">
-        </div>
-        <div>
-          {/* Dynamically display the greeting */}
-          <h1 className="greeting">{getGreeting()}, Uttkarsh</h1>
-        </div>
-        
-        {/* Cards Grid Container */}
-        <div className="cards-grid">
-          <ProfileCard onEditProfile={goToFormsPage} />
-          <TechStackCard />
-          <ProjectsCard />
-          <ResumeCard />
-        </div>
-    </div>
-  );
-};
-
-export default StudentDashboard;
+}

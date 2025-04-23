@@ -301,7 +301,6 @@ body {
 
 @media screen and (min-width: 769px) {
   main {
-    margin-left: var(--sidebar-width);
     transition: margin-left var(--transition-speed) ease;
   }
 }

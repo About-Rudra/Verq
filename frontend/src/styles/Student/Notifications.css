@@ -5,7 +5,6 @@
 }
 
 .dashboard-container {
-  width: var(--container-width);
   max-width: var(--max-container-width);
   margin: 0 auto;
   padding: 1rem;
@@ -439,7 +438,7 @@
 /* Large Desktops (1280px and above) */
 @media (min-width: 1280px) {
   .dashboard-container {
-    width: 80%;
+    width: 100%;
   }
 }
 
