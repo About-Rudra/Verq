@@ -63,11 +63,10 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
       achievement: '', 
       skills: '' 
     }],
-    resume: null
+    profilePicture: null
   });
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleInputChange = (section, field, value, index = null) => {
     if (index !== null) {
@@ -82,8 +81,8 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
     }
   };
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   const sections = [
@@ -95,23 +94,11 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
     { id: 'accomplishments', label: 'Accomplishments' },
     { id: 'extraCurricular', label: 'Extra-Curricular Activities' },
     { id: 'competitions', label: 'Competitions & Events' },
-    { id: 'resume', label: 'Resume Upload' },
+    { id: 'profilePicture', label: 'Profile Picture' },
   ];
 
   const activeSectionIndex = sections.findIndex(section => section.id === activeSection);
   const progressPercentage = ((activeSectionIndex + 1) / sections.length) * 100;
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      if (window.innerWidth > 992) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const addItem = (section) => {
     const sectionData = [...formData[section]];
@@ -139,14 +126,14 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
         return;
       }
       // Check file type
-      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
       if (!validTypes.includes(file.type)) {
-        alert('Only PDF, DOC, and DOCX files are allowed');
+        alert('Only PNG, JPG, and JPEG files are allowed');
         return;
       }
       setFormData({
         ...formData,
-        resume: file
+        profilePicture: file // Changed from resume to profilePicture
       });
     }
   };
@@ -194,33 +181,29 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
 
   return (
     <div className={`profile-container ${darkMode ? 'dark-theme' : ''}`}>
-      {/* Mobile header with menu toggle */}
-      {windowWidth <= 992 && (
-        <div className="mobile-header">
-          <h2>Student Profile</h2>
-          <button 
-            className="menu-toggle-btn" 
-            onClick={toggleMobileMenu}
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? 'Close' : 'Menu'}
-          </button>
-        </div>
-      )}
+      {/* Header with menu toggle */}
+      <div className="mobile-header">
+        <h2>Student Profile</h2>
+        <button 
+          className="menu-toggle-btn" 
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
+        >
+          {menuOpen ? 'Close' : 'Menu'}
+        </button>
+      </div>
       
-      {/* Progress bar for mobile */}
-      {windowWidth <= 992 && (
-        <div className="mobile-progress-container">
-          <div 
-            className="mobile-progress-bar" 
-            style={{width: `${progressPercentage}%`}}
-          />
-          <div className="progress-text">Step {activeSectionIndex + 1} of {sections.length}</div>
-        </div>
-      )}
+      {/* Progress bar */}
+      <div className="mobile-progress-container">
+        <div 
+          className="mobile-progress-bar" 
+          style={{width: `${progressPercentage}%`}}
+        />
+        <div className="progress-text">Step {activeSectionIndex + 1} of {sections.length}</div>
+      </div>
 
-      {/* Sidebar Navigation - show based on screen size or menu state */}
-      <div className={`sidebar ${windowWidth <= 992 && !mobileMenuOpen ? 'hidden' : ''}`}>
+      {/* Navigation Menu */}
+      <div className={`sidebar ${!menuOpen ? 'hidden' : ''}`}>
         <div className="sidebar-header">
           <h3>Profile Sections</h3>
         </div>
@@ -231,9 +214,7 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
               className={`sidebar-item ${activeSection === section.id ? 'active' : ''}`}
               onClick={() => {
                 setActiveSection(section.id);
-                if (windowWidth <= 992) {
-                  setMobileMenuOpen(false);
-                }
+                setMenuOpen(false);
               }}
             >
               {section.label}
@@ -244,7 +225,7 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
 
       <form 
         onSubmit={handleSubmit} 
-        className={windowWidth <= 992 && mobileMenuOpen ? 'hidden' : ''}
+        className={menuOpen ? 'hidden' : ''}
       >
         {/* Personal Information Section */}
         {activeSection === 'personal' && (
@@ -759,34 +740,34 @@ const StudentDetailsForm = ({ onFormSubmit }) => {
           </div>
         )}
 
-        {/* Resume Upload Section */}
-        {activeSection === 'resume' && (
+        {/* Profile Picture Upload Section */}
+        {activeSection === 'profilePicture' && (
           <div className="form-section">
-            <h2>Resume Upload</h2>
+            <h2>Upload Your Profile Picture</h2>
             <div className="input-group">
               <label className="file-upload-label">
                 <input
                   type="file"
-                  accept=".pdf,.doc,.docx"
+                  accept=".png,.jpg,.jpeg"
                   onChange={handleFileChange}
                   className="file-upload-input"
                 />
                 <div className="file-upload-button">
-                  {formData.resume ? 'Change Resume' : 'Upload Resume'}
+                  {formData.profilePicture ? 'Change Picture' : 'Upload Picture'}
                 </div>
-                {formData.resume && (
+                {formData.profilePicture && ( 
                   <div className="file-info-display">
-                    <span className="file-name">{formData.resume.name}</span>
+                    <span className="file-name">{formData.profilePicture.name}</span>
                     <span className="file-size">
-                      {(formData.resume.size / 1024 / 1024).toFixed(2)} MB
+                      {(formData.profilePicture.size / 1024 / 1024).toFixed(2)} MB
                     </span>
                   </div>
                 )}
-                <p className="file-info">Accepted formats: PDF, DOC, DOCX. Maximum size: 5MB</p>
+                <p className="file-info">Accepted formats: PNG, JPG, JPEG. Maximum size: 5MB</p>
               </label>
             </div>
             
-            {/* Skip to Dashboard Button - Only visible in the resume section */}
+            {/* Skip to Dashboard Button */}
             <div className="skip-section">
               <p>You can complete your profile later.</p>
               <button 

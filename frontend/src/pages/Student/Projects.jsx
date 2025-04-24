@@ -6,9 +6,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 const Projects = () => {
   const [selectedLevel, setSelectedLevel] = useState('all');
   const [selectedDomain, setSelectedDomain] = useState('all');
-  const [activeFilters, setActiveFilters] = useState([]);
-  const [activeTab, setActiveTab] = useState("Projects");
-  const [breadcrumbs, setBreadcrumbs] = useState([activeTab]);
+  const [activeFilters, setActiveFilters] = useState([]);;
   const { darkMode } = useContext(ThemeContext);
   const levelFiltersRef = useRef(null);
   const domainFiltersRef = useRef(null);
@@ -16,19 +14,19 @@ const Projects = () => {
   const projectCategories = {
     beginner: {
       title: "Beginner",
-      icon: <FaCode className="level-icon beginner" />,
+      icon: <FaCode className="level-icon-pro beginner-pro" />,
       description: "Great for students just starting out",
       color: "var(--beginner-color)"
     },
     intermediate: {
       title: "Intermediate",
-      icon: <FaLaptopCode className="level-icon intermediate" />,
+      icon: <FaLaptopCode className="level-icon-pro intermediate-pro" />,
       description: "For students with some coding experience",
       color: "var(--intermediate-color)"
     },
     advanced: {
       title: "Advanced",
-      icon: <FaRobot className="level-icon advanced" />,
+      icon: <FaRobot className="level-icon-pro advanced-pro" />,
       description: "Challenging projects for experienced coders",
       color: "var(--advanced-color)"
     }
@@ -40,12 +38,12 @@ const Projects = () => {
       const domainFilters = domainFiltersRef.current;
       
       if (levelFilters) {
-        levelFilters.classList.toggle('has-overflow', 
+        levelFilters.classList.toggle('has-overflow-pro', 
           levelFilters.scrollWidth > levelFilters.clientWidth);
       }
       
       if (domainFilters) {
-        domainFilters.classList.toggle('has-overflow', 
+        domainFilters.classList.toggle('has-overflow-pro', 
           domainFilters.scrollWidth > domainFilters.clientWidth);
       }
     };
@@ -61,7 +59,7 @@ const Projects = () => {
 
   useEffect(() => {
     if (selectedLevel !== 'all' && levelFiltersRef.current) {
-      const activeButton = levelFiltersRef.current.querySelector('.level-filter.active');
+      const activeButton = levelFiltersRef.current.querySelector('.level-filter-pro.active-pro');
       if (activeButton) {
         levelFiltersRef.current.scrollLeft = activeButton.offsetLeft - 20;
       }
@@ -70,7 +68,7 @@ const Projects = () => {
 
   useEffect(() => {
     if (selectedDomain !== 'all' && domainFiltersRef.current) {
-      const activeButton = domainFiltersRef.current.querySelector('.domain-filter.active');
+      const activeButton = domainFiltersRef.current.querySelector('.domain-filter-pro.active-pro');
       if (activeButton) {
         domainFiltersRef.current.scrollLeft = activeButton.offsetLeft - 20;
       }
@@ -191,23 +189,23 @@ const Projects = () => {
   };
 
   return (
-    <div className={`main-content ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+    <div className={`main-content ${darkMode ? 'dark-theme-pro' : 'light-theme-pro'}`}>
       <div className="breadcrumb-container">
         <div className="breadcrumbs">
           <span>Projects</span>
         </div>
       </div>
-      <div className="page-content">
-        <div className="controls">
-        <div className="filter-section">
-  <h3 className="filter-title">
-    <FaFilter className="filter-icon" /> Filter by:
+      <div className="page-content-pro">
+        <div className="controls-pro">
+        <div className="filter-section-pro">
+  <h3 className="filter-title-pro">
+    <FaFilter className="filter-icon-pro" /> Filter by:
   </h3>
   
   {activeFilters.length > 0 && (
-    <div className="active-filters">
+    <div className="active-filters-pro">
       {activeFilters.map((filter, index) => (
-        <span key={index} className="active-filter">
+        <span key={index} className="active-filter-pro">
           {filter.type === 'level' ? (
             <>
               {projectCategories[filter.value].icon}
@@ -221,7 +219,7 @@ const Projects = () => {
           )}
           <button 
             onClick={() => removeFilter(filter)}
-            className="remove-filter"
+            className="remove-filter-pro"
             aria-label="Remove filter"
           >
             <FaTimes />
@@ -230,19 +228,19 @@ const Projects = () => {
       ))}
       <button 
         onClick={resetFilters}
-        className="clear-filters"
+        className="clear-filters-pro"
       >
         Clear all
       </button>
     </div>
   )}
 
-  <div className="filter-groups">
-    <div className="filter-group">
+  <div className="filter-groups-pro">
+    <div className="filter-group-pro">
       <h4>Difficulty Level</h4>
-      <div className="level-filters" ref={levelFiltersRef}>
+      <div className="level-filters-pro" ref={levelFiltersRef}>
         <button 
-          className={`level-filter ${selectedLevel === 'all' ? 'active' : ''}`}
+          className={`level-filter-pro ${selectedLevel === 'all' ? 'active-pro' : ''}`}
           onClick={() => handleLevelFilter('all')}
         >
           All Levels
@@ -250,7 +248,7 @@ const Projects = () => {
         {Object.entries(projectCategories).map(([key, category]) => (
           <button
             key={key}
-            className={`level-filter ${selectedLevel === key ? 'active' : ''}`}
+            className={`level-filter-pro ${selectedLevel === key ? 'active-pro' : ''}`}
             onClick={() => handleLevelFilter(key)}
             style={selectedLevel === key ? { 
               backgroundColor: category.color,
@@ -265,11 +263,11 @@ const Projects = () => {
       </div>
     </div>
 
-    <div className="filter-group">
+    <div className="filter-group-pro">
       <h4>Tech Domain</h4>
-      <div className="domain-filters" ref={domainFiltersRef}>
+      <div className="domain-filters-pro" ref={domainFiltersRef}>
         <button
-          className={`domain-filter ${selectedDomain === 'all' ? 'active' : ''}`}
+          className={`domain-filter-pro ${selectedDomain === 'all' ? 'active-pro' : ''}`}
           onClick={() => handleDomainFilter('all')}
         >
           All Domains
@@ -277,7 +275,7 @@ const Projects = () => {
         {techDomains.map(domain => (
           <button
             key={domain.id}
-            className={`domain-filter ${selectedDomain === domain.id ? 'active' : ''}`}
+            className={`domain-filter-pro ${selectedDomain === domain.id ? 'active-pro' : ''}`}
             onClick={() => handleDomainFilter(domain.id)}
             style={selectedDomain === domain.id ? { 
               backgroundColor: domain.color,
@@ -295,20 +293,20 @@ const Projects = () => {
 </div>
         </div>
 
-        <div className="projects-container">
+        <div className="projects-container-pro">
           {filteredProjects.length > 0 ? (
-            <div className="projects-grid">
+            <div className="projects-grid-pro">
               {filteredProjects.map(project => (
-                <div key={project.id} className="project-card">
+                <div key={project.id} className="project-card-pro">
                   <div 
-                    className="project-image"
+                    className="project-image-pro"
                     style={{ backgroundImage: `url(${project.image})` }}
                   ></div>
                   
-                  <div className="project-content">
-                    <div className="project-header">
+                  <div className="project-content-pro">
+                    <div className="project-header-pro">
                       <span 
-                        className="difficulty-badge"
+                        className="difficulty-badge-pro"
                         style={{ 
                           backgroundColor: projectCategories[project.level].color,
                           borderColor: projectCategories[project.level].color
@@ -320,13 +318,13 @@ const Projects = () => {
                       <h3>{project.title}</h3>
                     </div>
                     
-                    <div className="project-domains">
+                    <div className="project-domains-pro">
                       {project.domains.map(domainId => {
                         const domain = techDomains.find(d => d.id === domainId);
                         return (
                           <span 
                             key={domainId} 
-                            className="domain-tag"
+                            className="domain-tag-pro"
                             style={{ borderColor: domain?.color }}
                           >
                             {domain?.icon}
@@ -336,19 +334,19 @@ const Projects = () => {
                       })}
                     </div>
                     
-                    <p className="project-description">{project.description}</p>
+                    <p className="project-description-pro">{project.description}</p>
                     
-                    <div className="project-footer">
-                      <div className="project-tags">
+                    <div className="project-footer-pro">
+                      <div className="project-tags-pro">
                         {project.tags.map(tag => (
-                          <span key={tag} className="tech-tag">{tag}</span>
+                          <span key={tag} className="tech-tag-pro">{tag}</span>
                         ))}
                       </div>
                       <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="github-link"
+                        className="github-link-pro"
                       >
                         <FaGithub /> View on GitHub
                       </a>
@@ -358,13 +356,13 @@ const Projects = () => {
               ))}
             </div>
           ) : (
-            <div className="no-projects">
-              <div className="no-projects-content">
+            <div className="no-projects-pro">
+              <div className="no-projects-content-pro">
                 <h3>No projects found matching your filters</h3>
                 <p>Try adjusting your filters or browse all projects</p>
                 <button 
                   onClick={resetFilters}
-                  className="reset-filters"
+                  className="reset-filters-pro"
                 >
                   Reset Filters
                 </button>
@@ -373,13 +371,13 @@ const Projects = () => {
           )}
         </div>
 
-        <div className="github-inspiration">
+        <div className="github-inspiration-pro">
           <h2>More Project Inspiration</h2>
-          <p className="inspiration-subtitle">Explore these curated collections for additional ideas</p>
+          <p className="inspiration-subtitle-pro">Explore these curated collections for additional ideas</p>
           
-          <div className="github-repos">
-            <div className="repo-card">
-              <div className="repo-icon">
+          <div className="github-repos-pro">
+            <div className="repo-card-pro">
+              <div className="repo-icon-pro">
                 <FaGithub />
               </div>
               <h3>Awesome Beginner Projects</h3>
@@ -388,14 +386,14 @@ const Projects = () => {
                 href="https://github.com/MunGell/awesome-for-beginners" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="repo-link"
+                className="repo-link-pro"
               >
                 View Repository
               </a>
             </div>
             
-            <div className="repo-card">
-              <div className="repo-icon">
+            <div className="repo-card-pro">
+              <div className="repo-icon-pro">
                 <FaCode />
               </div>
               <h3>Build Your Own X</h3>
@@ -404,14 +402,14 @@ const Projects = () => {
                 href="https://github.com/codecrafters-io/build-your-own-x" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="repo-link"
+                className="repo-link-pro"
               >
                 View Repository
               </a>
             </div>
             
-            <div className="repo-card">
-              <div className="repo-icon">
+            <div className="repo-card-pro">
+              <div className="repo-icon-pro">
                 <FaLaptopCode />
               </div>
               <h3>Project-Based Learning</h3>
@@ -420,7 +418,7 @@ const Projects = () => {
                 href="https://github.com/practical-tutorials/project-based-learning" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="repo-link"
+                className="repo-link-pro"
               >
                 View Repository
               </a>

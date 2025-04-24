@@ -148,14 +148,21 @@ const Companies = () => {
     if (filters.package !== 'all') {
       // This is a simplified implementation
       if (filters.package === 'above20') {
-        results = results.filter(company => parseFloat(company.package.split('-')[1]) >= 20);
+        results = results.filter(company => {
+          const maxPackage = parseFloat(company.package.split('-')[1].replace('₹', '').replace(' LPA', ''));
+          return maxPackage >= 20;
+        });
       } else if (filters.package === '10to20') {
-        results = results.filter(company => 
-          parseFloat(company.package.split('-')[0].replace('₹', '')) >= 10 && 
-          parseFloat(company.package.split('-')[1]) < 20
-        );
+        results = results.filter(company => {
+          const minPackage = parseFloat(company.package.split('-')[0].replace('₹', '').replace(' LPA', ''));
+          const maxPackage = parseFloat(company.package.split('-')[1].replace('₹', '').replace(' LPA', ''));
+          return minPackage >= 10 && maxPackage < 20;
+        });
       } else if (filters.package === 'below10') {
-        results = results.filter(company => parseFloat(company.package.split('-')[1]) < 10);
+        results = results.filter(company => {
+          const maxPackage = parseFloat(company.package.split('-')[1].replace('₹', '').replace(' LPA', ''));
+          return maxPackage < 10;
+        });
       }
     }
     
@@ -174,43 +181,48 @@ const Companies = () => {
   };
 
   return (
-    <div className={`main-content ${darkMode ? 'dark-theme' : ''}`}>
+    <div className={`main-content ${darkMode ? 'dark-theme-cmp' : ''}`}>
       <div className="breadcrumb-container">
         <div className="breadcrumbs">
           <span className="current">Companies</span>
         </div>
       </div>
       
-      <div className="companies-header">
+      <div className="companies-header-cmp">
+        <h1>Campus Recruiters</h1>
         <p>Explore companies that have visited our campus for recruitment in previous years</p>
       </div>
       
-      <div className="search-filter-container">
-        <div className="search-box">
-          <Search size={18} className="search-icon" />
+      <div className="search-filter-container-cmp">
+        <div className="search-box-cmp">
+          <Search size={18} className="search-icon-cmp" />
           <input 
             type="text" 
             placeholder="Search companies, roles, or industries..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            aria-label="Search companies"
           />
         </div>
         
         <button 
-          className="filter-toggle-button"
+          className="filter-toggle-button-cmp"
           onClick={() => setIsFilterOpen(!isFilterOpen)}
+          aria-expanded={isFilterOpen}
+          aria-controls="filter-panel"
         >
           <Filter size={18} />
-          Filters
-          <ChevronDown size={16} className={`chevron ${isFilterOpen ? 'open' : ''}`} />
+          <span>Filters</span>
+          <ChevronDown size={16} className={`chevron-cmp ${isFilterOpen ? 'open-cmp' : ''}`} />
         </button>
       </div>
       
       {isFilterOpen && (
-        <div className="filters-panel">
-          <div className="filter-group">
-            <label>Visiting Year</label>
+        <div className="filters-panel-cmp" id="filter-panel">
+          <div className="filter-group-cmp">
+            <label htmlFor="year-filter">Visiting Year</label>
             <select 
+              id="year-filter"
               value={filters.year}
               onChange={(e) => handleFilterChange('year', e.target.value)}
             >
@@ -221,9 +233,10 @@ const Companies = () => {
             </select>
           </div>
           
-          <div className="filter-group">
-            <label>Industry</label>
+          <div className="filter-group-cmp">
+            <label htmlFor="industry-filter">Industry</label>
             <select 
+              id="industry-filter"
               value={filters.industry}
               onChange={(e) => handleFilterChange('industry', e.target.value)}
             >
@@ -235,9 +248,10 @@ const Companies = () => {
             </select>
           </div>
           
-          <div className="filter-group">
-            <label>Package Range</label>
+          <div className="filter-group-cmp">
+            <label htmlFor="package-filter">Package Range</label>
             <select 
+              id="package-filter"
               value={filters.package}
               onChange={(e) => handleFilterChange('package', e.target.value)}
             >
@@ -250,102 +264,117 @@ const Companies = () => {
         </div>
       )}
       
-      <div className="companies-stats">
-        <div className="stat-card">
-          <Building size={22} className="stat-icon" />
-          <div className="stat-info">
+      <div className="companies-stats-cmp">
+        <div className="stat-card-cmp">
+          <Building size={22} className="stat-icon-cmp" />
+          <div className="stat-info-cmp">
             <h3>{MOCK_COMPANIES.length}</h3>
             <p>Companies</p>
           </div>
         </div>
         
-        <div className="stat-card">
-          <Calendar size={22} className="stat-icon" />
-          <div className="stat-info">
+        <div className="stat-card-cmp">
+          <Calendar size={22} className="stat-icon-cmp" />
+          <div className="stat-info-cmp">
             <h3>3</h3>
             <p>Years</p>
           </div>
         </div>
         
-        <div className="stat-card">
-          <Briefcase size={22} className="stat-icon" />
-          <div className="stat-info">
+        <div className="stat-card-cmp">
+          <Briefcase size={22} className="stat-icon-cmp" />
+          <div className="stat-info-cmp">
             <h3>20+</h3>
             <p>Job Roles</p>
           </div>
         </div>
         
-        <div className="stat-card">
-          <Users size={22} className="stat-icon" />
-          <div className="stat-info">
+        <div className="stat-card-cmp">
+          <Users size={22} className="stat-icon-cmp" />
+          <div className="stat-info-cmp">
             <h3>250+</h3>
             <p>Placements</p>
           </div>
         </div>
       </div>
       
-      <div className="companies-list">
+      <div className="companies-list-cmp">
         {filteredCompanies.length > 0 ? (
           filteredCompanies.map(company => (
             <div 
               key={company.id} 
-              className={`company-card ${expandedCompany === company.id ? 'expanded' : ''}`}
+              className={`company-card-cmp ${expandedCompany === company.id ? 'expanded-cmp' : ''}`}
               onClick={() => toggleExpandCompany(company.id)}
+              tabIndex={0}
+              aria-expanded={expandedCompany === company.id}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  toggleExpandCompany(company.id);
+                }
+              }}
             >
-              <div className="company-header">
-                <div className="company-logo-container">
-                  <img src={company.logo} alt={`${company.name} logo`} className="company-logo" />
+              <div className="company-header-cmp">
+                <div className="company-logo-container-cmp">
+                  <img src={company.logo} alt={`${company.name} logo`} className="company-logo-cmp" loading="lazy" />
                 </div>
                 
-                <div className="company-basic-info">
-                  <h2 className="company-name">{company.name}</h2>
-                  <div className="company-tags">
-                    <span className="company-industry">{company.industry}</span>
-                    <span className="company-year">Visited: {company.visited}</span>
+                <div className="company-basic-info-cmp">
+                  <h2 className="company-name-cmp">{company.name}</h2>
+                  <div className="company-tags-cmp">
+                    <span className="company-industry-cmp">{company.industry}</span>
+                    <span className="company-year-cmp">Visited: {company.visited}</span>
                   </div>
                 </div>
                 
-                <div className="company-package">
-                  <span className="package-label">Package:</span>
-                  <span className="package-value">{company.package}</span>
+                <div className="company-package-cmp">
+                  <span className="package-label-cmp">Package:</span>
+                  <span className="package-value-cmp">{company.package}</span>
                 </div>
                 
                 <ChevronDown 
                   size={20} 
-                  className={`expand-icon ${expandedCompany === company.id ? 'rotated' : ''}`} 
+                  className={`expand-icon-cmp ${expandedCompany === company.id ? 'rotated-cmp' : ''}`} 
+                  aria-hidden="true"
                 />
               </div>
               
               {expandedCompany === company.id && (
-                <div className="company-details">
-                  <div className="company-description">
+                <div className="company-details-cmp">
+                  <div className="company-description-cmp">
                     <p>{company.description}</p>
                   </div>
                   
-                  <div className="company-meta">
-                    <div className="meta-item">
-                      <MapPin size={16} className="meta-icon" />
+                  <div className="company-meta-cmp">
+                    <div className="meta-item-cmp">
+                      <MapPin size={16} className="meta-icon-cmp" aria-hidden="true" />
                       <span>{company.location}</span>
                     </div>
                     
-                    <div className="meta-item">
-                      <Briefcase size={16} className="meta-icon" />
+                    <div className="meta-item-cmp">
+                      <Briefcase size={16} className="meta-icon-cmp" aria-hidden="true" />
                       <span>Eligibility: {company.eligibility}</span>
                     </div>
                     
-                    <div className="meta-item website">
-                      <ExternalLink size={16} className="meta-icon" />
-                      <a href={company.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                    <div className="meta-item-cmp website-cmp">
+                      <ExternalLink size={16} className="meta-icon-cmp" aria-hidden="true" />
+                      <a 
+                        href={company.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        onClick={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => e.stopPropagation()}
+                      >
                         Visit Career Page
                       </a>
                     </div>
                   </div>
                   
-                  <div className="roles-section">
+                  <div className="roles-section-cmp">
                     <h3>Offered Roles</h3>
-                    <div className="roles-list">
+                    <div className="roles-list-cmp">
                       {company.roles.map((role, idx) => (
-                        <span key={idx} className="role-tag">{role}</span>
+                        <span key={idx} className="role-tag-cmp">{role}</span>
                       ))}
                     </div>
                   </div>
@@ -354,13 +383,13 @@ const Companies = () => {
             </div>
           ))
         ) : (
-          <div className="no-results">
+          <div className="no-results-cmp">
             <p>No companies match your search criteria. Try adjusting your filters.</p>
           </div>
         )}
       </div>
       
-      <div className="companies-footer">
+      <div className="companies-footer-cmp">
         <p>
           These listings are based on historical campus recruitment data. For the latest opportunities, please check with the college placement cell.
         </p>

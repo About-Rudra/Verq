@@ -69,13 +69,29 @@ body {
 }
 
 /* ===== Main Content ===== */
+
 .main-content {
-  flex: 1;
-  /* margin-left: var(--sidebar-width); */
-  padding: var(--section-padding);
-  transition: margin-left var(--transition-speed) ease, width var(--transition-speed) ease;
   width: calc(100% - var(--sidebar-width));
-  min-height: 100vh;
+  position: fixed;
+  left: var(--sidebar-width);
+  top: 0;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: overlay;
+  overscroll-behavior-y: contain;
+  padding: 2.5rem;
+  box-sizing: border-box;
+  background: var(--bg-secondary);
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+  animation: fadeIn 0.3s ease-out;
+}
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+.main-content::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 4px;
 }
 
 /* Apply when sidebar is collapsed */
@@ -91,7 +107,11 @@ body {
     width: 100%;
     padding: var(--section-padding);
     margin-top: 40px;
+    width: 100%;
+    left: 0;
+    padding: 1.75rem;
   }
+
   
   /* For when sidebar is expanded on mobile */
   .sidebar-expanded .main-content {

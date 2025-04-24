@@ -14,12 +14,44 @@
   box-sizing: border-box;
 }
 
+/* Back Button Styles */
+.back-button-container {
+  margin-bottom: 16px;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: none;
+  color: #4f46e5;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #f3f4f6;
+  color: #4338ca;
+}
+
+.back-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  fill: currentColor;
+}
+
 .header-section {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 16px;
   border-bottom: 1px solid #e5e7eb;
+  flex-wrap: wrap;
 }
 
 .logo-container {
@@ -55,6 +87,7 @@
 
 .job-title-info {
   flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
 }
 
 .job-title-info h1 {
@@ -117,6 +150,7 @@
   margin-bottom: 24px;
   border-bottom: 1px solid #e5e7eb;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .tabs-section ul {
@@ -167,7 +201,7 @@
 
 .overview-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 16px;
 }
 
@@ -210,13 +244,26 @@
   background-color: #e5e7eb;
 }
 
-.workflow-steps .step {
+/* Fixed Hiring Workflow Styles */
+.hiring-workflow-hwf {
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.workflow-steps-hwf {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.step-hwf {
   display: flex;
   align-items: flex-start;
   margin-bottom: 24px;
+  width: 100%;
 }
 
-.step-number {
+.step-number-hwf {
   background-color: #3b82f6;
   color: white;
   width: 32px;
@@ -227,16 +274,26 @@
   justify-content: center;
   margin-right: 12px;
   flex-shrink: 0;
+  font-weight: bold;
 }
 
-.step-info h3 {
+.step-info-hwf {
+  flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+.step-info-hwf h3 {
   font-weight: 500;
   margin: 0 0 4px 0;
+  font-size: 16px;
+  color: #374151;
 }
 
-.step-info p {
+.step-info-hwf p {
   color: #6b7280;
   margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .criteria-list .criterion {
@@ -263,6 +320,16 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Dark Theme Styles for Back Button */
+.job-posting-container.dark-theme .back-button {
+  color: #818cf8;
+}
+
+.job-posting-container.dark-theme .back-button:hover {
+  background-color: #1e293b;
+  color: #a5b4fc;
+}
+
 .job-posting-container.dark-theme .header-section {
   border-bottom-color: #333;
 }
@@ -273,7 +340,7 @@
 
 .job-posting-container.dark-theme .job-title-info p, 
 .job-posting-container.dark-theme .field-label, 
-.job-posting-container.dark-theme .step-info p, 
+.job-posting-container.dark-theme .step-info-hwf p, 
 .job-posting-container.dark-theme .tabs-section li {
   color: #9ca3af;
 }
@@ -338,9 +405,28 @@
   background-color: #334155;
 }
 
-/* Responsive styles */
+.job-posting-container.dark-theme .step-number-hwf {
+  background-color: #3b82f6;
+}
+
+.job-posting-container.dark-theme .step-info-hwf h3 {
+  color: #e5e7eb;
+}
+
+/* Enhanced Responsive styles */
+@media (max-width: 992px) {
+  .job-posting-container {
+    padding: 14px;
+  }
+  
+  .overview-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .job-posting-container {
+    margin-top: 1rem;
     padding: 12px;
   }
   
@@ -360,6 +446,7 @@
   
   .eligibility-badge {
     margin-top: 4px;
+    align-self: flex-start;
   }
   
   .overview-grid {
@@ -373,12 +460,60 @@
   .notice-banner {
     padding: 10px;
   }
+  
+  .step-info-hwf h3 {
+    font-size: 15px;
+  }
+  
+  .step-info-hwf p {
+    font-size: 13px;
+  }
+}
+
+/* For small tablets and large phones */
+@media (max-width: 640px) {
+  .job-posting-container {
+    padding: 12px;
+    border-radius: 6px;
+  }
+  
+  .back-button {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  
+  .job-title-info h1 {
+    font-size: 18px;
+  }
+  
+  .job-details p {
+    font-size: 14px;
+  }
+  
+  .content-section h2 {
+    font-size: 17px;
+  }
 }
 
 @media (max-width: 480px) {
   .job-posting-container {
     padding: 10px;
     border-radius: 6px;
+  }
+  
+  .back-button-container {
+    margin-bottom: 12px;
+  }
+  
+  .back-button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+  
+  .back-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
   }
   
   .logo-container {
@@ -393,7 +528,7 @@
   }
   
   .job-title-info h1 {
-    font-size: 18px;
+    font-size: 16px;
   }
   
   .job-title-info p {
@@ -432,11 +567,11 @@
     line-height: 1.4;
   }
   
-  .step-info h3 {
+  .step-info-hwf h3 {
     font-size: 15px;
   }
   
-  .step-info p {
+  .step-info-hwf p {
     font-size: 13px;
   }
   
@@ -446,5 +581,54 @@
   
   .criterion p {
     font-size: 13px;
+  }
+  
+  .step-number-hwf {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+}
+
+/* For very small devices */
+@media (max-width: 360px) {
+  .job-posting-container {
+    padding: 8px;
+  }
+  
+  .back-button {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+  
+  .job-title-info h1 {
+    font-size: 15px;
+  }
+  
+  .logo-container {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+  
+  .tabs-section li {
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+  
+  .content-section h2 {
+    font-size: 15px;
+  }
+  
+  .job-details p {
+    font-size: 13px;
+  }
+  
+  .step-info-hwf h3 {
+    font-size: 14px;
+  }
+  
+  .step-info-hwf p {
+    font-size: 12px;
   }
 }

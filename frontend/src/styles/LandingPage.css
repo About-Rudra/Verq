@@ -86,10 +86,11 @@ body {
   line-height: 1.2;
   margin-bottom: 2rem;
   animation: slideUp 1.2s ease-out;
+  color: var(--text-primary);
 }
 
 .text-muted {
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .discover-button {
