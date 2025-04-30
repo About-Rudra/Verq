@@ -38,6 +38,6 @@
 @media (min-width: 769px) {
   /* Ensure sidebar spacing consistency */
   .main-content {
-    padding: calc(var(--section-padding) * 1.5); /* 1.5x base padding */
+    padding: calc(var(--section-padding) * 2); /* 1.5x base padding */
   }
 }

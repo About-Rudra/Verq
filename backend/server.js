@@ -42,12 +42,14 @@ app.get("/", (req, res) => {
 
 const authRoutes = require("./routes/authRoutes"); 
 const volunteerRoutes = require("./routes/volunteerRoute");
-const personalInformationRoutes = require("./routes/personalInformationRoutes");
+
+const personalInformation = require("./routes/Dashboard/personalInformation");
 
 
 app.use("/api/auth", authRoutes);
-app.use("/api/volunteer-details", volunteerRoutes);
-app.use("/api/personal-information", personalInformationRoutes);
+app.use("/api/volunteer-details", volunteerRoutes); 
+app.use("/api/personal-information", personalInformation);
+
 
 // Error Middleware
 app.use(errorHandler);
