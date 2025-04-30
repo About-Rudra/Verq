@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from 'react';
 import "../../styles/Student/StudentDashboard.css";
 import axios from 'axios'; // Ensure axios is installed: npm install axios

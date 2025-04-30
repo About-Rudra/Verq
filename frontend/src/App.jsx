@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import { useState, useEffect } from "react";
@@ -33,11 +34,14 @@ import CompanyProfile from "./pages/Recruiter/CompanyProfile";
 // Layout Component
 import AppLayout from "./components/AppLayout";
 
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5001";
+
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userType, setUserType] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("authToken"));
+  const [userType, setUserType] = useState(() => localStorage.getItem("userType"));
+  const [isNewUser, setIsNewUser] = useState(() => localStorage.getItem("isNewUser") === "true");
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const [isNewUser, setIsNewUser] = useState(false);
+
 
   // Check auth status on initial load
   useEffect(() => {
@@ -47,22 +51,18 @@ function App() {
         if (isValid) {
           const storedUserType = localStorage.getItem("userType");
           const newUserFlag = localStorage.getItem("isNewUser") === "true";
-          
+
           setIsLoggedIn(true);
           setUserType(storedUserType);
-          setIsNewUser(newUserFlag);  
+          setIsNewUser(newUserFlag);
         } else {
           // Clear any potentially stale auth data
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("userType");
-          localStorage.removeItem("isNewUser");
+          localStorage.clear();
         }
       } catch (error) {
         console.error("Auth check failed:", error);
         // Clear auth data on error
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("userType");
-        localStorage.removeItem("isNewUser");
+        llocalStorage.clear();
       } finally {
         setIsCheckingAuth(false);
       }
@@ -75,12 +75,12 @@ function App() {
   const handleLogin = (token, type, isNewSignup = false) => {
     localStorage.setItem("authToken", token);
     localStorage.setItem("userType", type);
-    
+
     if (isNewSignup && type === 'student') {
       localStorage.setItem("isNewUser", "true");
       setIsNewUser(true);
     }
-    
+
     setIsLoggedIn(true);
     setUserType(type);
   };
@@ -94,14 +94,14 @@ function App() {
   // Handle logout
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5000/api/auth/logout', {
+      await fetch(`${BASE_URL}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include'
       });
     } catch (error) {
       console.error("Logout error:", error);
     }
-    
+
     localStorage.removeItem("authToken");
     localStorage.removeItem("userType");
     localStorage.removeItem("isNewUser");
@@ -120,39 +120,40 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage isLoggedIn={isLoggedIn} userType={userType} />} />
-          
+
           <Route
-            path="/auth"
-            element={
-              isLoggedIn ? (
-                userType === 'student' && isNewUser ? 
-                <Navigate to="/student-form" /> :
-                <Navigate to={
-                  userType === 'student' 
-                    ? "/default"
-                    : "/recruiter-dashboard"
-                } />
-              ) : (
-                <Auth onLogin={handleLogin} />
-              )
-            }
-          />
-          
+      path="/auth"
+      element={
+        isLoggedIn ? (
+          userType === 'student' && isNewUser ?
+            <Navigate to="/student-form" /> :
+            <Navigate to={
+              userType === 'student'
+                ? "/default"
+                : "/recruiter-dashboard"
+            } />
+        ) : (
+          <Auth onLogin={handleLogin} />
+        )
+      }
+    />
+
+
           {/* Student Details Form with completion handler */}
           <Route
-            path="/student-form"
-            element={
-              isLoggedIn && userType === 'student'
-                ? <StudentDetailsForm onFormSubmit={handleFormCompletion} />
-                : <Navigate to="/auth" />
-            }
-          />
+      path="/student-form"
+      element={
+        isLoggedIn && userType === 'student'
+          ? <StudentDetailsForm onFormSubmit={handleFormCompletion} />
+          : <Navigate to="/auth" />
+      }
+    />
 
           {/* Protected Student Routes */}
           {isLoggedIn && userType === 'student' && (
-            <Route 
+            <Route
               element={
-                isNewUser 
+                isNewUser
                   ? <Navigate to="/student-form" />
                   : <AppLayout onLogout={handleLogout} userType={userType} />
               }
@@ -178,30 +179,28 @@ function App() {
 
           {/* Protected Recruiter Routes */}
           {isLoggedIn && userType === 'recruiter' && (
-            <Route element={<AppLayout onLogout={handleLogout} userType={userType} />}>
-              <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
-              <Route path="/post-jobs" element={<PostJobs />} />
-              <Route path="/company-profile" element={<CompanyProfile />} />
-            </Route>
-          )}
+      <Route element={<AppLayout onLogout={handleLogout} userType={userType} />}>
+        <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
+        <Route path="/post-jobs" element={<PostJobs />} />
+        <Route path="/company-profile" element={<CompanyProfile />} />
+      </Route>
+    )}
 
           {/* Fallback Routes */}
           <Route
-            path="*"
-            element={
-              isLoggedIn ? (
-                userType === 'student' && isNewUser ? 
-                <Navigate to="/student-form" /> :
-                <Navigate to={
-                  userType === 'student' 
-                    ? "/default"
-                    : "/recruiter-dashboard"
-                } />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
+      path="*"
+      element={
+        isLoggedIn ? (
+          userType === 'student' ? (
+            <Navigate to="/default" />
+          ) : (
+            <Navigate to="/recruiter-dashboard" />
+          )
+        ) : (
+          <Navigate to="/" />
+        )
+      }
+    />
         </Routes>
       </Router>
     </ThemeProvider>

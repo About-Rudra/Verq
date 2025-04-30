@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 // const bodyParser = require("body-parser"); // Remove this
 // const userRoutes = require("./routes/userRoutes");
 const errorHandler = require("./middleware/errorMiddleware");
@@ -38,6 +39,8 @@ app.get("/", (req, res) => {
   res.send("🟢 Backend is live!");
 });
 
+
+
 // Routes
 
 const authRoutes = require("./routes/authRoutes"); 
@@ -50,6 +53,14 @@ app.use("/api/auth", authRoutes);
 app.use("/api/volunteer-details", volunteerRoutes); 
 app.use("/api/personal-information", personalInformation);
 
+// Serve static files from React build folder
+app.use(express.static(path.join(__dirname, "build")));
+
+// Catch-all handler for non-API routes
+app.get("*", (req, res) => {
+  console.log(`Serving index.html for route: ${req.url}`);
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 // Error Middleware
 app.use(errorHandler);
