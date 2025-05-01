@@ -28,14 +28,27 @@ app.use(cookieParser()); // Use cookie-parser to parse cookies
 
 // Routes
 
-const authRoutes = require("./routes/authRoutes"); 
-const volunteerRoutes = require("./routes/volunteerRoute");
-const personalInformationRoutes = require("./routes/personalInformationRoutes");
+const authRoutes = require("./routes/AuthRoutes"); 
+const volunteerRoutes = require("./routes/VolunteerRoutes");
+const accomplishmentRoutes = require("./routes/PersonalDetailsRoutes");
+const competitionRoutes = require("./routes/CompetitionRoutes"); 
+const educationRoutes = require("./routes/VolunteerRoutes");
+const extraCurricularRoutes = require("./routes/PersonalDetailsRoutes");
+const internshipRoutes = require("./routes/InternshipRoutes"); 
+const projectRoutes = require("./routes/VolunteerRoutes");
+const personalDetailsRoutes = require("./routes/PersonalDetailsRoutes");
 
 
 app.use("/api/auth", authRoutes);
 app.use("/api/volunteer-details", volunteerRoutes);
-app.use("/api/personal-information", personalInformationRoutes);
+app.use("/api/personal-details", personalDetailsRoutes);
+app.use("/api/accomplishments", accomplishmentRoutes);
+app.use("/api/competitions", competitionRoutes);
+app.use("/api/education", educationRoutes);
+app.use("/api/extra-curricular", extraCurricularRoutes);
+app.use("/api/internships", internshipRoutes);
+app.use("/api/projects", projectRoutes);
+
 
 // Error Middleware
 app.use(errorHandler);
