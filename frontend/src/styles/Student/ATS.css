@@ -69,6 +69,65 @@
 .dark .stay-tuned {
   color: #bdc3c7;
 }
+.iframe-container {
+  width: 100%;
+  height: calc(100vh - 100px); /* Adjust based on your breadcrumb height */
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Dark mode specific styles if needed */
+.dark-theme .iframe-container {
+  background: #333; /* Fallback color if iframe doesn't load */
+}
+/* Full-screen container */
+.ats-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+.iframe-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.ats-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.ats-iframe.hidden {
+  opacity: 0;
+}
+
+.iframe-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+}
+
+/* Hide Streamlit footer globally */
+iframe[src*="streamlit.app"] {
+  display: block; /* Override Streamlit's inline styles */
+}
+
+/* Hide Streamlit's hamburger menu if needed */
+iframe[src*="streamlit.app"] .stDeployButton {
+  display: none !important;
+}
 
 @keyframes progress-animation {
   0% {

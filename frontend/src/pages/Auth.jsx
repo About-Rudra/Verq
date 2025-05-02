@@ -11,29 +11,14 @@ const Auth = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [loginData, setLoginData] = useState({ email: '', password: '', remember: false });
   const [signupData, setSignupData] = useState({ email: '', password: '', confirmPassword: '', terms: false });
-  const [errors, setErrors] = useState({ 
-    password: false, 
-    confirmPassword: false,
-    email: false,
-    form: null
-  });
+  const [errors, setErrors] = useState({ password: false, confirmPassword: false, email: false, form: null });
   const [isLoading, setIsLoading] = useState(false);
 
-  // College email domain validation constant
   const COLLEGE_EMAIL_DOMAIN = '@sitpune.edu.in';
 
-  // Navigation functions
-  function navigateToStudentDashboard() {
-    navigate('/student-dashboard');
-  }
-
-  function navigateToRecruiterDashboard() {
-    navigate('/recruiter-dashboard');
-  }
-
-  function navigateToStudentForm() {
-    navigate('/student-form');
-  }
+  const navigateToStudentDashboard = () => navigate('/student-dashboard');
+  const navigateToRecruiterDashboard = () => navigate('/recruiter-dashboard');
+  const navigateToStudentForm = () => navigate('/student-form');
 
   useEffect(() => {
     if (location.state?.userType) {
@@ -42,38 +27,22 @@ const Auth = ({ onLogin }) => {
     setErrors({ password: false, confirmPassword: false, email: false, form: null });
   }, [location, isLogin]);
 
-  // Email validation function
   const validateEmail = (email, type) => {
-    if (type === 'student' && !email.endsWith(COLLEGE_EMAIL_DOMAIN)) {
-      return false;
-    }
-    return true;
+    return type !== 'student' || email.endsWith(COLLEGE_EMAIL_DOMAIN);
   };
 
   const handleLoginChange = (e) => {
     const { name, value, type, checked } = e.target;
     setLoginData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-    
-    // Clear errors on change
     if (errors.form) setErrors(prev => ({ ...prev, form: null }));
-    if (name === 'email') {
-      setErrors(prev => ({ ...prev, email: false }));
-    }
+    if (name === 'email') setErrors(prev => ({ ...prev, email: false }));
   };
 
   const handleSignupChange = (e) => {
     const { name, value, type, checked } = e.target;
     setSignupData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-    
-    // Clear errors on change
     if (errors.form || errors.password || errors.confirmPassword || errors.email) {
-      setErrors(prev => ({ 
-        ...prev, 
-        form: null,
-        password: false,
-        confirmPassword: false,
-        email: false
-      }));
+      setErrors({ password: false, confirmPassword: false, email: false, form: null });
     }
   };
 
@@ -82,13 +51,8 @@ const Auth = ({ onLogin }) => {
     setIsLoading(true);
     setErrors({ ...errors, form: null, email: false });
 
-    // Validate email for students
     if (userType === 'student' && !validateEmail(loginData.email, userType)) {
-      setErrors(prev => ({ 
-        ...prev, 
-        email: true, 
-        form: `Please use your college email (${COLLEGE_EMAIL_DOMAIN})` 
-      }));
+      setErrors({ ...errors, email: true, form: `Please use your college email (${COLLEGE_EMAIL_DOMAIN})` });
       setIsLoading(false);
       return;
     }
@@ -96,27 +60,24 @@ const Auth = ({ onLogin }) => {
     try {
       const response = await fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: loginData.email,
           password: loginData.password,
-          userType
+          userType,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        onLogin(data.token, userType);
-        if (userType === 'student') {
-          // Using the logic from App.jsx
-          if (localStorage.getItem('isFirstTime') === 'true') {
-            navigateToStudentForm();
-          } else {
-            navigateToStudentDashboard();
-          }
+        if (data.isFirstTime && userType === 'student') {
+          navigate('/student-form');
+        } else if (userType === 'student') {
+          navigate('/student-dashboard');
         } else {
-          navigateToRecruiterDashboard();
+          navigate('/student-dashboard');
         }
       } else {
         setErrors(prev => ({ ...prev, form: data.message || 'Login failed' }));
@@ -142,11 +103,11 @@ const Auth = ({ onLogin }) => {
       password: !passwordValid,
       confirmPassword: !passwordsMatch,
       email: !emailValid,
-      form: !termsAccepted 
-        ? 'You must accept the terms and conditions' 
-        : (!emailValid && userType === 'student') 
-          ? `Students must use college email (${COLLEGE_EMAIL_DOMAIN})` 
-          : null
+      form: !termsAccepted
+        ? 'You must accept the terms and conditions'
+        : (!emailValid && userType === 'student')
+        ? `Students must use college email (${COLLEGE_EMAIL_DOMAIN})`
+        : null,
     };
 
     setErrors(newErrors);
@@ -159,25 +120,21 @@ const Auth = ({ onLogin }) => {
     try {
       const response = await fetch(`${BASE_URL}/api/auth/signup`, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: signupData.email,
           password: signupData.password,
-          userType
+          userType,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Pass true as the third parameter to indicate it's a first-time login
-        onLogin(data.token, userType, true);
         if (userType === 'student') {
-          // For signup, always navigate to student form first as per App.jsx logic
-          navigateToStudentForm();
-        } else {
-          navigateToRecruiterDashboard();
-        }
+          navigate('/student-form');
+        } 
       } else {
         setErrors(prev => ({ ...prev, form: data.message || 'Registration failed' }));
       }

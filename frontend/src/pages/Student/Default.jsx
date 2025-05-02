@@ -18,11 +18,11 @@ const Default = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
+            entry.target.classList.add('dp-animate-in');
             
             // Animate stats counting
-            if (entry.target.classList.contains('stats-section')) {
-              const statNumbers = document.querySelectorAll('.stat-number');
+            if (entry.target.classList.contains('dp-stats-section')) {
+              const statNumbers = document.querySelectorAll('.dp-stat-number');
               statNumbers.forEach((stat) => {
                 const target = +stat.getAttribute('data-count');
                 const duration = 2000;
@@ -73,60 +73,141 @@ const Default = () => {
   ];
 
   return (
-    <div className="landing-page">
+    <div className="dp-landing-page">
       {/* Hero Section */}
-      <section ref={heroRef} className="hero-section">
-        <div className="hero-content">
-          <h1 className="hero-title">
-            <span className="title-line">Transform Your</span>
-            <span className="title-line highlight">Placement Journey</span>
+      <section ref={heroRef} className="dp-hero-section">
+        <div className="dp-hero-content">
+          <h1 className="dp-hero-title">
+            <span className="dp-title-line">Transform Your</span>
+            <span className="dp-title-line dp-highlight">Placement Journey</span>
           </h1>
-          <p className="hero-subtitle">
+          <p className="dp-hero-subtitle">
             Streamlining the placement process for students, recruiters, and administrators with our automated platform.
           </p>
-          <div className="hero-buttons">
-            <button className="btn btn-primary" onClick={handleGetStarted}>Get Started</button>
+          <div className="dp-hero-buttons">
+            <button className="dp-btn dp-btn-primary" onClick={handleGetStarted}>Get Started</button>
           </div>
         </div>
-        <div className="hero-illustration">
-          <div className="floating-elements">
-            <div className="floating-circle circle-1"></div>
-            <div className="floating-circle circle-2"></div>
-            <div className="floating-circle circle-3"></div>
-            <div className="floating-square"></div>
-            <div className="dashboard-mockup"></div>
+        
+        {/* Enhanced Hero Illustration with new visual elements */}
+        <div className="dp-hero-illustration">
+          <div className="dp-floating-elements">
+            <div className="dp-floating-circle dp-circle-1"></div>
+            <div className="dp-floating-circle dp-circle-2"></div>
+            <div className="dp-floating-circle dp-circle-3"></div>
+            <div className="dp-floating-square"></div>
+            
+            {/* New animated elements */}
+            <div className="dp-animated-dots">
+              <div className="dp-dot dp-dot-1"></div>
+              <div className="dp-dot dp-dot-2"></div>
+              <div className="dp-dot dp-dot-3"></div>
+              <div className="dp-dot dp-dot-4"></div>
+              <div className="dp-dot dp-dot-5"></div>
+            </div>
+            
+            {/* New decorative line elements */}
+            <div className="dp-decorative-lines">
+              <div className="dp-line dp-line-1"></div>
+              <div className="dp-line dp-line-2"></div>
+              <div className="dp-line dp-line-3"></div>
+            </div>
+            
+            {/* Interactive 3D placement cube */}
+            <div className="dp-placement-cube">
+              <div className="dp-cube-face dp-face-front"></div>
+              <div className="dp-cube-face dp-face-back"></div>
+              <div className="dp-cube-face dp-face-right"></div>
+              <div className="dp-cube-face dp-face-left"></div>
+              <div className="dp-cube-face dp-face-top"></div>
+              <div className="dp-cube-face dp-face-bottom"></div>
+            </div>
+            
+            {/* Career path visual */}
+            <div className="dp-career-path">
+              <div className="dp-path-node dp-node-education">
+                <div className="dp-node-icon dp-education-icon"></div>
+              </div>
+              <div className="dp-path-line"></div>
+              <div className="dp-path-node dp-node-skills">
+                <div className="dp-node-icon dp-skills-icon"></div>
+              </div>
+              <div className="dp-path-line"></div>
+              <div className="dp-path-node dp-node-interview">
+                <div className="dp-node-icon dp-interview-icon"></div>
+              </div>
+              <div className="dp-path-line"></div>
+              <div className="dp-path-node dp-node-job">
+                <div className="dp-node-icon dp-job-icon"></div>
+              </div>
+            </div>
+            
+            <div className="dp-dashboard-mockup">
+              <div className="dp-mockup-header">
+                <div className="dp-mockup-search">
+                  <div className="dp-search-bar"></div>
+                </div>
+                <div className="dp-mockup-user"></div>
+              </div>
+              <div className="dp-mockup-sidebar"></div>
+              <div className="dp-mockup-content">
+                <div className="dp-stats-row">
+                  <div className="dp-stat-box"></div>
+                  <div className="dp-stat-box"></div>
+                  <div className="dp-stat-box"></div>
+                  <div className="dp-stat-box"></div>
+                </div>
+                <div className="dp-chart-area">
+                  <div className="dp-line-chart"></div>
+                </div>
+                <div className="dp-jobs-list">
+                  <div className="dp-job-item"></div>
+                  <div className="dp-job-item"></div>
+                  <div className="dp-job-item"></div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Floating company logos */}
+            <div className="dp-floating-companies">
+              <div className="dp-company-logo dp-logo-1"></div>
+              <div className="dp-company-logo dp-logo-2"></div>
+              <div className="dp-company-logo dp-logo-3"></div>
+              <div className="dp-company-logo dp-logo-4"></div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section ref={statsRef} className="stats-section">
-        <div className="stats-container">
-          <div className="stat-card">
-            <h3 className="stat-number" data-count="150">0</h3>
-            <p className="stat-label">Top Companies</p>
+      <section ref={statsRef} className="dp-stats-section">
+        <div className="dp-stats-container">
+          <div className="dp-stat-card">
+            <h3 className="dp-stat-number" data-count="150">0</h3>
+            <p className="dp-stat-label">Top Companies</p>
           </div>
-          <div className="stat-card">
-            <h3 className="stat-number" data-count="1200">0</h3>
-            <p className="stat-label">Students Placed</p>
+          <div className="dp-stat-card">
+            <h3 className="dp-stat-number" data-count="1200">0</h3>
+            <p className="dp-stat-label">Students Placed</p>
           </div>
-          <div className="stat-card">
-            <h3 className="stat-number" data-count="96">0</h3>
-            <p className="stat-label">% Placement Rate</p>
+          <div className="dp-stat-card">
+            <h3 className="dp-stat-number" data-count="96">0</h3>
+            <p className="dp-stat-label">% Placement Rate</p>
           </div>
-          <div className="stat-card">
-            <h3 className="stat-number" data-count="500">0</h3>
-            <p className="stat-label">Job Offers</p>
+          <div className="dp-stat-card">
+            <h3 className="dp-stat-number" data-count="500">0</h3>
+            <p className="dp-stat-label">Job Offers</p>
           </div>
         </div>
       </section>
 
+      {/* The rest of your component remains the same... */}
       {/* Features Section */}
-      <section ref={featuresRef} className="features-section">
-        <h2 className="section-title-df">Key Features</h2>
-        <p className="section-subtitle">Everything you need for a seamless placement experience</p>
+      <section ref={featuresRef} className="dp-features-section">
+        <h2 className="dp-section-title">Key Features</h2>
+        <p className="dp-section-subtitle">Everything you need for a seamless placement experience</p>
         
-        <div className="features-grid-df">
+        <div className="dp-features-grid">
           {[
             {
               title: 'Automated Notifications',
@@ -156,15 +237,15 @@ const Default = () => {
             <div 
               key={index}
               ref={(el) => (featureCardsRef.current[index] = el)} 
-              className="feature-card-df"
+              className="dp-feature-card"
             >
-              <div className="feature-icon">
+              <div className="dp-feature-icon">
                 <svg viewBox="0 0 24 24">
                   <path d={featureIcons[index]} />
                 </svg>
               </div>
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">
+              <h3 className="dp-feature-title">{feature.title}</h3>
+              <p className="dp-feature-description">
                 {feature.description}
               </p>
             </div>
@@ -173,11 +254,11 @@ const Default = () => {
       </section>
 
       {/* Placement Process Section */}
-      <section ref={processRef} className="process-section">
-        <h2 className="section-title-df">Our Placement Process</h2>
-        <p className="section-subtitle">Simple steps to your dream job</p>
+      <section ref={processRef} className="dp-process-section">
+        <h2 className="dp-section-title">Our Placement Process</h2>
+        <p className="dp-section-subtitle">Simple steps to your dream job</p>
         
-        <div className="process-steps">
+        <div className="dp-process-steps">
           {[
             { number: '1', title: 'Profile Creation', description: 'Complete your profile with academic and skill details' },
             { number: '2', title: 'Resume Building', description: 'Create a professional resume using our templates' },
@@ -186,11 +267,11 @@ const Default = () => {
             { number: '5', title: 'Interview Preparation', description: 'Access resources to prepare for interviews' },
             { number: '6', title: 'Placement', description: 'Attend interviews and secure your dream job' }
           ].map((step, index) => (
-            <div key={index} className="process-step">
-              <div className="step-number">{step.number}</div>
-              <div className="step-content">
-                <h3 className="step-title">{step.title}</h3>
-                <p className="step-description">{step.description}</p>
+            <div key={index} className="dp-process-step">
+              <div className="dp-step-number">{step.number}</div>
+              <div className="dp-step-content">
+                <h3 className="dp-step-title">{step.title}</h3>
+                <p className="dp-step-description">{step.description}</p>
               </div>
             </div>
           ))}
@@ -198,11 +279,11 @@ const Default = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section ref={testimonialsRef} className="testimonials-section">
-        <h2 className="section-title-df">Success Stories</h2>
-        <p className="section-subtitle">Hear from our students and recruiters</p>
+      <section ref={testimonialsRef} className="dp-testimonials-section">
+        <h2 className="dp-section-title">Success Stories</h2>
+        <p className="dp-section-subtitle">Hear from our students and recruiters</p>
         
-        <div className="testimonials-grid">
+        <div className="dp-testimonials-grid">
           {[
             {
               text: "The placement portal made it so easy to apply to multiple companies and track my applications. I landed my dream job within weeks!",
@@ -222,15 +303,15 @@ const Default = () => {
           ].map((testimonial, index) => (
             <div 
               key={index}
-              className="testimonial-card"
+              className="dp-testimonial-card"
             >
-              <div className="testimonial-content">
-                <p className="testimonial-text">"{testimonial.text}"</p>
-                <div className="testimonial-author">
-                  <div className="author-avatar"></div>
-                  <div className="author-info">
-                    <h4 className="author-name">{testimonial.name}</h4>
-                    <p className="author-role">{testimonial.role}</p>
+              <div className="dp-testimonial-content">
+                <p className="dp-testimonial-text">"{testimonial.text}"</p>
+                <div className="dp-testimonial-author">
+                  <div className="dp-author-avatar"></div>
+                  <div className="dp-author-info">
+                    <h4 className="dp-author-name">{testimonial.name}</h4>
+                    <p className="dp-author-role">{testimonial.role}</p>
                   </div>
                 </div>
               </div>
