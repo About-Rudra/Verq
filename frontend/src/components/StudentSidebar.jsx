@@ -16,7 +16,17 @@ import {
   FaUsers,
   FaMicrophone,
   FaBars,
-  FaTimes
+  FaTimes,
+  FaQuestionCircle,
+  FaHistory,
+  FaFire,
+  FaBriefcase,
+  FaCode,
+  FaUniversity,
+  FaClipboardList,
+  FaArchive,
+  FaRedo,
+  FaSyncAlt
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
@@ -178,9 +188,9 @@ const StudentSidebar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/mock-interviews" className={isActiveRoute} title="Mock Interviews" onClick={closeSidebar}>
-                <FaMicrophone className="icon" /> 
-                <span className="menu-text">Mock Interviews</span>
+              <NavLink to="/interview-archives" className={isActiveRoute} title="Interview Archives" onClick={closeSidebar}>
+                <FaArchive className="icon" /> 
+                <span className="menu-text">Interview Archives</span>
               </NavLink>
             </li>
             <li>

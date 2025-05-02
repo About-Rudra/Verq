@@ -8,6 +8,7 @@ const router = express.Router();
 // POST /api/auth/login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required" });
@@ -42,6 +43,7 @@ router.post("/login", async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       maxAge: 3600000, // 1 hour
+      sameSite: 'Lax',
     });
 
     return res.status(200).json({ message: "Login successful", token });
@@ -85,7 +87,7 @@ router.post("/signup", async (req, res) => {
      res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      ssameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
       maxAge: 3600000, // 1 hour
     });
 
@@ -97,8 +99,18 @@ router.post("/signup", async (req, res) => {
 });
 
 // GET /api/auth/verify
-router.get("/verify", authenticateToken, (req, res) => {
-  res.status(200).json({ message: "Token valid", user: req.user });
+router.get('/verify', (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ message: "No token found" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return res.status(200).json({ message: "Token valid", user: decoded });
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
 });
 
 

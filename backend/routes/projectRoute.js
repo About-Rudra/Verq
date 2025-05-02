@@ -4,32 +4,55 @@ const authenticateToken = require('../middleware/authenticationToken');
 const pool = require('../config/db');
 
 router.post('/', authenticateToken, async (req, res) => {
-    const { project_id, user_id, project_title, description, tech_stack, project_link,  role } = req.body;
-    console.log("Received data:", req.body); // Log the received data
+    const { user_id, project_title, description, tech_stack, project_link, role } = req.body;
+    console.log("Received data:", req.body);
 
-    // Validate the received data
-    if (!project_id || !user_id || !project_title || !description || !tech_stack || !project_link || !role) {
-        return res.status(400).json({ error: 'All fields are required' });
+    // Validate required NOT NULL fields
+    if (!user_id || !project_title || !description || !tech_stack) {
+        return res.status(400).json({ error: 'Required fields are missing' });
     }
 
     try {
-        // Insert the data into the database using the pool
-        const query = `
-            INSERT INTO projects (project_id, user_id, project_title, description, tech_stack, project_link, role)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
-        `;
-        const values = [project_id, user_id, project_title, description, tech_stack, project_link, role];
+        // Verify user exists (since there's a foreign key constraint)
+        const userCheck = await pool.query(
+            'SELECT 1 FROM personal_details WHERE user_id = $1', 
+            [user_id]
+        );
+        if (userCheck.rows.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
 
-        await pool.query(query, values);
+        const query = `
+            INSERT INTO projects (
+                user_id, project_title, description, 
+                tech_stack, project_link, role
+            ) VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING project_id
+        `;
+        const values = [
+            user_id, project_title, description, 
+            tech_stack, project_link, role
+        ];
+
+        const result = await pool.query(query, values);
 
         return res.status(201).json({
-            message: 'Projects saved successfully',
+            message: 'Project saved successfully',
+            project_id: result.rows[0].project_id
         });
     } catch (error) {
-        console.error('Error saving Projects:', error);
-        return res.status(500).json({ error: 'Failed to save Projects' });
+        console.error('Error saving project:', error);
+        
+        // Handle foreign key violation
+        if (error.code === '23503') {
+            return res.status(400).json({ error: 'Invalid user_id' });
+        }
+        
+        return res.status(500).json({ 
+            error: 'Failed to save project',
+            details: error.message 
+        });
     }
-}
-);
+});
 
 module.exports = router;

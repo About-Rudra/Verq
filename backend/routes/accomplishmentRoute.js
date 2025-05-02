@@ -5,13 +5,14 @@ const pool = require('../config/db');
 
 router.post('/', authenticateToken, async (req, res) => {
     const userId = req.user.id; // From JWT
-    const { event_name, event_date, role, achievement, skills } = req.body;
+    const { title, institution, type, description, accomplishment_date, rank } = req.body;
 
-    // Validate required fields
-    if (!event_name || !event_date) {
+    // Validate required field
+    if (!title) {
         return res.status(400).json({ 
-            error: 'Missing required fields',
-            required: ['event_name', 'event_date']
+            error: 'Missing required field',
+            required: ['title'],
+            optional: ['institution', 'type', 'description', 'accomplishment_date', 'rank']
         });
     }
 
@@ -29,19 +30,19 @@ router.post('/', authenticateToken, async (req, res) => {
             });
         }
 
-        // Insert competition event
+        // Insert with correct RETURNING clause
         const result = await pool.query(
-            `INSERT INTO competition_events (
-                user_id, event_name, event_date, 
-                role, achievement, skills
-             ) VALUES ($1, $2, $3, $4, $5, $6)
-             RETURNING event_id`,
-            [userId, event_name, event_date, role || null, achievement || null, skills || null]
+            `INSERT INTO accomplishments (
+                user_id, title, institution, 
+                type, description, accomplishment_date, rank
+             ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+             RETURNING accomplishment_id`,
+            [userId, title, institution, type, description, accomplishment_date, rank]
         );
 
         return res.status(201).json({
-            message: 'Competition event record created',
-            event_id: result.rows[0].event_id,
+            message: 'Accomplishment record created',
+            accomplishment_id: result.rows[0].accomplishment_id,
             user_id: userId
         });
 

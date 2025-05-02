@@ -5,13 +5,17 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    open: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5001', // Backend server
-        changeOrigin: true,
-        secure: false,
-      },
+  },
+  build: {
+    outDir: 'dist',
+  },
+  resolve: {
+    alias: {
+      '@': '/src',
     },
+  },
+  base: '/', // Ensure this is set correctly for your deployment
+  server: {
+    historyApiFallback: true,
   },
 });

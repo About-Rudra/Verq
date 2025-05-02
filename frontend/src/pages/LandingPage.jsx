@@ -28,13 +28,13 @@ const LandingPage = ({ isLoggedIn, userType }) => {
     }
   };
 
-  const handleRecruiterClick = () => {
-    if (isLoggedIn && userType === 'recruiter') {
-      navigate("/recruiter-dashboard");
-    } else {
-      navigate("/auth", { state: { userType: "recruiter" } });
-    }
-  };
+  // const handleRecruiterClick = () => {
+  //   if (isLoggedIn && userType === 'recruiter') {
+  //     navigate("/recruiter-dashboard");
+  //   } else {
+  //     navigate("/auth", { state: { userType: "recruiter" } });
+  //   }
+  // };
   
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -78,7 +78,7 @@ const LandingPage = ({ isLoggedIn, userType }) => {
           {/* Right section - gray overlay */}
           <div className="right-section">
             <div className="auth-buttons">
-              <button className="auth-button" onClick={handleRecruiterClick}>
+              <button className="auth-button" >
                 Recruiter
               </button>
               <button className="auth-button" onClick={handleStudentClick}>
