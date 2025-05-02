@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const sectorOptions = [
-  'Technology', 'Finance', 'Healthcare', 'Education', 'Marketing', 
-  'Engineering', 'Retail', 'Manufacturing', 'Media', 'Consulting', 
+const companySectorOptions = [
+  'Technology', 'Finance', 'Healthcare', 'Education', 'Marketing',
+  'Engineering', 'Retail', 'Manufacturing', 'Media', 'Consulting',
   'Non-profit', 'Government', 'Other'
 ];
 
@@ -26,32 +26,57 @@ const Volunteering = ({ volunteering, handleInputChange, addItem, removeItem, on
     setSuccess(null);
 
     try {
-      const response = await fetch(`${BASE_URL}/api/volunteer-details-form`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getCookie('token')}`
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          volunteering: volunteering.map(volunteer => ({
-            organization: volunteer.organization,
-            location: volunteer.location,
-            sector: volunteer.sector,
-            task: volunteer.task,
-            start_date: volunteer.startDate,
-            end_date: volunteer.endDate
-          }))
-        })
-      });
+      // Validate all records before submission
+      const validationErrors = volunteering.map((volunteer, index) => {
+        const errors = [];
+        if (!volunteer.location) errors.push(`Record ${index + 1}: Location is required`);
+        if (!volunteer.company_sector) errors.push(`Record ${index + 1}: Sector is required`);
+        if (!volunteer.task) errors.push(`Record ${index + 1}: Task is required`);
+        if (!volunteer.start_date) errors.push(`Record ${index + 1}: Start date is required`);
+        if (!volunteer.end_date) errors.push(`Record ${index + 1}: End date is required`);
+        
+        // Date validation
+        if (volunteer.start_date && volunteer.end_date) {
+          if (new Date(volunteer.start_date) >= new Date(volunteer.end_date)) {
+            errors.push(`Record ${index + 1}: End date must be after start date`);
+          }
+        }
+        return errors;
+      }).flat();
 
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.error || 'Failed to save volunteering information');
+      if (validationErrors.length > 0) {
+        throw new Error(validationErrors.join('\n'));
       }
 
-      setSuccess('Volunteering information saved successfully');
+      // Submit each record individually
+      const results = await Promise.all(
+        volunteering.map(async (volunteer) => {
+          const response = await fetch(`${BASE_URL}/api/volunteer-details-form`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${getCookie('token')}`
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+              location: volunteer.location,
+              company_sector: volunteer.company_sector,
+              task: volunteer.task,
+              start_date: volunteer.start_date,
+              end_date: volunteer.end_date
+            })
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to save record');
+          }
+
+          return response.json();
+        })
+      );
+
+      setSuccess(`${results.length} volunteering records saved successfully!`);
       if (onSave) {
         onSave();
       }
@@ -65,7 +90,13 @@ const Volunteering = ({ volunteering, handleInputChange, addItem, removeItem, on
   return (
     <div className="form-section">
       <h2>Volunteering</h2>
-      {error && <div className="error-message">{error}</div>}
+      {error && (
+        <div className="error-message">
+          {error.split('\n').map((line, i) => (
+            <div key={i}>{line}</div>
+          ))}
+        </div>
+      )}
       {success && <div className="success-message">{success}</div>}
       {isLoading && <div className="loading-indicator">Loading...</div>}
 
@@ -73,15 +104,7 @@ const Volunteering = ({ volunteering, handleInputChange, addItem, removeItem, on
         {volunteering.map((volunteer, index) => (
           <div key={index} className="repeatable-item">
             <h3>Volunteering Experience {index + 1}</h3>
-            <div className="input-group">
-              <label>Organization:</label>
-              <input
-                type="text"
-                value={volunteer.organization || ''}
-                onChange={(e) => handleInputChange('volunteering', 'organization', e.target.value, index)}
-                required
-              />
-            </div>
+            
             <div className="input-group">
               <label>Location:</label>
               <input
@@ -91,19 +114,21 @@ const Volunteering = ({ volunteering, handleInputChange, addItem, removeItem, on
                 required
               />
             </div>
+
             <div className="input-group">
-              <label>Sector:</label>
+              <label>Company Sector:</label>
               <select
-                value={volunteer.sector || ''}
-                onChange={(e) => handleInputChange('volunteering', 'sector', e.target.value, index)}
+                value={volunteer.company_sector || ''}
+                onChange={(e) => handleInputChange('volunteering', 'company_sector', e.target.value, index)}
                 required
               >
                 <option value="">Select sector</option>
-                {sectorOptions.map(sector => (
+                {companySectorOptions.map(sector => (
                   <option key={sector} value={sector}>{sector}</option>
                 ))}
               </select>
             </div>
+
             <div className="input-group">
               <label>Task/Description:</label>
               <textarea
@@ -112,23 +137,28 @@ const Volunteering = ({ volunteering, handleInputChange, addItem, removeItem, on
                 required
               />
             </div>
+
             <div className="input-group">
               <label>Start Date:</label>
               <input
                 type="date"
-                value={volunteer.startDate || ''}
-                onChange={(e) => handleInputChange('volunteering', 'startDate', e.target.value, index)}
+                value={volunteer.start_date || ''}
+                onChange={(e) => handleInputChange('volunteering', 'start_date', e.target.value, index)}
                 required
               />
             </div>
+
             <div className="input-group">
               <label>End Date:</label>
               <input
                 type="date"
-                value={volunteer.endDate || ''}
-                onChange={(e) => handleInputChange('volunteering', 'endDate', e.target.value, index)}
+                value={volunteer.end_date || ''}
+                onChange={(e) => handleInputChange('volunteering', 'end_date', e.target.value, index)}
+                required
+                min={volunteer.start_date || ''}
               />
             </div>
+
             {volunteering.length > 1 && (
               <button 
                 type="button" 
@@ -136,11 +166,12 @@ const Volunteering = ({ volunteering, handleInputChange, addItem, removeItem, on
                 onClick={() => removeItem('volunteering', index)}
                 disabled={isLoading}
               >
-                Remove Volunteer Experience
+                Remove Experience
               </button>
             )}
           </div>
         ))}
+
         <div className="button-group">
           <button 
             type="button" 
@@ -148,10 +179,10 @@ const Volunteering = ({ volunteering, handleInputChange, addItem, removeItem, on
             onClick={() => addItem('volunteering')}
             disabled={isLoading}
           >
-            Add Another Volunteer Experience
+            Add Another Experience
           </button>
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Saving...' : 'Save Volunteering Information'}
+            {isLoading ? 'Saving...' : 'Save All Records'}
           </button>
         </div>
       </form>

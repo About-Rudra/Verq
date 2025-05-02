@@ -469,7 +469,7 @@ const InterviewArchives = () => {
         {/* Filter Controls */}
         <div className="filter-controls">
           <div className="filter-group">
-            <label>Company:</label>
+            <label class = "company-label">Company:</label>
             <select 
               value={companyFilter} 
               onChange={(e) => setCompanyFilter(e.target.value)}
@@ -537,12 +537,12 @@ const InterviewArchives = () => {
                       </div>
                       <div className="question-content">
                         <h3>{q.question}</h3>
-                        {/* <div className="answer-section">
+                        <div className="answer-section">
                           <details>
                             <summary>View Answer</summary>
                             <p>{q.answer}</p>
                           </details>
-                        </div> */}
+                        </div>
                       </div>
                     </div>
                   ))
@@ -586,12 +586,12 @@ const InterviewArchives = () => {
                             </div>
                             <div className="question-content">
                               <h3>{q.question}</h3>
-                              {/* <div className="answer-section">
+                              <div className="answer-section">
                                 <details>
                                   <summary>View Answer</summary>
                                   <p>{q.answer}</p>
                                 </details>
-                              </div> */}
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -632,12 +632,12 @@ const InterviewArchives = () => {
                       </div>
                       <div className="question-content">
                         <h3>{q.question}</h3>
-                        {/* <div className="answer-section">
+                        <div className="answer-section">
                           <details>
                             <summary>View Answer</summary>
                             <p>{q.answer}</p>
                           </details>
-                        </div> */}
+                        </div>
                       </div>
                     </div>
                   ))
@@ -674,12 +674,12 @@ const InterviewArchives = () => {
                       </div>
                       <div className="question-content">
                         <h3>{q.question}</h3>
-                        {/* <div className="answer-section">
+                        <div className="answer-section">
                           <details>
                             <summary>View Answer</summary>
                             <p>{q.answer}</p>
                           </details>
-                        </div> */}
+                        </div>
                       </div>
                     </div>
                   ))

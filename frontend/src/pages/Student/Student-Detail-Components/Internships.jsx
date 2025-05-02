@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const sectorOptions = [
-  'Technology', 'Finance', 'Healthcare', 'Education', 'Marketing', 
-  'Engineering', 'Retail', 'Manufacturing', 'Media', 'Consulting', 
+const companySectorOptions = [
+  'Technology', 'Finance', 'Healthcare', 'Education', 'Marketing',
+  'Engineering', 'Retail', 'Manufacturing', 'Media', 'Consulting',
   'Non-profit', 'Government', 'Other'
 ];
 
@@ -26,37 +26,74 @@ const Internships = ({ internships, handleInputChange, addItem, removeItem, onSa
     setSuccess(null);
 
     try {
-      const response = await fetch(`${BASE_URL}/api/internship-details-form`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getCookie('token')}`
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          internships: internships.map(internship => ({
-            company: internship.company,
-            position: internship.position,
-            location: internship.location,
-            sector: internship.sector,
-            start_date: internship.startDate,
-            end_date: internship.endDate,
-            stipend: internship.stipend
-          }))
-        })
-      });
+      // Validate all records before submission
+      const validationErrors = internships.map((internship, index) => {
+        const errors = [];
+        if (!internship.company) errors.push(`Record ${index + 1}: Company is required`);
+        if (!internship.position) errors.push(`Record ${index + 1}: Position is required`);
+        if (!internship.location) errors.push(`Record ${index + 1}: Location is required`);
+        if (!internship.sector) errors.push(`Record ${index + 1}: Sector is required`);
+        if (!internship.startDate) errors.push(`Record ${index + 1}: Start date is required`);
+        if (!internship.endDate) errors.push(`Record ${index + 1}: End date is required`);
+        
+        if (internship.startDate && internship.endDate) {
+          if (new Date(internship.startDate) >= new Date(internship.endDate)) {
+            errors.push(`Record ${index + 1}: End date must be after start date`);
+          }
+        }
+        
+        if (internship.stipend && internship.stipend < 0) {
+          errors.push(`Record ${index + 1}: Stipend cannot be negative`);
+        }
+        return errors;
+      }).flat();
 
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.error || 'Failed to save internships');
+      if (validationErrors.length > 0) {
+        throw new Error(validationErrors.join('\n'));
       }
 
-      setSuccess('Internships saved successfully');
+      // Submit each record individually
+      const results = await Promise.all(
+        internships.map(async (internship) => {
+          const requestBody = {
+            company_name: internship.company,
+            job_title: internship.position,
+            location: internship.location,
+            company_sector: internship.sector,
+            start_date: internship.startDate,
+            end_date: internship.endDate,
+            stipend_salary: internship.stipend || null
+          };
+
+          console.log('Submitting:', requestBody); // Debug log
+
+          const response = await fetch(`${BASE_URL}/api/internship-details-form`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${getCookie('token')}`
+            },
+            credentials: 'include',
+            body: JSON.stringify(requestBody)
+          });
+
+          const responseData = await response.json();
+          console.log('Response:', response.status, responseData); // Debug log
+
+          if (!response.ok) {
+            throw new Error(responseData.error || `Failed to save record (Status: ${response.status})`);
+          }
+
+          return responseData;
+        })
+      );
+
+      setSuccess(`${results.length} internship records saved successfully!`);
       if (onSave) {
         onSave();
       }
     } catch (err) {
+      console.error('Submission error:', err);
       setError(err.message);
     } finally {
       setIsLoading(false);
@@ -66,14 +103,21 @@ const Internships = ({ internships, handleInputChange, addItem, removeItem, onSa
   return (
     <div className="form-section">
       <h2>Internships</h2>
-      {error && <div className="error-message">{error}</div>}
+      {error && (
+        <div className="error-message">
+          {error.split('\n').map((line, i) => (
+            <div key={i}>{line}</div>
+          ))}
+        </div>
+      )}
       {success && <div className="success-message">{success}</div>}
       {isLoading && <div className="loading-indicator">Loading...</div>}
 
       <form onSubmit={handleSubmit}>
         {internships.map((internship, index) => (
           <div key={index} className="repeatable-item">
-            <h3>Internship {index + 1}</h3>
+            <h3>Internship Experience {index + 1}</h3>
+            
             <div className="input-group">
               <label>Company/Organization:</label>
               <input
@@ -83,6 +127,7 @@ const Internships = ({ internships, handleInputChange, addItem, removeItem, onSa
                 required
               />
             </div>
+
             <div className="input-group">
               <label>Position:</label>
               <input
@@ -92,29 +137,31 @@ const Internships = ({ internships, handleInputChange, addItem, removeItem, onSa
                 required
               />
             </div>
+
             <div className="input-group">
               <label>Location:</label>
               <input
                 type="text"
                 value={internship.location || ''}
                 onChange={(e) => handleInputChange('internships', 'location', e.target.value, index)}
-                placeholder="City, Country"
                 required
               />
             </div>
+
             <div className="input-group">
-              <label>Sector:</label>
+              <label>Company Sector:</label>
               <select
                 value={internship.sector || ''}
                 onChange={(e) => handleInputChange('internships', 'sector', e.target.value, index)}
                 required
               >
                 <option value="">Select sector</option>
-                {sectorOptions.map(sector => (
+                {companySectorOptions.map(sector => (
                   <option key={sector} value={sector}>{sector}</option>
                 ))}
               </select>
             </div>
+
             <div className="input-group">
               <label>Start Date:</label>
               <input
@@ -124,23 +171,28 @@ const Internships = ({ internships, handleInputChange, addItem, removeItem, onSa
                 required
               />
             </div>
+
             <div className="input-group">
               <label>End Date:</label>
               <input
                 type="date"
                 value={internship.endDate || ''}
                 onChange={(e) => handleInputChange('internships', 'endDate', e.target.value, index)}
+                required
+                min={internship.startDate || ''}
               />
             </div>
+
             <div className="input-group">
               <label>Stipend/Salary:</label>
               <input
                 type="number"
                 value={internship.stipend || ''}
                 onChange={(e) => handleInputChange('internships', 'stipend', e.target.value, index)}
-                placeholder="Amount per month"
+                min="0"
               />
             </div>
+
             {internships.length > 1 && (
               <button 
                 type="button" 
@@ -148,11 +200,12 @@ const Internships = ({ internships, handleInputChange, addItem, removeItem, onSa
                 onClick={() => removeItem('internships', index)}
                 disabled={isLoading}
               >
-                Remove Internship
+                Remove Experience
               </button>
             )}
           </div>
         ))}
+
         <div className="button-group">
           <button 
             type="button" 
@@ -160,10 +213,10 @@ const Internships = ({ internships, handleInputChange, addItem, removeItem, onSa
             onClick={() => addItem('internships')}
             disabled={isLoading}
           >
-            Add Another Internship
+            Add Another Experience
           </button>
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Saving...' : 'Save Internships'}
+            {isLoading ? 'Saving...' : 'Save All Records'}
           </button>
         </div>
       </form>
