@@ -38,12 +38,13 @@ router.post("/login", async (req, res) => {
     console.log("Token generated:", token); 
 
     // Send the token as an HTTP-only cookie
-    res.cookie("token", token, {
+    res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : undefined,
       maxAge: 3600000, // 1 hour
-      sameSite: 'Lax',
+      path: '/'
     });
 
     return res.status(200).json({ message: "Login successful", token });
@@ -84,11 +85,13 @@ router.post("/signup", async (req, res) => {
     });
 
      // Send the token as an HTTP-only cookie to avoid XXS attacks
-     res.cookie("token", token, {
+     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      ssameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : undefined,
       maxAge: 3600000, // 1 hour
+      path: '/'
     });
 
     return res.status(201).json({ message: "Sign-up successful", token });

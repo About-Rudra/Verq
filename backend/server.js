@@ -15,8 +15,11 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'https://verq-pi.vercel.app',
+  'https://verq-*.vercel.app',
   'https://verq-pcae1zlxv-rudras-projects-cd8653fc.vercel.app',
 ];
+
+
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -29,7 +32,9 @@ app.use(cors({
     return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
-  exposedHeaders: ['set-cookie'] // Add this line
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  exposedHeaders: ['set-cookie'], // Add this line
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.options('*', cors());
