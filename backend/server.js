@@ -56,6 +56,13 @@ const competitionRoute = require("./routes/CompetitionRoute");
 
 //get calls variables
 const personalInformation = require("./routes/Dashboard/personalInformation");
+const VolunteerInformation = require("./routes/Dashboard/volunteerInformation");
+const InternshipInformation = require("./routes/Dashboard/internshipInformation");
+const CompetitionInformation = require("./routes/Dashboard/competitionInformation");
+const SkillsInformation = require("./routes/Dashboard/skillsInformation");
+const AccomplishmentInformation = require("./routes/Dashboard/accomplishmentInformation");
+const ExtraCurricularInformation = require("./routes/Dashboard/extraCurricularInformation");
+
 
 //post calls routes
 app.use("/api/auth", authRoutes);
@@ -70,6 +77,12 @@ app.use("/api/competitions-form", competitionRoute);
 
 //get calls routes
 app.use("/api/personal-information", personalInformation);
+app.use("/api/volunteer-information", VolunteerInformation);
+app.use("/api/internship-information", InternshipInformation);
+app.use("/api/competition-information", CompetitionInformation);
+app.use("/api/skills-information", SkillsInformation);
+app.use("/api/accomplishment-information", AccomplishmentInformation);
+app.use("/api/extra-curricular-information", ExtraCurricularInformation);
 
 // Serve static files from React build folder
 app.use(express.static(path.join(__dirname, "dist")));
