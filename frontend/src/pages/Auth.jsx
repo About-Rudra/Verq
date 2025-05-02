@@ -77,9 +77,9 @@ const Auth = ({ onLogin }) => {
         if (data.isFirstTime && userType === 'student') {
           navigate('/student-form');
         } else if (userType === 'student') {
-          navigate('/student-dashboard');
+          navigate('/default');
         } else {
-          navigate('/student-dashboard');
+          navigate('/default');
         }
       } else {
         setErrors(prev => ({ ...prev, form: data.message || 'Login failed' }));
