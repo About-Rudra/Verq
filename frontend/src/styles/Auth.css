@@ -257,24 +257,27 @@
 .social-buttons {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 .btn-social {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid var(--border-color);
-  background: var(--bg-primary);
-  border-radius: var(--border-radius);
-  font-weight: 500;
-  font-size: 0.875rem;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.social-icon {
+  font-size: 1.2rem;
 }
 
 .btn-social:hover {

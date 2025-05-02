@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Auth.css';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5001";
 
@@ -321,9 +323,14 @@ const Auth = ({ onLogin }) => {
         </div>
 
         <div className="social-buttons">
-          <button className="btn-social">Google</button>
-          <button className="btn-social">GitHub</button>
+          <button className="btn-social">
+            <FcGoogle className="social-icon" /> Google
+          </button>
+          <button className="btn-social">
+            <FaGithub className="social-icon" /> GitHub
+          </button>
         </div>
+
 
         <div className="auth-redirect">
           {isLogin ? (
