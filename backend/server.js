@@ -50,7 +50,7 @@ const volunteerRoutes = require("./routes/volunteerRoute");
 const skillsRoute = require("./routes/skillsRoute");
 const projectsRoute = require("./routes/projectRoute"); 
 const accomplishmentRoute = require("./routes/accomplishmentRoute"); 
-const extraCurricularRoute = require("./routes/extra_CurricularRoute");
+const extraCurricularRoute = require("./routes/extra_curricularRoute");
 const competitionRoute = require("./routes/competitionRoute"); 
 
 
