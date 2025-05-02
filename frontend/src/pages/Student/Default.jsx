@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 import '../../styles/Student/Default.css';
 
 const Default = () => {
@@ -12,6 +14,7 @@ const Default = () => {
   const testimonialsRef = useRef(null);
   const companiesRef = useRef(null);
   const ctaRef = useRef(null);
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -73,7 +76,7 @@ const Default = () => {
   ];
 
   return (
-    <div className="dp-landing-page">
+    <div className="dp-landing-page" data-theme={darkMode ? "dark" : "light"}>
       {/* Hero Section */}
       <section ref={heroRef} className="dp-hero-section">
         <div className="dp-hero-content">

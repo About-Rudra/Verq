@@ -21,15 +21,13 @@ import {
   FaGoogle,
   FaEnvelope,
   FaCheck,
-  FaTimes,
-  FaSignOutAlt
+  FaTimes
 } from 'react-icons/fa';
 import { ThemeContext } from '../../context/ThemeContext';
 import '../../styles/Student/Settings.css';
 
 const Settings = () => {
   const navigate = useNavigate();
-  const { onLogout } = useOutletContext();
   const { darkMode } = useContext(ThemeContext);
   const [activeTab, setActiveTab] = useState('security');
   const [breadcrumbs, setBreadcrumbs] = useState(['Settings', 'Security']);
@@ -88,19 +86,13 @@ const Settings = () => {
     google: { connected: false, email: '' }
   });
 
-  // Logout state
-  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-  const [logoutLoading, setLogoutLoading] = useState(false);
-  const [logoutError, setLogoutError] = useState(null);
-
   const tabs = [
     { id: 'security', icon: <FaLock />, label: 'Security' },
     { id: 'notifications', icon: <FaBell />, label: 'Notifications' },
     { id: 'privacy', icon: <FaShieldAlt />, label: 'Privacy & Data' },
     { id: 'preferences', icon: <FaBriefcase />, label: 'Company Preferences' },
     { id: 'integrations', icon: <FaPlug />, label: 'Integrations' },
-    { id: 'help', icon: <FaQuestionCircle />, label: 'Help & Support' },
-    { id: 'logout', icon: <FaSignOutAlt />, label: 'Logout' }
+    { id: 'help', icon: <FaQuestionCircle />, label: 'Help & Support' }
   ];
 
   // Update breadcrumbs when active tab changes
@@ -226,26 +218,6 @@ const Settings = () => {
     }));
   };
 
-  // Logout function
-  const handleLogout = async () => {
-    if (!showLogoutConfirm) {
-      setShowLogoutConfirm(true);
-      return;
-    }
-    
-    setLogoutLoading(true);
-    setLogoutError(null);
-    
-    try {
-      await onLogout();
-      // No need to navigate, the App.jsx logic will handle it
-    } catch (error) {
-      console.error('Logout error:', error);
-      setLogoutError('Failed to log out. Please try again.');
-      setLogoutLoading(false);
-    }
-  };
-
   return (
     <div className={`main-content ${darkMode ? 'dark' : ''}`}>
       <div className="settings-header">
@@ -265,7 +237,7 @@ const Settings = () => {
           {tabs.map(tab => (
             <button
               key={tab.id}
-              className={`sidebar-tab ${activeTab === tab.id ? 'active' : ''} ${tab.id === 'logout' ? 'logout-tab' : ''}`}
+              className={`sidebar-tab ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => handleTabChange(tab.id)}
             >
               {tab.icon}
@@ -824,62 +796,6 @@ const Settings = () => {
                 <h3>Feedback</h3>
                 <p>Share your suggestions with us</p>
                 <button className="action-button">Give Feedback</button>
-              </div>
-            </div>
-          )}
-
-          {/* Logout Tab */}
-          {activeTab === 'logout' && (
-            <div className="settings-section">
-              <h2><FaSignOutAlt /> Logout</h2>
-              
-              <div className="logout-container">
-                <div className="logout-message">
-                  <p>Are you sure you want to log out of your account?</p>
-                  {showLogoutConfirm && (
-                    <p className="logout-confirmation">This will end your current session on this device.</p>
-                  )}
-                  {logoutError && (
-                    <p className="logout-error">{logoutError}</p>
-                  )}
-                </div>
-                <div className="logout-actions">
-                  <button 
-                    className={`logout-button ${showLogoutConfirm ? 'confirm' : ''}`}
-                    onClick={handleLogout}
-                    disabled={logoutLoading}
-                  >
-                    {logoutLoading ? (
-                      <>
-                        <div className="spinner-small"></div>
-                        Logging out...
-                      </>
-                    ) : (
-                      <>
-                        <FaSignOutAlt />
-                        {showLogoutConfirm ? 'Confirm Logout' : 'Logout'}
-                      </>
-                    )}
-                  </button>
-                  
-                  {showLogoutConfirm && !logoutLoading && (
-                    <button 
-                      className="cancel-button"
-                      onClick={() => setShowLogoutConfirm(false)}
-                    >
-                      <FaTimes /> Cancel
-                    </button>
-                  )}
-                </div>
-              </div>
-              
-              <div className="logout-info">
-                <h3>Before you go</h3>
-                <ul>
-                  <li>Your data will remain secure in your account</li>
-                  <li>You'll need to log back in to access your profile</li>
-                  <li>Any unsaved changes may be lost</li>
-                </ul>
               </div>
             </div>
           )}
