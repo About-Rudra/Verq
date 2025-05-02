@@ -66,11 +66,13 @@ app.use("/api/accomplishment-form", accomplishmentRoute);
 app.use("/api/extra-curricular-form", extraCurricularRoute);
 app.use("/api/competitions-form", competitionRoute);
 
-/// Add this with your other route imports
+// Add this with your other route imports
 const personalDetailsGetRoutes = require('./routes/Dashboard/personalGetDetailsRoute');
+const volunteerGetRoutes = require('./routes/Dashboard/volunteeringGetRoute');  
 
 // Add this with your other route middlewares
 app.use('/api/personal-details', personalDetailsGetRoutes);
+app.use('/api/volunteer-details', volunteerGetRoutes);
 
 // Serve static files from React build folder
 app.use(express.static(path.join(__dirname, "dist")));
